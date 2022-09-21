@@ -1,14 +1,17 @@
 .profile-tab-container {
     border: 1px red solid;
-    width: 300px;
     height: 100%;
+    width: 300px;
+    flex-shrink: 0; 
 }
 
 .profile-tab {
     height: 100%;
+    width: inherit;
     border: 1px red solid;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    position: fixed;
 }

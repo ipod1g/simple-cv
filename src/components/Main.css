@@ -3,3 +3,16 @@
     width: 100%;
     border: 1px red solid;
 }
+
+.about-container {
+    border: 1px red solid;
+    
+}
+
+.about-container p {
+    margin-left: 30px;
+}
+
+.main-container h3 {
+    padding: 15px;
+}

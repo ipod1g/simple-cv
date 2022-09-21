@@ -6,9 +6,12 @@ import "./Main.css";
 const Main = () => {
    return (
       <div className="main-container">
-         <About></About>
-         <Experience></Experience>
-         <p>LONG TEXT LONG TEXT LONG TEXT LONG TEXT LONG TEXT LONG TEXT</p>
+         <About />
+         <h3>Experience</h3>
+         <div className="xp-line"></div>
+         <ul>
+            <Experience></Experience>
+         </ul>
       </div>
    );
 };
