@@ -1,17 +1,25 @@
 .profile-tab-container {
-    border: 1px red solid;
-    height: 100%;
-    width: 300px;
-    flex-shrink: 0; 
+
 }
 
 .profile-tab {
-    height: 100%;
-    width: inherit;
     border: 1px red solid;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
+
 }
+
+@media (min-width: 815px){
+    .profile-tab-container {
+        width: 300px;
+        flex-shrink: 0; 
+    }
+
+    .profile-tab {
+        height: 100%;
+        width: inherit;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+    }
+  }

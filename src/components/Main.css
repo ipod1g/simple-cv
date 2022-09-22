@@ -1,18 +1,40 @@
+.main-wrapper {
+
+}
+
 .main-container {
     height: fit-content;
     width: 100%;
-    border: 1px red solid;
+    padding: 10px;
 }
 
+/* .main-container::after {
+    clear: both;
+} */
+
 .about-container {
-    border: 1px red solid;
-    
+    width: 100vw;
 }
 
 .about-container p {
     margin-left: 30px;
+    padding-right: 10px;
 }
 
 .main-container h3 {
     padding: 15px;
 }
+
+hr {
+    margin-top: 24px;
+    margin-bottom: 24px;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+
+@media (min-width: 815px){
+    .about-container {
+        width: 60vw;
+    }
+}
+
