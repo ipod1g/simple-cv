@@ -1,8 +1,11 @@
-import React from "react";
+import Aos from "aos";
+import "aos/dist/aos.css";
+
 import About from "./About";
 import Experience from "./Experience";
 import "./Main.css";
 import Projects from "./Projects";
+import Skills from "./Skills";
 
 const Main = () => {
    return (
@@ -22,6 +25,7 @@ const Main = () => {
                <Projects></Projects>
             </ul>
             <hr />
+            <Skills />
          </section>
       </div>
    );

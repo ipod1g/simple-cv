@@ -5,10 +5,9 @@ const About = () => {
       <div className="about-container">
          <h3>About</h3>
          <p>
-            Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
-            Ipsum Ipsum Lorem Ipsum Lorem Ipsum Ipsum Lorem Ipsum Lorem Ipsum
-            Ipsum Ipsum Lorem Ipsum Lorem Ipsum Ipsum Lorem Ipsum Lorem Ipsum
-            Ipsum Ipsum Lorem Ipsum Lorem Ipsum Ipsum Lorem Ipsum Lorem Ipsum
+            Hi, I'm an undergraduate in Physics at The Chinese University of
+            Hong Kong, CUHK. Now I am a self-taught Frontend web developer
+            passionate about creating aesthetic and functional interface.
          </p>
       </div>
    );
