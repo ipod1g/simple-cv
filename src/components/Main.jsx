@@ -1,10 +1,9 @@
-import Aos from "aos";
-import "aos/dist/aos.css";
-
+import React from "react";
 import About from "./About";
 import Experience from "./Experience";
 import "./Main.css";
 import Projects from "./Projects";
+import ScrollBarIndicator from "./ScrollBarIndicator";
 import Skills from "./Skills";
 
 const Main = () => {
@@ -15,7 +14,8 @@ const Main = () => {
             <hr />
             <h3>Experience</h3>
             <ul>
-               <div className="xp-line"></div>
+               {/* <div className="xp-line"></div> */}
+               <ScrollBarIndicator />
                <Experience></Experience>
             </ul>
             <hr />

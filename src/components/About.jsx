@@ -7,7 +7,7 @@ const About = () => {
          <p>
             Hi, I'm an undergraduate in Physics at The Chinese University of
             Hong Kong, CUHK. Now I am a self-taught Frontend web developer
-            passionate about creating aesthetic and functional interface.
+            passionate about creating aesthetic and functional experiences! 😊
          </p>
       </div>
    );
