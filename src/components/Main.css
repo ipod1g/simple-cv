@@ -6,7 +6,25 @@
     height: fit-content;
     width: 100%;
     padding: 10px;
+    
 }
+.main-container::before {
+    content: "";
+    height: 250%;
+    /* background: url("../assets/reg/bg-welcome.jpg") top; */
+    background: url("https://thumbs.dreamstime.com/b/abstract-shiny-metal-background-swirls-twisted-wavy-lines-pattern-d-rendering-illustration-177862747.jpg") top;
+    background-size: cover;
+    background-repeat: repeat-y;
+    display: block;
+    position: absolute;
+    z-index: -10;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: .08;
+    filter: blur(15px);
+  }
 
 /* .main-container::after {
     clear: both;
@@ -17,24 +35,41 @@
 }
 
 .about-container p {
-    margin-left: 30px;
-    padding-right: 10px;
+    padding-right: 150px;
+    line-height: 26px;
+    margin: 0 0 2px 70px;
 }
 
 .main-container h3 {
     padding: 15px;
+    margin-left: 55px;
+}
+
+.xp-wrapper {
+    display: flex;
+}
+
+.proj-wrapper {
+        display: flex;
 }
 
 hr {
-    margin-top: 24px;
-    margin-bottom: 24px;
     border: 0;
-    border-top: 1px solid #eee;
+    border-top: 1px solid rgba(238, 238, 238, 0.291);
+    margin: 24px 60px 24px 60px;
 }
 
-@media (min-width: 815px){
+.skills-container {
+    margin-left: 70px;
+    padding-right: 50px;
+}
+
+@media (min-width: 960px){
     .about-container {
         width: 60vw;
+    }
+    .about-container p {
+        padding-right: 50px;
     }
 }
 
