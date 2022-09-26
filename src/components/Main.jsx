@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import About from "./About";
 import Experience from "./Experience";
 import "./Main.css";
@@ -10,22 +10,29 @@ const Main = () => {
    return (
       <div className="main-wrapper">
          <section className="main-container">
+            <hr />
             <About />
             <hr />
             <h3>Experience</h3>
-            <ul>
-               {/* <div className="xp-line"></div> */}
-               <ScrollBarIndicator />
-               <Experience></Experience>
-            </ul>
+            <div className="xp-wrapper">
+               <ScrollBarIndicator height={740} origin={0} />
+               <ul className="xp-container">
+                  {/* <div className="xp-line"></div> */}
+                  <Experience></Experience>
+               </ul>
+            </div>
             <hr />
             <h3>Projects</h3>
-            <ul>
-               <div className="proj-line"></div>
-               <Projects></Projects>
-            </ul>
+            <div className="proj-wrapper">
+               <ScrollBarIndicator height={901} origin={700} />
+               <ul>
+                  {/* <div className="proj-line"></div> */}
+                  <Projects></Projects>
+               </ul>
+            </div>
             <hr />
             <Skills />
+            <hr />
          </section>
       </div>
    );
