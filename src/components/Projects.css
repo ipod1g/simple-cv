@@ -1,0 +1,34 @@
+
+.xp-box .company {
+    -webkit-transition: all .2s linear;
+    -o-transition: all .2s linear;
+    transition: all .2s linear;
+}
+
+.xp-box:hover .company {
+    background-color: red;
+    padding: 0 2px 0 2px;
+    -webkit-transition: all .2s linear;
+    -o-transition: all .2s linear;
+    transition: all .2s linear;
+}
+
+.proj-box-wrapper::before {
+    content: '';
+    background: white;
+    display: inline-block;
+    position: absolute;
+    transform: rotate(45deg);
+    border: 1px solid #95a7c7;
+    margin-top: 6px;
+    width: 10px;
+    height: 10px;
+    z-index: 400;
+    left: 45px;
+}
+
+@media (min-width: 960px) {
+    .proj-box-wrapper::before  {
+        left: 445px;
+    }
+}
