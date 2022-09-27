@@ -6,7 +6,6 @@ import ProfileTab from "./components/ProfileTab";
 function App() {
    return (
       <div className="App">
-         {/* <Navbar /> */}
          <ProfileTab />
          <Main />
       </div>
