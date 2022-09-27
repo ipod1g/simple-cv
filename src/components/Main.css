@@ -1,5 +1,5 @@
 .main-wrapper {
-
+    height: fit-content;
 }
 
 .main-container {
@@ -8,22 +8,25 @@
     padding: 10px;
     
 }
-.main-container::before {
+.main-wrapper::before {
     content: "";
-    height: 250%;
-    /* background: url("../assets/reg/bg-welcome.jpg") top; */
-    background: url("https://thumbs.dreamstime.com/b/abstract-shiny-metal-background-swirls-twisted-wavy-lines-pattern-d-rendering-illustration-177862747.jpg") top;
+    height: 200%;
+    background: url("../assets/galaxy.gif") top;
+    background: url("../assets/spaceloop.gif") top;
     background-size: cover;
-    background-repeat: repeat-y;
     display: block;
-    position: absolute;
+    position: fixed;
+    /* Try using this if I can fix the floating height issue */
+    /* position: absolute; */
     z-index: -10;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    opacity: .08;
-    filter: blur(15px);
+    opacity: 0.20;
+    filter: blur(6px);
+    /* opacity: .08;
+    filter: blur(15px); */
   }
 
 /* .main-container::after {
@@ -43,6 +46,7 @@
 .main-container h3 {
     padding: 15px;
     margin-left: 55px;
+    letter-spacing: 8px;
 }
 
 .xp-wrapper {
@@ -64,7 +68,7 @@ hr {
     padding-right: 50px;
 }
 
-@media (min-width: 960px){
+@media (min-width: 1050px){
     .about-container {
         width: 60vw;
     }
