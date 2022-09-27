@@ -27,7 +27,7 @@
     left: 45px;
 }
 
-@media (min-width: 960px) {
+@media (min-width: 1050px) {
     .proj-box-wrapper::before  {
         left: 445px;
     }

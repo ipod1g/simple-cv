@@ -1,12 +1,12 @@
 .xp-box {
     width: 70vw;
     /* border: 1px rgb(73, 185, 222) solid; */
-    margin-left: 30px;
-    padding: 0 30px 20px 30px;
+    margin-left: 38px;
+    padding: 0px 30px 20px 18px;
     margin-bottom: 50px;
     list-style-type: none;   
     box-sizing: border-box; 
-    /* background-color: beige; */
+    background-color: #0e0e0e38;
 }
 
 .xp-box h4 {
@@ -47,7 +47,7 @@
 }
 
 
-@media (min-width: 960px){
+@media (min-width: 1050px){
 
     .xp-box {
         width: 50vw;
