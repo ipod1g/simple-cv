@@ -10,12 +10,12 @@
 }
 
 .progress-main {
-    background: linear-gradient(140deg,#6c5faf56 0,#631fb079);
+    background: linear-gradient(180deg,#6c5faf56 0,#631fb079);
     width: 4px;
     margin-left:-1px;
 }
 
-@media (min-width: 960px){
+@media (min-width: 1050px){
     .progress-wrapper {
         /* left: calc(390px + 25%); */
     left: 40px;

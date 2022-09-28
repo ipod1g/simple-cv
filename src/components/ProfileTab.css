@@ -7,7 +7,11 @@
     background-color: rgba(0, 0, 0, 0.66);
 }
 
-@media (min-width: 960px){
+.selfie-wrapper {
+    margin-top: 180px;
+}
+
+@media (min-width: 1050px){
     .profile-tab-container {
         width: 400px;
         flex-shrink: 0; 
