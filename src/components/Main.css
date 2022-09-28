@@ -10,9 +10,10 @@
 }
 .main-wrapper::before {
     content: "";
-    height: 200%;
-    background: url("../assets/galaxy.gif") top;
-    background: url("../assets/spaceloop.gif") top;
+    height: 177%;
+    /* background: url("../assets/galaxy.gif") top; */
+    background: url("../assets/spaceloop-compressed.webp") top;
+    ;/* background-position: 120px 0px; */
     background-size: cover;
     display: block;
     position: fixed;
@@ -24,9 +25,7 @@
     right: 0;
     bottom: 0;
     opacity: 0.20;
-    filter: blur(6px);
-    /* opacity: .08;
-    filter: blur(15px); */
+    filter: blur(4px);
   }
 
 /* .main-container::after {
