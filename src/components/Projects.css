@@ -1,3 +1,18 @@
+.xp-box a {
+    text-decoration: none;
+}
+
+.company {
+    margin-bottom: 20px;
+    width: fit-content;
+    color:rgb(209 225 238 / 96%);
+    font-weight: 700;
+}
+
+.inner-container {
+    display: flex;
+    flex-direction: column;
+}
 
 .xp-box .company {
     -webkit-transition: all .2s linear;
@@ -6,8 +21,11 @@
 }
 
 .xp-box:hover .company {
-    background-color: red;
-    padding: 0 2px 0 2px;
+    color: #9f63d5d4;
+    /* padding: 0 2px 0 2px; */
+    /* text-shadow: rgb(236 141 255) 1px 0 10px; */
+    text-shadow: 2.5px 2.5px #401674d1;
+    transform: scale(1.01);
     -webkit-transition: all .2s linear;
     -o-transition: all .2s linear;
     transition: all .2s linear;
@@ -28,6 +46,7 @@
 }
 
 @media (min-width: 1050px) {
+
     .proj-box-wrapper::before  {
         left: 445px;
     }
