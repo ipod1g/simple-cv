@@ -1,38 +1,46 @@
 import React from "react";
+import { motion } from "framer-motion";
 import "./Navbar.css";
 
 const Navbar = (props) => {
    return (
-      <nav className="nav-bar">
-         <button
+      <motion.nav className="nav-bar" whileHover={{ scale: 1.1 }}>
+         <motion.button
             onClick={() => {
                props.scrollToSection(props.aboutSection);
             }}
+            style={{ marginRight: "4px" }}
+            whileHover={{ scale: 1.2, letterSpacing: "4px" }}
          >
-            Ab.
-         </button>
-         <button
+            About
+         </motion.button>
+         <motion.button
             onClick={() => {
                props.scrollToSection(props.experienceSection);
             }}
+            style={{ marginRight: "6px" }}
+            whileHover={{ scale: 1.2, letterSpacing: "4px" }}
          >
-            Xp.
-         </button>
-         <button
+            Work
+         </motion.button>
+         <motion.button
             onClick={() => {
                props.scrollToSection(props.projectsSection);
             }}
+            whileHover={{ scale: 1.2, letterSpacing: "4px" }}
          >
-            Pj.
-         </button>
-         <button
+            Project
+         </motion.button>
+         <motion.button
             onClick={() => {
                props.scrollToSection(props.skillsSection);
             }}
+            style={{ marginRight: "9px" }}
+            whileHover={{ scale: 1.2, letterSpacing: "4px" }}
          >
-            Sk.
-         </button>
-      </nav>
+            Skill
+         </motion.button>
+      </motion.nav>
    );
 };
 
