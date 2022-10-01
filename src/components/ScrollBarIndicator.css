@@ -9,11 +9,40 @@
     left: 40px;
 }
 
-.progress-main {
+/* .progress-main {
     background: linear-gradient(180deg,#6c5faf56 0,#631fb079);
     width: 4px;
     margin-left:-1px;
+} */
+
+.progress {
+    position: absolute;
+    top: 0;
+    left: -30px;
+    width: 80px;
+    height: 80px;
+    margin: 0;
+    padding: 0;
 }
+
+.progress svg {
+    transform: rotate(-180deg);
+  }
+
+line {
+    stroke-dashoffset: 0;
+    stroke-width: 5%;
+    fill: none;
+}
+
+.bg {
+    stroke: red;
+    opacity: 0.2;
+}
+
+.progress .indicator {
+    stroke: red
+} 
 
 @media (min-width: 1050px){
     .progress-wrapper {

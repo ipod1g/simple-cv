@@ -3,14 +3,14 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 import "./Projects.css";
 
-const Projects = (props) => {
+const Projects = (props, ref) => {
    useEffect(() => {
       Aos.init({ duration: 500 });
    }, []);
    return (
       <>
          {/* divider */}
-         <div className="proj-box-wrapper">
+         <div className="proj-box-wrapper" ref={ref}>
             <li data-aos="zoom-in-up" className="xp-box">
                <div className="inner-container">
                   <a className="company" href="#">
@@ -72,8 +72,47 @@ const Projects = (props) => {
             </li>
          </div>
          {/* divider */}
+         <div className="proj-box-wrapper">
+            <li data-aos="zoom-in-up" className="xp-box">
+               <div className="inner-container">
+                  <a
+                     className="company"
+                     href="https://github.com/ipod1g/testers/tree/main/riot-login-clone"
+                     target="_blank"
+                     rel="noopener noreferrer"
+                  >
+                     Riot Games Client Login Screen Clone
+                  </a>
+                  <div className="role-date">
+                     <span>Solo </span>
+                     <span>Aug - Sep 22</span>
+                  </div>
+                  <br />
+                  <ul>
+                     <li>
+                        Developed a functional registration and login
+                        authorization system connected to RDBMS (MySQL) database
+                        using React and Node.js.
+                     </li>
+                     <br />
+                     <li>
+                        Implemented responsive design and practised React Hook
+                        system
+                     </li>
+                     <br />
+                     <li>
+                        Optimized loading time by changing font loading method
+                        and refactoring code
+                     </li>
+                  </ul>
+               </div>
+            </li>
+         </div>
+         {/* divider */}
       </>
    );
 };
 
-export default Projects;
+const forwardProjects = React.forwardRef(Projects);
+
+export default forwardProjects;

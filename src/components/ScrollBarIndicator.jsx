@@ -1,42 +1,54 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useImperativeHandle } from "react";
+import { motion, useScroll } from "framer-motion";
 import "./ScrollBarIndicator.css";
+import { forwardRef } from "react";
 
-const ScrollBarIndicator = (props) => {
-   const [scrollTop, setScrollTop] = useState(0);
+const ScrollBarIndicator = forwardRef((props, ref) => {
+   const childRef = ref;
+   // const ref = useRef(null);
 
-   const onScroll = () => {
-      const el = document.documentElement;
+   console.log("this is childRef " + childRef);
 
-      const winScroll = el.scrollTop;
-      const height = el.scrollHeight - el.clientHeight;
+   useImperativeHandle(ref, () => ({
+      focus: () => {
+         ref.current.focus();
+      },
+   }));
+   // const { scrollXpProgress } = useScroll({
+   //    target: ref1,
+   //    offset: ["start start", "end end"],
+   // });
 
-      const scrolled = ((winScroll - props.origin) / props.height) * 100;
-
-      console.log("scrolled: " + scrolled);
-      if (scrolled >= 0) {
-         setScrollTop(scrolled);
-      }
-      console.log("scrollTop: " + scrollTop);
-   };
-
-   useEffect(() => {
-      window.addEventListener("scroll", onScroll);
-      return () => window.removeEventListener("scroll", onScroll);
-   }, [scrollTop]);
+   // const { scrollProjProgress } = useScroll({
+   //    target: ref2,
+   //    offset: ["start start", "end end"],
+   // });
 
    return (
-      <div className="progress-wrapper">
-         <div
-            className="progress-main"
-            style={{
-               height: `${scrollTop + "%"}`,
-               //    maxHeight: `${props.height}px`,
-               maxHeight: "100%",
-            }}
-         ></div>
-      </div>
+      <>
+         <div className="progress-wrapper">
+            <div className="progress">
+               <svg id="progress" width="4" height="1000" viewBox="0 0 2 1000">
+                  <line x1="1" y1="1000" pathLength="1" className="bg" />
+                  <motion.line
+                     y1="1000"
+                     x1="1"
+                     width="6"
+                     pathLength="1"
+                     className="indicator"
+                     // style={
+                     //    props.scrollType === "xp"
+                     //       ? { pathLength: scrollXpProgress }
+                     //       : { pathLength: scrollProjProgress }
+                     // }
+                  />
+               </svg>
+            </div>
+            {props.children}
+         </div>
+      </>
    );
-};
+});
 
 export default ScrollBarIndicator;
