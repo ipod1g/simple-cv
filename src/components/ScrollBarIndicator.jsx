@@ -1,47 +1,38 @@
 import React from "react";
-import { useState, useEffect, useRef, useImperativeHandle } from "react";
-import { motion, useScroll } from "framer-motion";
+import { useState, useEffect, useRef, forwardRef } from "react";
+import { addScaleCorrector, motion, useScroll, useSpring } from "framer-motion";
 import "./ScrollBarIndicator.css";
-import { forwardRef } from "react";
 
 const ScrollBarIndicator = forwardRef((props, ref) => {
-   const childRef = ref;
-   // const ref = useRef(null);
+   const { scrollYProgress } = useScroll({
+      target: ref,
+      // offset: ["start start", "end end"],
+      // offset: ["-400px start", "end 600px"],
 
-   console.log("this is childRef " + childRef);
+      offset: [`-400px start`, "end 600px"],
+   });
 
-   useImperativeHandle(ref, () => ({
-      focus: () => {
-         ref.current.focus();
-      },
-   }));
-   // const { scrollXpProgress } = useScroll({
-   //    target: ref1,
-   //    offset: ["start start", "end end"],
-   // });
+   const scrollProgress = useSpring(scrollYProgress);
 
-   // const { scrollProjProgress } = useScroll({
-   //    target: ref2,
-   //    offset: ["start start", "end end"],
-   // });
+   useEffect(() => {
+      return scrollYProgress.onChange((latest) => {
+         console.log("Page scroll: ", latest);
+      });
+   }, []);
 
    return (
       <>
          <div className="progress-wrapper">
             <div className="progress">
-               <svg id="progress" width="4" height="1000" viewBox="0 0 2 1000">
-                  <line x1="1" y1="1000" pathLength="1" className="bg" />
+               <svg id="progress" width="4" height="830" viewBox="0 0 2 830">
+                  <line x1="1" y1="950" pathLength="1" className="bg" />
                   <motion.line
-                     y1="1000"
+                     y1="830"
                      x1="1"
                      width="6"
                      pathLength="1"
                      className="indicator"
-                     // style={
-                     //    props.scrollType === "xp"
-                     //       ? { pathLength: scrollXpProgress }
-                     //       : { pathLength: scrollProjProgress }
-                     // }
+                     style={{ pathLength: scrollProgress }}
                   />
                </svg>
             </div>
