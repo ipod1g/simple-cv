@@ -14,7 +14,7 @@ const Projects = (props) => {
 
    return (
       <>
-         <ScrollBarIndicator ref={ref} scrollType="project" />
+         <ScrollBarIndicator ref={ref} />
          <ul className="proj-container" ref={ref}>
             {/* divider */}
             <div className="proj-box-wrapper">

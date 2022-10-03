@@ -1,26 +1,25 @@
 .progress-wrapper {
-    background-color: rgba(168, 201, 220, 0.196);
-    /* height: 700px; */
+    /* background-color: rgba(168, 201, 220, 0.196); */
     position: relative;
     z-index: -10;
-    width: 2px;
     /* left: calc(90px + 35%); */
     margin-top: 35px;
     left: 40px;
 }
 
-/* .progress-main {
+.progress-main {
     background: linear-gradient(180deg,#6c5faf56 0,#631fb079);
     width: 4px;
     margin-left:-1px;
-} */
+}
 
 .progress {
     position: absolute;
     top: 0;
     left: -1px;
-    width: 80px;
-    height: 80px;
+    /* width: 80px; */
+    /* height: 80px; */
+    height: 100%;
     margin: 0;
     padding: 0;
 }
@@ -31,17 +30,17 @@
 
 line {
     stroke-dashoffset: 0;
-    stroke-width: 5%;
+    stroke-width: 5px;
     fill: none;
 }
 
 .bg {
-    stroke: red;
-    opacity: 0.2;
+    stroke: rgba(168, 201, 220, 0.196);
+    opacity: 0.5;
 }
 
 .progress .indicator {
-    stroke: red
+    stroke: url(#linear);
 } 
 
 @media (min-width: 1050px){

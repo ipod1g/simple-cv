@@ -1,15 +1,14 @@
 import React from "react";
-import { useState, useEffect, useRef, forwardRef } from "react";
-import { addScaleCorrector, motion, useScroll, useSpring } from "framer-motion";
+import { useEffect, forwardRef } from "react";
+import { motion, useScroll, useSpring } from "framer-motion";
 import "./ScrollBarIndicator.css";
 
 const ScrollBarIndicator = forwardRef((props, ref) => {
    const { scrollYProgress } = useScroll({
       target: ref,
-      // offset: ["start start", "end end"],
-      // offset: ["-400px start", "end 600px"],
-
-      offset: [`-400px start`, "end 600px"],
+      // intersection offset when [going down, going up]
+      // offset: ["target container", "target container"],
+      offset: ["start 0.8", "center 0.15"],
    });
 
    const scrollProgress = useSpring(scrollYProgress);
@@ -17,6 +16,7 @@ const ScrollBarIndicator = forwardRef((props, ref) => {
    useEffect(() => {
       return scrollYProgress.onChange((latest) => {
          console.log("Page scroll: ", latest);
+         console.log(ref);
       });
    }, []);
 
@@ -24,10 +24,23 @@ const ScrollBarIndicator = forwardRef((props, ref) => {
       <>
          <div className="progress-wrapper">
             <div className="progress">
-               <svg id="progress" width="4" height="830" viewBox="0 0 2 830">
-                  <line x1="1" y1="950" pathLength="1" className="bg" />
+               {/* <motion.div className="progress-main" style={{}}></motion.div> */}
+               <svg id="progress" width="4" height="100%" viewBox="0 0 2 100%">
+                  <defs>
+                     <linearGradient
+                        id="linear"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="0%"
+                     >
+                        <stop offset="0%" stop-color="#6c5faf56" />
+                        <stop offset="100%" stop-color="#631fb079" />
+                     </linearGradient>
+                  </defs>
+                  <line x1="1" y1="100%" pathLength="1" className="bg" />
                   <motion.line
-                     y1="830"
+                     y1="100%"
                      x1="1"
                      width="6"
                      pathLength="1"

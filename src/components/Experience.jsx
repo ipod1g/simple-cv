@@ -11,12 +11,11 @@ const Experience = (props) => {
 
    const ref = useRef(null);
    // For scrolldimension
-   const offset = [-400, 600];
 
    return (
       <>
-         <ScrollBarIndicator ref={ref} offset={offset} />
-         <ul className="xp-container">
+         <ScrollBarIndicator ref={ref} />
+         <ul className="xp-container" ref={ref}>
             {/* divider */}
             <div className="xp-box-wrapper">
                <li data-aos="zoom-in-up" className="xp-box">
