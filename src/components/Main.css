@@ -65,6 +65,7 @@ hr {
 .skills-container {
     margin-left: 70px;
     padding-right: 50px;
+    padding-bottom: 50px;
 }
 
 @media (min-width: 1050px){
@@ -73,6 +74,10 @@ hr {
     }
     .about-container p {
         padding-right: 50px;
+    }
+
+    .skills-container {
+        padding-bottom: 10px;
     }
 }
 

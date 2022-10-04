@@ -36,7 +36,7 @@
     margin-top: 6px;
     width: 10px;
     height: 10px;
-    z-index: 400;
+    z-index: 165;
     left: 45px;
 }
 
@@ -59,6 +59,6 @@
     }
     
     .xp-box-wrapper::before {
-        left: 445px;
+        left: 365px;
     }
   }
