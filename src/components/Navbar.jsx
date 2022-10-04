@@ -11,6 +11,7 @@ const Navbar = (props) => {
             }}
             style={{ marginRight: "4px" }}
             whileHover={{ scale: 1.2, letterSpacing: "4px" }}
+            whileTap={{ scale: 1 }}
          >
             About
          </motion.button>
@@ -20,6 +21,7 @@ const Navbar = (props) => {
             }}
             style={{ marginRight: "6px" }}
             whileHover={{ scale: 1.2, letterSpacing: "4px" }}
+            whileTap={{ scale: 1 }}
          >
             Work
          </motion.button>
@@ -28,6 +30,7 @@ const Navbar = (props) => {
                props.scrollToSection(props.projectsSection);
             }}
             whileHover={{ scale: 1.2, letterSpacing: "4px" }}
+            whileTap={{ scale: 1 }}
          >
             Project
          </motion.button>
@@ -37,6 +40,7 @@ const Navbar = (props) => {
             }}
             style={{ marginRight: "9px" }}
             whileHover={{ scale: 1.2, letterSpacing: "4px" }}
+            whileTap={{ scale: 1 }}
          >
             Skill
          </motion.button>

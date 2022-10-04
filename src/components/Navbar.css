@@ -2,7 +2,7 @@
     position: fixed;
     margin: 7% 0;
     right: 10px;
-    width: 63px;
+    width: 55px;
     border-radius: 30px;
     height: 75%;
     display: flex;
@@ -19,8 +19,6 @@
     backdrop-filter: blur(8.7px);
     -webkit-backdrop-filter: blur(8.7px);
     border: 1px solid rgba(0, 0, 0, 0.27);
-    /* top: 50%; */
-    /* transform: translateY(-50%); */
 }
 
 .nav-bar:hover {
@@ -39,17 +37,24 @@
     border: none;
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 700;
+    font-size: .8rem;
 }
 
 
 .nav-bar:hover button {
     cursor: pointer;
-    /* transition: all .2s ease-out; */
-    /* transform: scale(1.2); */
 }
 
 .nav-bar:hover button:hover {
     cursor: pointer;
-    /* letter-spacing: 4px; */
-    /* transition: all .1s ease-out; */
+}
+
+@media (min-width: 1050px){
+    .nav-bar button{
+        font-size: 1rem;
+    }
+
+    .nav-bar {
+        width: 60px;
+    }
 }
