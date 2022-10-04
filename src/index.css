@@ -19,3 +19,6 @@ html {
   line-height: 25px;
 }
 
+:root {
+  font-size: 13px;
+}
