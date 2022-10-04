@@ -1,15 +1,13 @@
 .xp-box {
     width: 70vw;
     /* border: 1px rgb(73, 185, 222) solid; */
-    padding: 0px 18px 20px 18px;
-    margin: 10px 0px 50px 38px;
+    padding: 0px 14px 20px 18px;
+    margin: 10px 0px 50px 0px;
     list-style-type: none;   
     box-sizing: border-box; 
     /* Glassmorphism */
     background: rgba(0, 0, 0, 0.10);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(8.7px);
-    -webkit-backdrop-filter: blur(8.7px);
     border: 1px solid rgba(0, 0, 0, 0.07);
 }
 
@@ -37,7 +35,7 @@
     width: 10px;
     height: 10px;
     z-index: 165;
-    left: 45px;
+    left: 17px;
 }
 
 /* .xp-box:hover::before {
@@ -56,10 +54,14 @@
     .xp-box {
         width: 50vw;
         /* margin-right: 50px; */
+        margin-left: 55px;
         margin-right: 50px;
+        padding-right: 18px;
+        backdrop-filter: blur(8.7px);
+        -webkit-backdrop-filter: blur(8.7px);
     }
     
     .xp-box-wrapper::before {
-        left: 365px;
+        left: 355px;
     }
   }

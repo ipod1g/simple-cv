@@ -40,12 +40,12 @@
     width: 10px;
     height: 10px;
     z-index: 165;
-    left: 45px;
+    left: 17px;
 }
 
 @media (min-width: 1050px) {
 
     .proj-box-wrapper::before  {
-        left: 365px;
+        left: 355px;
     }
 }
