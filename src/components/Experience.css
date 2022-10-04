@@ -1,7 +1,7 @@
 .xp-box {
     width: 70vw;
     /* border: 1px rgb(73, 185, 222) solid; */
-    padding: 0px 30px 20px 18px;
+    padding: 0px 18px 20px 18px;
     margin: 10px 0px 50px 38px;
     list-style-type: none;   
     box-sizing: border-box; 
@@ -55,6 +55,7 @@
 
     .xp-box {
         width: 50vw;
+        /* margin-right: 50px; */
         margin-right: 50px;
     }
     

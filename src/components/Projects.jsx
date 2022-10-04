@@ -1,9 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import "./Projects.css";
-import { useRef } from "react";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { library } from "@fortawesome/fontawesome-svg-core";
+// import { faReact, faNode } from "@fortawesome/free-brands-svg-icons";
 import ScrollBarIndicator from "./ScrollBarIndicator";
+
+// library.add(faReact, faNode);
 
 const Projects = (props) => {
    useEffect(() => {
@@ -30,12 +34,19 @@ const Projects = (props) => {
                      <br />
                      <ul>
                         <li>
-                           Created a resume-style interactive website using
-                           React.js.
+                           Created a glass-morphism themed interactive and
+                           responsive resume website using React and
+                           framer-motion
                         </li>
                         <br />
                         <li>
-                           Focused on clean and component factored coding style
+                           Focused on clean and reusable component factored
+                           coding style for convenient updates to contents
+                        </li>
+                        <br />
+                        <li>
+                           Optimized loading time by converting assets to
+                           appropriate file types like webp
                         </li>
                      </ul>
                   </div>
@@ -61,18 +72,19 @@ const Projects = (props) => {
                      <ul>
                         <li>
                            Developed a functional registration and login
-                           authorization system connected to RDBMS (MySQL)
+                           authorization system connected to RDBMS(MySQL)
                            database using React and Node.js.
                         </li>
                         <br />
                         <li>
-                           Implemented responsive design and utilized React Hook
-                           system
+                           Implemented custom responsive design and utilized
+                           React Hooks API
                         </li>
                         <br />
                         <li>
-                           Optimized loading time by changing font loading
-                           method and refactoring code
+                           Increased performance by changing font loading method
+                           and continuously refactoring code for better
+                           efficiency
                         </li>
                      </ul>
                   </div>
@@ -88,28 +100,22 @@ const Projects = (props) => {
                         target="_blank"
                         rel="noopener noreferrer"
                      >
-                        Riot Games Client Login Screen Clone
+                        Portfolio Website v1
                      </a>
                      <div className="role-date">
                         <span>Solo </span>
-                        <span>Aug - Sep 22</span>
+                        <span>Aug 22</span>
                      </div>
                      <br />
                      <ul>
                         <li>
-                           Developed a functional registration and login
-                           authorization system connected to RDBMS (MySQL)
-                           database using React and Node.js.
+                           Developed a simplistic interactive website with
+                           vanilla Javascript
                         </li>
                         <br />
                         <li>
-                           Implemented responsive design and practised React
-                           Hook system
-                        </li>
-                        <br />
-                        <li>
-                           Optimized loading time by changing font loading
-                           method and refactoring code
+                           Deployed in custom domain and improved crawlability
+                           by following semantic format for enhanced SEO
                         </li>
                      </ul>
                   </div>
