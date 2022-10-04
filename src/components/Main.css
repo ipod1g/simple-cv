@@ -34,12 +34,42 @@
 
 .about-container {
     width: 100vw;
+    padding-right: 20%;
+    box-sizing: border-box;
 }
 
 .about-container p {
-    padding-right: 150px;
     line-height: 26px;
-    margin: 0 0 2px 70px;
+    margin: 0 0 2px 45px;
+}
+
+.about-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.about-header button {
+    border-radius: 30px;
+    padding: 0 10px 0 10px;
+    height: 50px;
+     /* Glassmorphism */
+     background: rgba(200, 176, 226, 0.077);
+     border-radius: 16px;
+     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+     backdrop-filter: blur(8.7px);
+     -webkit-backdrop-filter: blur(8.7px);
+     border: 1px solid rgba(0, 0, 0, 0.27);
+}
+
+.about-header button a {
+    color:rgba(209, 225, 238, 0.9);
+    text-decoration: none;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 11px;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 
 .main-container h3 {
@@ -59,7 +89,7 @@
 hr {
     border: 0;
     border-top: 1px solid rgba(238, 238, 238, 0.291);
-    margin: 24px 60px 24px 60px;
+    margin: 24px 20% 24px 60px;
 }
 
 .skills-container {
@@ -69,11 +99,17 @@ hr {
 }
 
 @media (min-width: 1050px){
+    hr {
+        margin-right: 60px;
+    }
     .about-container {
         width: 60vw;
+        padding-right: 60px;
+        
     }
     .about-container p {
-        padding-right: 50px;
+        padding-right: 100px;
+        margin-left: 70px;
     }
 
     .skills-container {
