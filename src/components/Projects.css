@@ -14,6 +14,11 @@
     flex-direction: column;
 }
 
+.inner-buttons {
+    display: flex;
+    gap: 13px;
+}
+
 .xp-box .company {
     -webkit-transition: all .2s linear;
     -o-transition: all .2s linear;
@@ -23,7 +28,7 @@
 .xp-box:hover .company {
     color: #c199e5e0;
     text-shadow: 1px 3px 3px #6f4d9bad;
-    transform: scale(1.06);
+    transform: scale(1.04);
     -webkit-transition: all .2s linear;
     -o-transition: all .2s linear;
     transition: all .2s linear;

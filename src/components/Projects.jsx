@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 // import { faReact, faNode } from "@fortawesome/free-brands-svg-icons";
 import ScrollBarIndicator from "./ScrollBarIndicator";
 import "./Projects.css";
 
-// library.add(faReact, faNode);
+library.add(faGithub);
 
 const Projects = (props) => {
    const ref = useRef(null);
@@ -27,9 +28,23 @@ const Projects = (props) => {
                >
                   <li className="xp-box">
                      <div className="inner-container">
-                        <a className="company" href="#">
-                           CV website
-                        </a>
+                        <div className="inner-buttons">
+                           <a className="company" href="#">
+                              CV website
+                           </a>
+                           <motion.a
+                              className="fa-icon"
+                              target="_blank"
+                              rel="noreferrer"
+                              href="https://github.com/ipod1g/simple-cv"
+                              title=""
+                              whileHover={{ scale: 1.15, color: "#c199e5e0" }}
+                              whileTap={{ scale: 1 }}
+                              style={{ marginTop: "1px" }}
+                           >
+                              <FontAwesomeIcon icon="fa-brands fa-github" />
+                           </motion.a>
+                        </div>
                         <div className="role-date">
                            <span>Solo </span>
                            <span>Sep 22</span>
@@ -68,14 +83,28 @@ const Projects = (props) => {
                >
                   <li className="xp-box">
                      <div className="inner-container">
-                        <a
-                           className="company"
-                           href="https://github.com/ipod1g/testers/tree/main/riot-login-clone"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                        >
-                           Riot Games Client Login Screen Clone
-                        </a>
+                        <div className="inner-buttons">
+                           <a
+                              className="company"
+                              href="https://testers4bono.netlify.app"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                           >
+                              Riot Games Client Login Screen Clone
+                           </a>
+                           <motion.a
+                              className="fa-icon"
+                              target="_blank"
+                              rel="noreferrer"
+                              href="https://github.com/ipod1g/testers/tree/main/riot-login-clone"
+                              title=""
+                              whileHover={{ scale: 1.15, color: "#c199e5e0" }}
+                              whileTap={{ scale: 1 }}
+                              style={{ marginTop: "1px" }}
+                           >
+                              <FontAwesomeIcon icon="fa-brands fa-github" />
+                           </motion.a>
+                        </div>
                         <div className="role-date">
                            <span>Solo </span>
                            <span>Aug - Sep 22</span>
@@ -115,14 +144,28 @@ const Projects = (props) => {
                >
                   <li className="xp-box">
                      <div className="inner-container">
-                        <a
-                           className="company"
-                           href="https://github.com/ipod1g/portfolio-1/"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                        >
-                           Portfolio Website v1
-                        </a>
+                        <div className="inner-buttons">
+                           <a
+                              className="company"
+                              href="https://bonoku.shop"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                           >
+                              Portfolio Website v1
+                           </a>
+                           <motion.a
+                              className="fa-icon"
+                              target="_blank"
+                              rel="noreferrer"
+                              href="https://github.com/ipod1g/portfolio-1/"
+                              title=""
+                              whileHover={{ scale: 1.15, color: "#c199e5e0" }}
+                              whileTap={{ scale: 1 }}
+                              style={{ marginTop: "1px" }}
+                           >
+                              <FontAwesomeIcon icon="fa-brands fa-github" />
+                           </motion.a>
+                        </div>
                         <div className="role-date">
                            <span>Solo </span>
                            <span>Aug 22</span>
@@ -136,7 +179,7 @@ const Projects = (props) => {
                            <br />
                            <li>
                               Deployed in custom domain and improved
-                              crawlability by following semantic format for
+                              crawlability by using semantic elements for
                               enhanced SEO
                            </li>
                         </ul>
