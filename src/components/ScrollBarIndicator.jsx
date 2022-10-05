@@ -6,8 +6,8 @@ import "./ScrollBarIndicator.css";
 const ScrollBarIndicator = forwardRef((props, ref) => {
    const { scrollYProgress } = useScroll({
       target: ref,
-      // intersection offset when [going down, going up]
-      // offset: ["target container", "target container"],
+      /* intersection offset when [going down, going up]
+       offset: ["target container", "target container"], */
       offset: ["start 0.8", "center 0.13"],
    });
 
@@ -25,7 +25,7 @@ const ScrollBarIndicator = forwardRef((props, ref) => {
          <div className="progress-wrapper">
             <div className="progress">
                {/* <motion.div className="progress-main" style={{}}></motion.div> */}
-               <svg id="progress" width="4" height="100%" viewBox="0 0 2 100%">
+               <svg id="progress" width="4" height="100%" viewBox="0 0 4 100%">
                   <defs>
                      <linearGradient
                         id="linear"
@@ -34,8 +34,8 @@ const ScrollBarIndicator = forwardRef((props, ref) => {
                         x2="100%"
                         y2="0%"
                      >
-                        <stop offset="0%" stop-color="#6c5faf56" />
-                        <stop offset="100%" stop-color="#631fb079" />
+                        <stop offset="0%" stopColor="#6c5faf56" />
+                        <stop offset="100%" stopColor="#631fb079" />
                      </linearGradient>
                   </defs>
                   <line x1="1" y1="100%" pathLength="1" className="bg" />
