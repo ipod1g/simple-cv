@@ -4,21 +4,107 @@
 
 .profile-tab {
     /* border: 1px red solid; */
-    background: rgba(0, 0, 0, 0.34);
-    border-radius: 16px;
+    padding: 0 20px 0 20px;
+    box-sizing: border-box;
+    text-align: center;
+    padding-bottom: 20px;
+    /* Glassmorphism */
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(0, 0, 0, 0.27);
+    background: rgba(0, 0, 0, 0.20);
+    /* Changes to neumorphism */
+    /* background:#121212; */
+}
+
+.profile-tab p {
+    font-size: 14px;
+}
+
+.selfie-wrapper {
+    margin: 10px auto;
+    height: 170px;
+    width: 170px;
+    /* size 224 */
+    border-radius: 150px;
+    background: #121212;
+    box-shadow: inset 17px 17px 34px #090909,
+                inset -17px -17px 34px #1b1b1b;
+}
+
+.selfie {
+    border-radius: 50%;
+    margin: 35px 0;
+}
+
+.intro {
+    margin-top: 10px;
+    padding: 0 30px 0 40px;
+    box-sizing: border-box;
+}
+
+
+.profile-tab-container button {
+    border-radius: 30px;
+    padding: 0 10px 0 10px;
+    margin: 15px auto ;
+    height: 50px;
+     /* Glassmorphism */
+     background: rgba(200, 176, 226, 0.077);
+     border-radius: 16px;
+     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+     backdrop-filter: blur(8.7px);
+     -webkit-backdrop-filter: blur(8.7px);
+     border: 1px solid rgba(0, 0, 0, 0.27);
+}
+
+.profile-tab-container button a {
+    color:rgba(209, 225, 238, 0.9);
+    text-decoration: none;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 11px;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+
+
+.footer {
+    position:fixed;
+    bottom: 0px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    z-index: 177;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(8.7px);
     -webkit-backdrop-filter: blur(8.7px);
     border: 1px solid rgba(0, 0, 0, 0.27);
+    background: rgba(0, 0, 0, 0.34);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.selfie-wrapper {
-    margin-top: 180px;
+.social {
+    display: flex;
+    gap: 16px;
+    font-size: 20px;
 }
+
+.fa-icon {
+    color: rgba(209, 225, 238, 0.9);
+}
+
+
 
 @media (min-width: 1050px){
     .profile-tab-container {
-        width: 400px;
+        width: 320px;
         flex-shrink: 0; 
     }
 
@@ -27,8 +113,29 @@
         width: inherit;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         position: fixed;
+        border-radius: 16px;
+        backdrop-filter: blur(8.7px);
+        -webkit-backdrop-filter: blur(8.7px);
+    }
+
+    .origins {
+        font-size: 1.2rem;
+    }
+    
+    .intro {
+        padding: 0;
+    }
+
+    .footer {
+        position:fixed;
+        z-index: 177;
+        border: none;
+        box-shadow: none;
+        width: 310px;
+        padding-bottom: 14px;
+        background:transparent;
     }
   }
