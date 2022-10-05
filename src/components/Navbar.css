@@ -16,8 +16,6 @@
     background: rgba(0, 0, 0, 0.34);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(8.7px);
-    -webkit-backdrop-filter: blur(8.7px);
     border: 1px solid rgba(0, 0, 0, 0.27);
 }
 
@@ -56,5 +54,7 @@
 
     .nav-bar {
         width: 60px;
+        backdrop-filter: blur(8.7px);
+        -webkit-backdrop-filter: blur(8.7px);
     }
 }

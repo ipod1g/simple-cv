@@ -1,16 +1,19 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import About from "./About";
 import Experience from "./Experience";
 import "./Main.css";
 import Navbar from "./Navbar";
 import Projects from "./Projects";
 import Skills from "./Skills";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 
 const Main = () => {
    const aboutSection = useRef(null);
    const experienceSection = useRef(null);
    const projectsSection = useRef(null);
    const skillsSection = useRef(null);
+
+   const isInView = useInView(aboutSection);
 
    const scrollToSection = (elementRef) => {
       window.scrollTo({
@@ -48,13 +51,26 @@ const Main = () => {
                <hr />
             </article>
          </div>
-         <Navbar
-            scrollToSection={scrollToSection}
-            aboutSection={aboutSection}
-            experienceSection={experienceSection}
-            projectsSection={projectsSection}
-            skillsSection={skillsSection}
-         />
+         <AnimatePresence>
+            {isInView ? (
+               ""
+            ) : (
+               <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  style={{ position: "fixed" }}
+               >
+                  <Navbar
+                     scrollToSection={scrollToSection}
+                     aboutSection={aboutSection}
+                     experienceSection={experienceSection}
+                     projectsSection={projectsSection}
+                     skillsSection={skillsSection}
+                  />
+               </motion.div>
+            )}
+         </AnimatePresence>
       </>
    );
 };
