@@ -8,7 +8,7 @@ const ScrollBarIndicator = forwardRef((props, ref) => {
       target: ref,
       /* intersection offset when [going down, going up]
        offset: ["target container", "target container"], */
-      offset: ["start 0.8", "center 0.13"],
+      offset: ["start 0.5", "0.5 0"],
    });
 
    const scrollProgress = useSpring(scrollYProgress);

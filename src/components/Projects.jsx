@@ -32,6 +32,7 @@ const Projects = (props) => {
                            <a className="company" href="#">
                               CV website
                            </a>
+                           |
                            <motion.a
                               className="fa-icon"
                               target="_blank"
@@ -92,6 +93,7 @@ const Projects = (props) => {
                            >
                               Riot Games Client Login Screen Clone
                            </a>
+                           |
                            <motion.a
                               className="fa-icon"
                               target="_blank"
@@ -153,6 +155,7 @@ const Projects = (props) => {
                            >
                               Portfolio Website v1
                            </a>
+                           |
                            <motion.a
                               className="fa-icon"
                               target="_blank"
