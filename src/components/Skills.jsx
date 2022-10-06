@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 const Skills = () => {
    return (
@@ -9,6 +10,25 @@ const Skills = () => {
             <p> JavaScript | CSS | HTML | React.js | Python | LaTeX </p>
             <h4>Language Skills</h4>
             <p> English - Native | Korean - Native </p>
+         </div>
+         <hr />
+         <div className="credits">
+            <span>
+               Background image source:{" "}
+               <motion.a
+                  className="fa-icon"
+                  target="_blank"
+                  rel="noreferrer"
+                  href="https://gifer.com/en/2r4z"
+                  title=""
+                  whileHover={{ scale: 1.15, color: "#c199e5e0" }}
+                  whileTap={{ scale: 1 }}
+               >
+                  here
+               </motion.a>
+               <p>Special Thanks to YI Jisoo</p>
+            </span>
+            <hr />
          </div>
       </>
    );

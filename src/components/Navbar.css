@@ -12,6 +12,7 @@
     box-sizing: border-box;
     padding: 150px 0 150px 20px;
     opacity: 0.5;
+    transition: all .1s ease;
     /* Glassmorphism */
     background: rgba(0, 0, 0, 0.34);
     border-radius: 16px;
