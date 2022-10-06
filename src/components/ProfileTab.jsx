@@ -10,7 +10,7 @@ import {
    faReact,
 } from "@fortawesome/free-brands-svg-icons";
 import "./ProfileTab.css";
-import Selfie from "../assets/download.jpg";
+import Selfie from "../assets/selfie.jpeg";
 
 library.add(faReact, faGithub, faLinkedin, faInstagram, faEnvelope);
 
@@ -21,7 +21,7 @@ const ProfileTab = () => {
             <div className="profile-tab">
                <div className="selfie-wrapper">
                   <img
-                     className="selfie"
+                     id="selfie"
                      src={Selfie}
                      alt="My selfie"
                      height="100px"
@@ -46,12 +46,19 @@ const ProfileTab = () => {
                      persevering deep problem solver{" "}
                   </p>
                </summary>
-               <div className="origins">👨‍👩‍👦‍👦🇰🇷 🎒🇲🇾 🎓🇭🇰 </div>
+               <div className="origins">
+                  👨‍👩‍👦‍👦 <span>KR</span> 🎒
+                  <span>MY</span> 🎓<span>HK</span>{" "}
+               </div>
+               {/* 🇰🇷 🇲🇾 🇭🇰*/}
                <motion.button
-                  whileHover={{ scale: 1.1 }}
+                  whileHover={{
+                     scale: 1.1,
+                     border: "1px rgba(238, 238, 238, 0.291) solid",
+                  }}
                   whileTap={{ scale: 0.99 }}
                >
-                  <a href="../assets/CVSep.pdf" download="newfilename">
+                  <a href="../assets/CVSep.pdf" download="CVSep.pdf">
                      Download CV
                   </a>
                </motion.button>
