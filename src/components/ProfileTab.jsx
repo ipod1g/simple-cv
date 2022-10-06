@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import "./ProfileTab.css";
 import Selfie from "../assets/selfie.jpeg";
+import CV from "../assets/CVSep.pdf";
 
 library.add(faReact, faGithub, faLinkedin, faInstagram, faEnvelope);
 
@@ -58,7 +59,7 @@ const ProfileTab = () => {
                   }}
                   whileTap={{ scale: 0.99 }}
                >
-                  <a href="../assets/CVSep.pdf" download="CVSep.pdf">
+                  <a href={CV} download="CVSep.pdf">
                      Download CV
                   </a>
                </motion.button>
