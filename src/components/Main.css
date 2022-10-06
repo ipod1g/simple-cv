@@ -1,6 +1,7 @@
 .main-wrapper {
     height: fit-content;
     width: 100%;
+    position: relative;
 }
 
 .main-container {
@@ -9,14 +10,12 @@
 }
 .main-wrapper::before {
     content: "";
-    height: 177%;
-    /* background: url("../assets/galaxy.gif") top; */
+    height:100%;
     background: url("../assets/spaceloop-compressed.webp") top;
-    ;/* background-position: 120px 0px; */
+    background-position: -700px 0px;
     background-size: cover;
     display: block;
     position: fixed;
-    /* Try using this if I can fix the floating height issue */
     /* position: absolute; */
     z-index: -10;
     top: 0;
@@ -71,7 +70,18 @@ hr {
 .skills-container {
     margin-left: 70px;
     padding-right: 50px;
-    padding-bottom: 50px;
+    padding-bottom: 15px;
+}
+
+.credits {
+    font-size: 13px;
+    margin-bottom: 80px;
+    display: flex;
+    flex-direction: column;
+}
+
+.credits span {
+    margin: 0 0 0 65px;
 }
 
 @media (min-width: 1050px){
@@ -82,6 +92,11 @@ hr {
     hr {
         margin-right: 60px;
     }
+    .main-wrapper::before {
+        height: 100%;
+        background-position: -100px 0px;
+    }
+
     .about-container {
         width: 60vw;
         padding-right: 40px;

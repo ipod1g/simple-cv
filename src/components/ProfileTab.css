@@ -35,9 +35,11 @@
                 inset -17px -17px 34px #1b1b1b;
 }
 
-.selfie {
+#selfie {
     border-radius: 50%;
     margin: 35px 0;
+    object-fit:contain;
+    filter: saturate(0.85);
 }
 
 .intro {
@@ -123,6 +125,10 @@
 
     .origins {
         font-size: 1.2rem;
+    }
+
+    .origins span {
+        font-size: 1rem;
     }
     
     .intro {

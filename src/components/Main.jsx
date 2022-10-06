@@ -48,7 +48,6 @@ const Main = () => {
                <section className="skill-section" ref={skillsSection}>
                   <Skills />
                </section>
-               <hr />
             </article>
          </div>
          <AnimatePresence>
