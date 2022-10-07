@@ -19,6 +19,7 @@ const Experience = (props) => {
                      scale: 1,
                   }}
                   transition={{ ease: "easeOut", duration: 0.5 }}
+                  viewport={{ once: true }}
                >
                   <li className="xp-box">
                      <h4>Summer Undergraduate Research Internship Program</h4>
@@ -55,6 +56,7 @@ const Experience = (props) => {
                      scale: 1,
                   }}
                   transition={{ ease: "easeOut", duration: 0.5 }}
+                  viewport={{ once: true }}
                >
                   <li className="xp-box">
                      <h4>Republic of Korea Army (ROKA)</h4>
@@ -86,6 +88,7 @@ const Experience = (props) => {
                      scale: 1,
                   }}
                   transition={{ ease: "easeOut", duration: 0.5 }}
+                  viewport={{ once: true }}
                >
                   <li className="xp-box">
                      <h4>
@@ -118,6 +121,7 @@ const Experience = (props) => {
             </div>
          </ul>
          <ScrollBarIndicator ref={xpContainerRef} />
+         {/* divider */}
       </>
    );
 };

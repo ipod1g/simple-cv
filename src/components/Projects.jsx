@@ -24,6 +24,7 @@ const Projects = () => {
                      scale: 1,
                   }}
                   transition={{ ease: "easeOut", duration: 0.5 }}
+                  viewport={{ once: true }}
                >
                   <li className="xp-box">
                      <div className="inner-container">
@@ -80,6 +81,7 @@ const Projects = () => {
                      scale: 1,
                   }}
                   transition={{ ease: "easeOut", duration: 0.5 }}
+                  viewport={{ once: true }}
                >
                   <li className="xp-box">
                      <div className="inner-container">
@@ -142,6 +144,7 @@ const Projects = () => {
                      scale: 1,
                   }}
                   transition={{ ease: "easeOut", duration: 0.5 }}
+                  viewport={{ once: true }}
                >
                   <li className="xp-box">
                      <div className="inner-container">
