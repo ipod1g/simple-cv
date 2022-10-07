@@ -55,10 +55,14 @@
 
 .xp-wrapper {
     display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
 }
 
 .proj-wrapper {
-        display: flex;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
 }
 
 hr {

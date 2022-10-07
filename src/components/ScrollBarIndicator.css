@@ -45,8 +45,6 @@ line {
 
 @media (min-width: 1050px){
     .progress-wrapper {
-        /* left: calc(390px + 25%); */
     left: 40px;
-
     }
   }

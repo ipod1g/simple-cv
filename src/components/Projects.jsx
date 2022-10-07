@@ -9,13 +9,12 @@ import "./Projects.css";
 
 library.add(faGithub);
 
-const Projects = (props) => {
-   const ref = useRef(null);
+const Projects = () => {
+   const projContainerRef = useRef(null);
 
    return (
       <>
-         <ScrollBarIndicator ref={ref} />
-         <ul className="proj-container" ref={ref}>
+         <ul className="proj-container" ref={projContainerRef}>
             {/* divider */}
             <div className="proj-box-wrapper">
                <motion.div
@@ -192,6 +191,7 @@ const Projects = (props) => {
             </div>
             {/* divider */}
          </ul>
+         <ScrollBarIndicator ref={projContainerRef} />
       </>
    );
 };

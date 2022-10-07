@@ -24,7 +24,6 @@ const ScrollBarIndicator = forwardRef((props, ref) => {
       <>
          <div className="progress-wrapper">
             <div className="progress">
-               {/* <motion.div className="progress-main" style={{}}></motion.div> */}
                <svg id="progress" width="4" height="100%" viewBox="0 0 4 100%">
                   <defs>
                      <linearGradient
@@ -49,7 +48,6 @@ const ScrollBarIndicator = forwardRef((props, ref) => {
                   />
                </svg>
             </div>
-            {props.children}
          </div>
       </>
    );

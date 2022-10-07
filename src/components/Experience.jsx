@@ -5,12 +5,11 @@ import ScrollBarIndicator from "./ScrollBarIndicator";
 
 const Experience = (props) => {
    // For scrolldimension
-   const ref = useRef(null);
+   const xpContainerRef = useRef(null);
 
    return (
       <>
-         <ScrollBarIndicator ref={ref} />
-         <ul className="xp-container" ref={ref}>
+         <ul className="xp-container" ref={xpContainerRef}>
             {/* divider */}
             <div className="xp-box-wrapper">
                <motion.div
@@ -118,6 +117,7 @@ const Experience = (props) => {
                </motion.div>
             </div>
          </ul>
+         <ScrollBarIndicator ref={xpContainerRef} />
       </>
    );
 };
