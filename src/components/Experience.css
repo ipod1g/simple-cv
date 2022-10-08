@@ -13,6 +13,7 @@
 
 .xp-box h4 {
     margin-top: 0;
+    font-size: 1.2rem;
 }
 
 .xp-box > ul > li {
@@ -38,6 +39,10 @@
     left: 17px;
 }
 
+.xp-box-wrapper hr {
+    margin: 12px;
+}
+
 /* .xp-box:hover::before {
     background: #95a7c1;
 } */
@@ -46,6 +51,11 @@
     display: flex;
     justify-content: space-between;
     margin-top:-18px;
+}
+
+.role-date .role {
+    font-style: italic;
+    font-size: 1.1rem;
 }
 
 
@@ -63,5 +73,9 @@
     
     .xp-box-wrapper::before {
         left: 35px;
+    }
+
+    .xp-box h4 {
+        font-size: 1.3rem;
     }
   }

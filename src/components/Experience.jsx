@@ -22,12 +22,14 @@ const Experience = (props) => {
                   viewport={{ once: true }}
                >
                   <li className="xp-box">
-                     <h4>Summer Undergraduate Research Internship Program</h4>
+                     <h4>Summer Undergraduate Research Internship Program </h4>
                      <div className="role-date">
-                        <span>Computational Biomolecules (hydrogel) </span>
+                        <span className="role">
+                           Computational Biomolecules (hydrogel){" "}
+                        </span>
                         <span>May - Jul 22</span>
                      </div>
-                     <br />
+                     <hr />
                      <ul>
                         <li>
                            {" "}
@@ -61,10 +63,12 @@ const Experience = (props) => {
                   <li className="xp-box">
                      <h4>Republic of Korea Army (ROKA)</h4>
                      <div className="role-date">
-                        <span>Mortar Squad Leader in the 28th Division</span>
+                        <span className="role">
+                           Mortar Squad Leader in the 28th Division
+                        </span>
                         <span>Jun 20 – Dec 21</span>
                      </div>
-                     <br />
+                     <hr />
                      <ul>
                         <li>
                            Led, managed, and supervised a 12-person squad in 23
@@ -96,13 +100,13 @@ const Experience = (props) => {
                         Training
                      </h4>
                      <div className="role-date">
-                        <span>
+                        <span className="role">
                            English Linguist in the Combined Ground Component
                            Command
                         </span>
                         <span>Jun – Aug 21</span>
                      </div>
-                     <br />
+                     <hr />
                      <ul>
                         <li>
                            Engaged in US-ROK training as a real-time English

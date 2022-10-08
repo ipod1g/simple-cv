@@ -1,12 +1,10 @@
-.xp-box a {
-    text-decoration: none;
-}
-
 .company {
     margin-bottom: 20px;
     width: fit-content;
     color:rgb(209 225 238 / 96%);
+    text-decoration: none;
     font-weight: 700;
+    font-size: 1.2rem;
 }
 
 .inner-container {
@@ -48,7 +46,15 @@
     left: 17px;
 }
 
+.proj-box-wrapper hr {
+    margin: 12px;
+}
+
 @media (min-width: 1050px) {
+
+    .company {
+        font-size: 1.3rem;
+    }
 
     .proj-box-wrapper::before  {
         left: 35px;

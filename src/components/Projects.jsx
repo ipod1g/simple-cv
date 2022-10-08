@@ -50,7 +50,7 @@ const Projects = () => {
                            <span>Solo </span>
                            <span>Sep 22</span>
                         </div>
-                        <br />
+                        <hr />
                         <ul>
                            <li>
                               Created a glass-morphism themed interactive and
@@ -112,7 +112,7 @@ const Projects = () => {
                            <span>Solo </span>
                            <span>Aug - Sep 22</span>
                         </div>
-                        <br />
+                        <hr />
                         <ul>
                            <li>
                               Developed a functional registration and login
@@ -175,7 +175,7 @@ const Projects = () => {
                            <span>Solo </span>
                            <span>Aug 22</span>
                         </div>
-                        <br />
+                        <hr />
                         <ul>
                            <li>
                               Developed a simplistic interactive website with
