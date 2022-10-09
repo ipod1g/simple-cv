@@ -22,3 +22,9 @@ html {
 :root {
   font-size: 13px;
 }
+
+@media (min-width: 1050px){
+  :root {
+    font-size: 17px;
+  }
+}

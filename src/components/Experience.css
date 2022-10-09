@@ -1,27 +1,21 @@
-.xp-box {
+.content-box {
     width: 70vw;
-    /* border: 1px rgb(73, 185, 222) solid; */
     padding: 0px 14px 20px 18px;
     margin: 10px 0px 50px 0px;
     list-style-type: none;   
     box-sizing: border-box; 
     /* Glassmorphism */
-    background: rgba(0, 0, 0, 0.10);
+    background: rgba(0, 0, 0, 0.19);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(0, 0, 0, 0.07);
 }
 
-.xp-box h4 {
+.content-box h4 {
     margin-top: 0;
-    font-size: 1.2rem;
+    font-size: 1.14rem;
 }
 
-.xp-box > ul > li {
-    /* list-style-type:square; */
-    /* Replace with emoji? */
-}
-
-.xp-box > ul {
+.content-box > ul {
     margin-bottom: 12px;
 }
 
@@ -43,10 +37,6 @@
     margin: 12px;
 }
 
-/* .xp-box:hover::before {
-    background: #95a7c1;
-} */
-
 .role-date {
     display: flex;
     justify-content: space-between;
@@ -55,15 +45,13 @@
 
 .role-date .role {
     font-style: italic;
-    font-size: 1.1rem;
+    font-size: .9rem;
 }
 
 
 @media (min-width: 1050px){
-
-    .xp-box {
+    .content-box {
         width: 50vw;
-        /* margin-right: 50px; */
         margin-left: 55px;
         margin-right: 50px;
         padding-right: 18px;
@@ -73,9 +61,5 @@
     
     .xp-box-wrapper::before {
         left: 35px;
-    }
-
-    .xp-box h4 {
-        font-size: 1.3rem;
     }
   }

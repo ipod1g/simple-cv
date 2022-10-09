@@ -4,26 +4,26 @@
     color:rgb(209 225 238 / 96%);
     text-decoration: none;
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 1.14rem;
 }
 
-.inner-container {
+.content-box-inner-container {
     display: flex;
     flex-direction: column;
 }
 
-.inner-buttons {
+.content-box-inner-buttons {
     display: flex;
     gap: 13px;
 }
 
-.xp-box .company {
+.content-box .company {
     -webkit-transition: all .2s linear;
     -o-transition: all .2s linear;
     transition: all .2s linear;
 }
 
-.xp-box:hover .company {
+.content-box:hover .company {
     color: #c199e5e0;
     text-shadow: 1px 3px 3px #6f4d9bad;
     transform: scale(1.04);
@@ -51,11 +51,6 @@
 }
 
 @media (min-width: 1050px) {
-
-    .company {
-        font-size: 1.3rem;
-    }
-
     .proj-box-wrapper::before  {
         left: 35px;
     }

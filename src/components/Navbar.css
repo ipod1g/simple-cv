@@ -49,10 +49,6 @@
 }
 
 @media (min-width: 1050px){
-    .nav-bar button{
-        font-size: 1rem;
-    }
-
     .nav-bar {
         width: 60px;
         backdrop-filter: blur(8.7px);
