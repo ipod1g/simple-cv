@@ -7,7 +7,7 @@ const Skills = () => {
          <h3>Skills</h3>
          <div className="skills-container">
             <h4>Technical</h4>
-            <p> JavaScript | CSS | HTML | React.js | Python | LaTeX </p>
+            <p> JavaScript | CSS | HTML | React | Python | LaTeX </p>
             <h4>Language</h4>
             <p> English - Native | Korean - Native </p>
          </div>

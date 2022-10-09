@@ -26,9 +26,9 @@ const Projects = () => {
                   transition={{ ease: "easeOut", duration: 0.5 }}
                   viewport={{ once: true }}
                >
-                  <li className="xp-box">
-                     <div className="inner-container">
-                        <div className="inner-buttons">
+                  <li className="content-box">
+                     <div className="content-box-inner-container">
+                        <div className="content-box-inner-buttons">
                            <a className="company" href="#">
                               CV website
                            </a>
@@ -47,7 +47,7 @@ const Projects = () => {
                            </motion.a>
                         </div>
                         <div className="role-date">
-                           <span>Solo </span>
+                           <span className="role">Solo </span>
                            <span>Sep 22</span>
                         </div>
                         <hr />
@@ -83,9 +83,9 @@ const Projects = () => {
                   transition={{ ease: "easeOut", duration: 0.5 }}
                   viewport={{ once: true }}
                >
-                  <li className="xp-box">
-                     <div className="inner-container">
-                        <div className="inner-buttons">
+                  <li className="content-box">
+                     <div className="content-box-inner-container">
+                        <div className="content-box-inner-buttons">
                            <a
                               className="company"
                               href="https://testers4bono.netlify.app"
@@ -109,7 +109,7 @@ const Projects = () => {
                            </motion.a>
                         </div>
                         <div className="role-date">
-                           <span>Solo </span>
+                           <span className="role">Solo </span>
                            <span>Aug - Sep 22</span>
                         </div>
                         <hr />
@@ -146,9 +146,9 @@ const Projects = () => {
                   transition={{ ease: "easeOut", duration: 0.5 }}
                   viewport={{ once: true }}
                >
-                  <li className="xp-box">
-                     <div className="inner-container">
-                        <div className="inner-buttons">
+                  <li className="content-box">
+                     <div className="content-box-inner-container">
+                        <div className="content-box-inner-buttons">
                            <a
                               className="company"
                               href="https://bonoku.shop"
@@ -172,7 +172,7 @@ const Projects = () => {
                            </motion.a>
                         </div>
                         <div className="role-date">
-                           <span>Solo </span>
+                           <span className="role">Solo </span>
                            <span>Aug 22</span>
                         </div>
                         <hr />

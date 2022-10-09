@@ -30,7 +30,7 @@ const ProfileTab = () => {
                   />
                </div>
                <summary>
-                  <span style={{ fontSize: "1.3rem", color: "#c199e5e0" }}>
+                  <span style={{ fontSize: "1.1rem", color: "#c199e5e0" }}>
                      Ku Bon Kwan (Bono) <br />
                   </span>
                   BSc in Physics, CUHK <br />

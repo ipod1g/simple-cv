@@ -21,7 +21,7 @@ const Experience = (props) => {
                   transition={{ ease: "easeOut", duration: 0.5 }}
                   viewport={{ once: true }}
                >
-                  <li className="xp-box">
+                  <li className="content-box">
                      <h4>Summer Undergraduate Research Internship Program </h4>
                      <div className="role-date">
                         <span className="role">
@@ -60,7 +60,7 @@ const Experience = (props) => {
                   transition={{ ease: "easeOut", duration: 0.5 }}
                   viewport={{ once: true }}
                >
-                  <li className="xp-box">
+                  <li className="content-box">
                      <h4>Republic of Korea Army (ROKA)</h4>
                      <div className="role-date">
                         <span className="role">
@@ -94,7 +94,7 @@ const Experience = (props) => {
                   transition={{ ease: "easeOut", duration: 0.5 }}
                   viewport={{ once: true }}
                >
-                  <li className="xp-box">
+                  <li className="content-box">
                      <h4>
                         United States - Republic of Korea Combined Command Post
                         Training
