@@ -30,7 +30,7 @@ const Projects = () => {
                      <div className="content-box-inner-container">
                         <div className="content-box-inner-buttons">
                            <a className="company" href="#">
-                              CV website
+                              CV Website
                            </a>
                            |
                            <motion.a

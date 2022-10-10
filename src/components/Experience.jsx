@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import "./Experience.css";
 import ScrollBarIndicator from "./ScrollBarIndicator";
 
-const Experience = (props) => {
+const Experience = () => {
    // For scrolldimension
    const xpContainerRef = useRef(null);
 
@@ -35,8 +35,11 @@ const Experience = (props) => {
                            {" "}
                            Simulated biophysical system with MARTINI force field
                            and GROMACS to compare for compatibility of result
-                           under the supervision of Professor Wang Yi and
-                           awarded the best poster presentation prize amongst 18
+                           under the supervision of Professor Wang Yi
+                        </li>
+                        <br />
+                        <li>
+                           Awarded the best poster presentation prize amongst 18
                            other teams by the professors
                         </li>
                         <br />
