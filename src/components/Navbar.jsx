@@ -17,6 +17,15 @@ const Navbar = (props) => {
          </motion.button>
          <motion.button
             onClick={() => {
+               props.scrollToSection(props.projectsSection);
+            }}
+            whileHover={{ scale: 1.2, letterSpacing: "4px" }}
+            whileTap={{ scale: 1 }}
+         >
+            Project
+         </motion.button>
+         <motion.button
+            onClick={() => {
                props.scrollToSection(props.experienceSection);
             }}
             style={{ marginRight: "6px" }}
@@ -24,15 +33,6 @@ const Navbar = (props) => {
             whileTap={{ scale: 1 }}
          >
             Work
-         </motion.button>
-         <motion.button
-            onClick={() => {
-               props.scrollToSection(props.projectsSection);
-            }}
-            whileHover={{ scale: 1.2, letterSpacing: "4px" }}
-            whileTap={{ scale: 1 }}
-         >
-            Project
          </motion.button>
          <motion.button
             onClick={() => {

@@ -31,17 +31,17 @@ const Main = () => {
                   <About />
                </section>
                <hr />
-               <section className="xp-section" ref={experienceSection}>
-                  <h3>Experience</h3>
-                  <div className="xp-wrapper">
-                     <Experience></Experience>
-                  </div>
-               </section>
-               <hr />
                <section className="project-section" ref={projectsSection}>
                   <h3>Projects</h3>
                   <div className="proj-wrapper">
                      <Projects></Projects>
+                  </div>
+               </section>
+               <hr />
+               <section className="xp-section" ref={experienceSection}>
+                  <h3>Experience</h3>
+                  <div className="xp-wrapper">
+                     <Experience></Experience>
                   </div>
                </section>
                <hr />
