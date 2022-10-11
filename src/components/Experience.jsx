@@ -86,7 +86,8 @@ export default function Experience() {
                   desc1={desc1}
                   desc2={desc2}
                   desc3={desc3}
-                  //    key={}
+                  // Try to fix the key issue
+                  key={work}
                ></ExperienceBox>
             ))}
          </ul>
