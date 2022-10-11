@@ -13,12 +13,13 @@ const ScrollBarIndicator = forwardRef((props, ref) => {
 
    const scrollProgress = useSpring(scrollYProgress);
 
-   useEffect(() => {
-      return scrollYProgress.onChange((latest) => {
-         console.log("Page scroll: ", latest);
-         console.log(ref);
-      });
-   }, []);
+   /* To test for scrollbar */
+   // useEffect(() => {
+   //    return scrollYProgress.onChange((latest) => {
+   //       console.log("Page scroll: ", latest);
+   //       console.log(ref);
+   //    });
+   // }, []);
 
    return (
       <>
