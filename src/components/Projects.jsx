@@ -93,7 +93,7 @@ const projectsArray = [
    [
       "Riot Games Client Login Screen Clone",
       "https://testers4bono.netlify.app",
-      "https://github.com/ipod1g/testers/tree/main/riot-login-clone",
+      "https://github.com/ipod1g/riotlogin-clone-client",
       "Solo",
       "Aug – Sep 22",
       "Developed a functional registration and login authorization system connected to RDBMS(MySQL) database using React and Node.js",
