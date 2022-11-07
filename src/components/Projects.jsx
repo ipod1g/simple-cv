@@ -81,6 +81,16 @@ const ProjectsBox = ({
 const projectsArray = [
    /* PROJECT, PROJECT LINK, GITHUB LINK, ROLE, DATE, DESC1, DESC2, DESC3 */
    [
+      "Battleship Online",
+      "#",
+      "https://github.com/ipod1g/battleship",
+      "Team - with Sim Ho",
+      "Oct 22 – Present",
+      "Developed an online version of battleship using Next.js and Typescript with secure server-side data management to prevent cheats",
+      "Collaborated with a more experienced developer and received immediate feedbacks for code improvements using Github",
+      "Work in progress",
+   ],
+   [
       "CV Website",
       "#",
       "https://github.com/ipod1g/simple-cv",
