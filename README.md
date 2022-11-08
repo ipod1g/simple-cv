@@ -36,6 +36,7 @@ Live https://cvbono.netlify.app/
 ### Initial
 
 -  Goal is to make a CV that is as simple as possible to focus mainly on legibility with lightweight interactibility
+-  Ideally with responsive design and links to relevant contents
 
 ### Problems
 
