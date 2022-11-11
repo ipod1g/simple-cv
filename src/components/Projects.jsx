@@ -56,17 +56,23 @@ const ProjectsBox = ({
                      </div>
                      <hr />
                      <ul>
-                        <li>{desc1}</li>
+                        <li dangerouslySetInnerHTML={{ __html: desc1 }}>
+                           {/* {desc1} */}
+                        </li>
                         {desc2 ? (
                            <>
                               <br />
-                              <li>{desc2}</li>
+                              <li dangerouslySetInnerHTML={{ __html: desc2 }}>
+                                 {/* {desc2} */}
+                              </li>
                            </>
                         ) : null}
                         {desc3 ? (
                            <>
                               <br />
-                              <li>{desc3}</li>
+                              <li dangerouslySetInnerHTML={{ __html: desc3 }}>
+                                 {/* {desc3} */}
+                              </li>
                            </>
                         ) : null}
                      </ul>
@@ -86,9 +92,9 @@ const projectsArray = [
       "https://github.com/ipod1g/battleship",
       "Team - with Sim Ho",
       "Oct 22 – Present",
-      "Developed an online version of battleship using Next.js and Typescript with secure server-side data management to prevent cheats",
-      "Collaborated with a more experienced developer and received immediate feedbacks for code improvements using Github",
-      "Work in progress",
+      "Developed an online version of battleship using modern frameworks - <u>Next.js</u> and <u>TypeScript</u>",
+      "Collaborated with an experienced full-stack developer to gain constant insights and feedbacks for code improvements with GitHub features",
+      "Prevented exploits and cheats by managing game data with server-side authentication",
    ],
    [
       "CV Website",
@@ -96,7 +102,7 @@ const projectsArray = [
       "https://github.com/ipod1g/simple-cv",
       "Personal",
       "Sep 22",
-      "Created a glass-morphism themed interactive and responsive resume website using React and framer-motion",
+      "Created a glass-morphism themed interactive and responsive resume website using <u>React</u> and <u>framer-motion</u>",
       "Focused on clean and reusable component factored coding style for convenient updates to contents",
       "Optimized loading time by converting assets to appropriate file types like webp",
    ],
@@ -106,7 +112,7 @@ const projectsArray = [
       "https://github.com/ipod1g/riotlogin-clone-client",
       "Personal",
       "Aug – Sep 22",
-      "Developed a functional registration and login authorization system connected to RDBMS(MySQL) database using React and Node.js",
+      "Developed a functional registration and login authorization system connected to <u>RDBMS(MySQL)</u> database using <u>React</u> and <u>Node.js</u>",
       "Implemented custom responsive design and utilized React Hooks API",
       "Increased performance by changing font loading method and continuously refactoring code for better efficiency",
    ],

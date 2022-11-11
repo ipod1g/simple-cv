@@ -14,6 +14,7 @@ const About = () => {
             Now I am a self-taught Frontend web developer passionate about
             creating aesthetic and functional experiences! 😊
          </p>
+         <p>Check out my projects through the links!</p>
       </div>
    );
 };
