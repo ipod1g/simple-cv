@@ -98,7 +98,7 @@ const extrasArray = [
    /* PROJECT, PROJECT LINK, GITHUB LINK, ROLE, DATE, DESC1, DESC2, DESC3 */
    [
       "Cathay Hackathon 2022 Shortlist",
-      "#",
+      "https://hackathon.cathaypacific.com/index.html",
       "https://github.com/ipod1g/battleship",
       "UI/UX design & Frontend developer",
       "Nov 22",

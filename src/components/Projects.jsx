@@ -100,7 +100,7 @@ const projectsArray = [
    /* PROJECT, PROJECT LINK, GITHUB LINK, ROLE, DATE, DESC1, DESC2, DESC3 */
    [
       "Battleship Online",
-      "#",
+      "https://github.com/ipod1g/battleship",
       "https://github.com/ipod1g/battleship",
       "Team - with Sim Ho",
       "Oct 22 – Present",

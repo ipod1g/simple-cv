@@ -11,7 +11,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import "./ProfileTab.css";
 import Selfie from "../assets/selfie.jpeg";
-import CV from "../assets/CVSep.pdf";
+import CV from "../assets/CV.pdf";
 
 library.add(faReact, faGithub, faLinkedin, faInstagram, faEnvelope);
 
