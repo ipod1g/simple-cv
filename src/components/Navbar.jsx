@@ -26,6 +26,16 @@ const Navbar = (props) => {
          </motion.button>
          <motion.button
             onClick={() => {
+               props.scrollToSection(props.extrasSection);
+            }}
+            style={{ marginRight: "6.5px" }}
+            whileHover={{ scale: 1.2, letterSpacing: "4px" }}
+            whileTap={{ scale: 1 }}
+         >
+            Extra
+         </motion.button>
+         <motion.button
+            onClick={() => {
                props.scrollToSection(props.experienceSection);
             }}
             style={{ marginRight: "6px" }}

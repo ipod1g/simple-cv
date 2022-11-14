@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, forwardRef } from "react";
+import { forwardRef } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import "./ScrollBarIndicator.css";
 

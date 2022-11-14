@@ -6,11 +6,13 @@ import Navbar from "./Navbar";
 import Projects from "./Projects";
 import Skills from "./Skills";
 import { AnimatePresence, motion, useInView } from "framer-motion";
+import Extras from "./Extras";
 
 const Main = () => {
    const aboutSection = useRef(null);
    const experienceSection = useRef(null);
    const projectsSection = useRef(null);
+   const extrasSection = useRef(null);
    const skillsSection = useRef(null);
 
    const isInView = useInView(aboutSection);
@@ -35,6 +37,13 @@ const Main = () => {
                   <h3>Projects</h3>
                   <div className="proj-wrapper">
                      <Projects></Projects>
+                  </div>
+               </section>
+               <hr />
+               <section className="extras-section" ref={extrasSection}>
+                  <h3>Extra-curricular</h3>
+                  <div className="extras-wrapper">
+                     <Extras></Extras>
                   </div>
                </section>
                <hr />
@@ -63,8 +72,9 @@ const Main = () => {
                   <Navbar
                      scrollToSection={scrollToSection}
                      aboutSection={aboutSection}
-                     experienceSection={experienceSection}
                      projectsSection={projectsSection}
+                     extrasSection={extrasSection}
+                     experienceSection={experienceSection}
                      skillsSection={skillsSection}
                   />
                </motion.div>

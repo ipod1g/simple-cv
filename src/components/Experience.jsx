@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
-import "./Experience.css";
+import "./Contents.css";
 import ScrollBarIndicator from "./ScrollBarIndicator";
 
 const ExperienceBox = ({ work, role, date, desc1, desc2, desc3 }) => {

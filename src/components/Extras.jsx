@@ -8,9 +8,9 @@ import "./Contents.css";
 
 library.add(faGithub);
 
-const ProjectsBox = ({
-   project,
-   projLink,
+const ExtrasBox = ({
+   title,
+   extrasLink,
    githubLink,
    role,
    date,
@@ -20,7 +20,7 @@ const ProjectsBox = ({
 }) => {
    return (
       <>
-         <div className="proj-box-wrapper">
+         <div className="extras-box-wrapper">
             <motion.div
                initial={{ opacity: 0, scale: 0.5 }}
                whileInView={{
@@ -35,11 +35,11 @@ const ProjectsBox = ({
                      <div className="content-box-inner-buttons">
                         <a
                            className="company"
-                           href={projLink}
+                           href={extrasLink}
                            target="_blank"
                            rel="noreferrer"
                         >
-                           {project}
+                           {title}
                         </a>
                         {githubLink && (
                            <>
@@ -68,23 +68,21 @@ const ProjectsBox = ({
                      </div>
                      <hr />
                      <ul>
-                        <li dangerouslySetInnerHTML={{ __html: desc1 }}>
-                           {/* {desc1} */}
-                        </li>
+                        <li dangerouslySetInnerHTML={{ __html: desc1 }}></li>
                         {desc2 ? (
                            <>
                               <br />
-                              <li dangerouslySetInnerHTML={{ __html: desc2 }}>
-                                 {/* {desc2} */}
-                              </li>
+                              <li
+                                 dangerouslySetInnerHTML={{ __html: desc2 }}
+                              ></li>
                            </>
                         ) : null}
                         {desc3 ? (
                            <>
                               <br />
-                              <li dangerouslySetInnerHTML={{ __html: desc3 }}>
-                                 {/* {desc3} */}
-                              </li>
+                              <li
+                                 dangerouslySetInnerHTML={{ __html: desc3 }}
+                              ></li>
                            </>
                         ) : null}
                      </ul>
@@ -96,60 +94,39 @@ const ProjectsBox = ({
    );
 };
 
-const projectsArray = [
+const extrasArray = [
    /* PROJECT, PROJECT LINK, GITHUB LINK, ROLE, DATE, DESC1, DESC2, DESC3 */
    [
-      "Battleship Online",
+      "Cathay Hackathon 2022 Shortlist",
       "#",
       "https://github.com/ipod1g/battleship",
-      "Team - with Sim Ho",
-      "Oct 22 – Present",
-      "Developed an online version of battleship using modern frameworks - <u>Next.js</u> and <u>TypeScript</u>",
-      "Collaborated with an experienced full-stack developer to gain constant insights and feedbacks for code improvements with GitHub features",
-      "Prevented exploits by managing game data with server-side authentication",
+      "UI/UX design & Frontend developer",
+      "Nov 22",
+      "Designed and developed an AI integrated inflight service solution using <u>Flutter</u> and <u>Firebase</u> in linkage with Google Cloud Console API for prototype showcasing",
+      "Qualified for the final rounds as top 20 teams amongst 100 participating teams with a pitching video of our solution",
    ],
    [
-      "CV Website",
-      "#",
-      "https://github.com/ipod1g/simple-cv",
-      "Personal",
-      "Sep 22",
-      "Created a glass-morphism themed interactive and responsive resume website using <u>React</u> and <u>framer-motion</u>",
-      "Focused on clean and reusable component factored coding style for convenient updates to contents",
-      "Optimized loading time by converting assets to appropriate file types like webp",
-   ],
-   [
-      "Riot Games Client Login Screen Clone",
-      "https://testers4bono.netlify.app",
-      "https://github.com/ipod1g/riotlogin-clone-client",
-      "Personal",
-      "Aug – Sep 22",
-      "Developed a functional registration and login authorization system connected to <u>RDBMS(MySQL)</u> database using <u>React</u> and <u>Node.js</u>",
-      "Implemented custom responsive design and utilized React Hooks API",
-      "Increased performance by changing font loading method and continuously refactoring code for better efficiency",
-   ],
-   [
-      "Portfolio Website v1",
-      "https://bonoku.shop",
-      "https://github.com/ipod1g/portfolio-1/",
-      "Personal",
-      "Aug 22",
-      "Developed a simplistic interactive website with vanilla <u>Javascript</u>",
-      "Deployed in custom domain and improved crawlability by using semantic elements for enhanced SEO",
+      "PLANCKS 2022 Hong Kong Round 2nd Runner Up ",
+      "https://www.dpg-physik.de/vereinigungen/fachuebergreifend/ak/akjdpg/events/wettbewerbe/plancks",
+      "",
+      "Physics Competition Participant",
+      "Mar 22",
+      "Solved 5/6 masters-level challenging physics questions in the Hong Kong preliminary rounds – in collaboration with 2 members from Hong Kong University of Science and Technology (HKUST)",
+      "Acquired critical thinking power beyond textbooks by enforcing research paper comprehension, and experienced professional discussions with academically excellent peers",
    ],
 ];
 
-export default function Projects() {
+export default function Extras() {
    // For scrolldimension
-   const projContainerRef = useRef(null);
+   const extrasContainerRef = useRef(null);
 
    return (
       <>
-         <ul className="xp-container" ref={projContainerRef}>
-            {projectsArray.map(
+         <ul className="xp-container" ref={extrasContainerRef}>
+            {extrasArray.map(
                ([
-                  project,
-                  projLink,
+                  title,
+                  extrasLink,
                   githubLink,
                   role,
                   date,
@@ -157,9 +134,9 @@ export default function Projects() {
                   desc2,
                   desc3,
                ]) => (
-                  <ProjectsBox
-                     project={project}
-                     projLink={projLink}
+                  <ExtrasBox
+                     title={title}
+                     extrasLink={extrasLink}
                      githubLink={githubLink}
                      role={role}
                      date={date}
@@ -167,12 +144,12 @@ export default function Projects() {
                      desc2={desc2}
                      desc3={desc3}
                      // Try to fix the key issue
-                     key={project}
-                  ></ProjectsBox>
+                     key={title}
+                  ></ExtrasBox>
                )
             )}
          </ul>
-         <ScrollBarIndicator ref={projContainerRef} />
+         <ScrollBarIndicator ref={extrasContainerRef} />
       </>
    );
 }
