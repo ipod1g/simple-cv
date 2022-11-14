@@ -62,7 +62,7 @@ const ProfileTab = () => {
                   }}
                   whileTap={{ scale: 0.99 }}
                >
-                  <a href={CV} download="CVSep.pdf">
+                  <a href={CV} download="CV.pdf">
                      Download CV
                   </a>
                </motion.button>
