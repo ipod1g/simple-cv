@@ -8,7 +8,8 @@ const Skills = () => {
          <div className="skills-container">
             <h4>Technical</h4>
             <p>
-               JavaScript | HTML/CSS | React | TypeScript | Next.js | Node.js
+               JavaScript | HTML/CSS | React | TypeScript | Next.js | Node.js |
+               Figma
             </p>
             <h4>Language</h4>
             <p> English - Native | Korean - Native </p>

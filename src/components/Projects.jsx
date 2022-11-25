@@ -106,7 +106,7 @@ const projectsArray = [
       "Oct 22 – Present",
       "Developed an online version of battleship using modern frameworks - <u>Next.js</u> and <u>TypeScript</u>",
       "Collaborated with an experienced full-stack developer to gain constant insights and feedbacks for code improvements with GitHub features",
-      "Prevented exploits by managing game data with server-side authentication",
+      "Prevented exploits by managing game states and data with server-side authentication",
    ],
    [
       "CV Website",

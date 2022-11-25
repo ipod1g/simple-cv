@@ -102,8 +102,8 @@ const extrasArray = [
       "https://github.com/ipod1g/battleship",
       "UI/UX design & Frontend developer",
       "Nov 22",
-      "Designed and developed an AI integrated inflight service solution using <u>Flutter</u> and <u>Firebase</u> in linkage with Google Cloud Console API for prototype showcasing",
-      "Qualified for the final rounds as top 20 teams amongst 100 participating teams with a pitching video of our solution",
+      "Designed and developed an AI integrated inflight service solution app using Figma, Flutter and Firebase for prototype showcasing",
+      "Qualified for the final rounds as top 20 teams amongst 100+ participating teams with a pitching video of our solution",
    ],
    [
       "PLANCKS 2022 Hong Kong Round 2nd Runner Up ",
