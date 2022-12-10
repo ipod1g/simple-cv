@@ -36,13 +36,12 @@ Live https://cvbono.netlify.app/
 ### Initial
 
 -  Goal is to make a CV that is as simple as possible to focus mainly on legibility with lightweight interactibility
--  Ideally with responsive design and links to relevant contents
 
 ### Problems
 
 -  Faced difficulties when making a scroll directed progress bar for components
    -  Initially I made it with recognizing the window’s scroll and subtracted the origin points to separate + limiting and providing the height of the component
-   -  Fixed by properly using forwardRef on child components and framer-motion's useScroll
+   -  Fixed by properly using forwardRef on child components and framer-motion’s useScroll
 -  Floating elements - with height as fit-content
    -  Properly fitting the background images without hard values was confusing
       -  Fixed using parent element as position relative!
@@ -69,6 +68,11 @@ Live https://cvbono.netlify.app/
    -  Framer-motion based interactions
    -  Scroll progress tracking on element containers
    -  CSS bug on kakaotalk browser
+-  v2.0.0
+   -  Deployed on 3 Dec 2022
+   -  Update content to latest
+   -  Add extracurricular section
+   -  Minor UI update
 
 # Future implementation
 
@@ -78,4 +82,7 @@ Live https://cvbono.netlify.app/
 -  [x] Download CV button top right
 -  [x] Nav bar to click to navigate to section
 -  [x] Use ref to properly scroll progress
--  [ ] Animated background → optimize using blur-up technique
+-  [x] Animated background
+-  [ ] Optimize using blur-up technique?
+-  [x] 2.2 rem title
+-  [ ] flag on work experience
