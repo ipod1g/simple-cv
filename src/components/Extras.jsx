@@ -8,6 +8,28 @@ import "./Contents.css";
 
 library.add(faGithub);
 
+const extrasArray = [
+   /* PROJECT, PROJECT LINK, GITHUB LINK, ROLE, DATE, DESC1, DESC2, DESC3 */
+   [
+      "Cathay Hackathon 2022 Shortlist",
+      "https://hackathon.cathaypacific.com/index.html",
+      "https://github.com/ipod1g/battleship",
+      "UI/UX design & Frontend developer",
+      "Nov 22",
+      "Designed and developed an AI integrated inflight service solution app using Figma, Flutter and Firebase for prototype showcasing",
+      "Qualified for the final rounds as top 20 teams amongst 100+ participating teams with a pitching video of our solution",
+   ],
+   [
+      "PLANCKS 2022 Hong Kong Round 2nd Runner Up ",
+      "https://www.dpg-physik.de/vereinigungen/fachuebergreifend/ak/akjdpg/events/wettbewerbe/plancks",
+      "",
+      "Physics Competition Participant",
+      "Mar 22",
+      "Solved 5/6 masters-level challenging physics questions in the Hong Kong preliminary rounds – in collaboration with 2 members from Hong Kong University of Science and Technology (HKUST)",
+      "Acquired critical thinking power beyond textbooks by enforcing research paper comprehension, and experienced professional discussions with academically excellent peers",
+   ],
+];
+
 const ExtrasBox = ({
    title,
    extrasLink,
@@ -94,28 +116,6 @@ const ExtrasBox = ({
    );
 };
 
-const extrasArray = [
-   /* PROJECT, PROJECT LINK, GITHUB LINK, ROLE, DATE, DESC1, DESC2, DESC3 */
-   [
-      "Cathay Hackathon 2022 Shortlist",
-      "https://hackathon.cathaypacific.com/index.html",
-      "https://github.com/ipod1g/battleship",
-      "UI/UX design & Frontend developer",
-      "Nov 22",
-      "Designed and developed an AI integrated inflight service solution app using Figma, Flutter and Firebase for prototype showcasing",
-      "Qualified for the final rounds as top 20 teams amongst 100+ participating teams with a pitching video of our solution",
-   ],
-   [
-      "PLANCKS 2022 Hong Kong Round 2nd Runner Up ",
-      "https://www.dpg-physik.de/vereinigungen/fachuebergreifend/ak/akjdpg/events/wettbewerbe/plancks",
-      "",
-      "Physics Competition Participant",
-      "Mar 22",
-      "Solved 5/6 masters-level challenging physics questions in the Hong Kong preliminary rounds – in collaboration with 2 members from Hong Kong University of Science and Technology (HKUST)",
-      "Acquired critical thinking power beyond textbooks by enforcing research paper comprehension, and experienced professional discussions with academically excellent peers",
-   ],
-];
-
 export default function Extras() {
    // For scrolldimension
    const extrasContainerRef = useRef(null);
@@ -143,7 +143,6 @@ export default function Extras() {
                      desc1={desc1}
                      desc2={desc2}
                      desc3={desc3}
-                     // Try to fix the key issue
                      key={title}
                   ></ExtrasBox>
                )

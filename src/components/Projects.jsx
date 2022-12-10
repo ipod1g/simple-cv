@@ -8,6 +8,50 @@ import "./Contents.css";
 
 library.add(faGithub);
 
+// Maybe change array to object with key for better DX?
+const projectsArray = [
+   /* PROJECT, PROJECT LINK, GITHUB LINK, ROLE, DATE, DESC1, DESC2, DESC3 */
+   [
+      "Battleship Online",
+      "https://github.com/ipod1g/battleship",
+      "https://github.com/ipod1g/battleship",
+      "Team - with Sim Ho",
+      "Oct 22 – Present",
+      "Developed an online version of battleship using modern frameworks - <u>Next.js</u> and <u>TypeScript</u>",
+      "Collaborated with an experienced full-stack developer to gain constant insights and feedbacks for code improvements with GitHub features",
+      "Prevented exploits by managing game states and data with server-side authentication",
+   ],
+   [
+      "CV Website",
+      "#",
+      "https://github.com/ipod1g/simple-cv",
+      "Personal",
+      "Sep 22",
+      "Created a glass-morphism themed interactive and responsive resume website using <u>React</u> and <u>framer-motion</u>",
+      "Focused on clean and reusable component factored coding style for convenient updates to contents",
+      "Optimized loading time by converting assets to appropriate file types like webp",
+   ],
+   [
+      "Riot Games Client Login Screen Clone",
+      "https://testers4bono.netlify.app",
+      "https://github.com/ipod1g/riotlogin-clone-client",
+      "Personal",
+      "Aug – Sep 22",
+      "Developed a functional registration and login authorization system connected to <u>RDBMS(MySQL)</u> database using <u>React</u> and <u>Node.js</u>",
+      "Implemented custom responsive design and utilized React Hooks API",
+      "Increased performance by changing font loading method and continuously refactoring code for better efficiency",
+   ],
+   [
+      "Portfolio Website v1",
+      "https://bonoku.shop",
+      "https://github.com/ipod1g/portfolio-1/",
+      "Personal",
+      "Aug 22",
+      "Developed a simplistic interactive website with vanilla <u>Javascript</u>",
+      "Deployed in custom domain and improved crawlability by using semantic elements for enhanced SEO",
+   ],
+];
+
 const ProjectsBox = ({
    project,
    projLink,
@@ -68,6 +112,7 @@ const ProjectsBox = ({
                      </div>
                      <hr />
                      <ul>
+                        {/* Refactor to make it dry */}
                         <li dangerouslySetInnerHTML={{ __html: desc1 }}>
                            {/* {desc1} */}
                         </li>
@@ -96,49 +141,6 @@ const ProjectsBox = ({
    );
 };
 
-const projectsArray = [
-   /* PROJECT, PROJECT LINK, GITHUB LINK, ROLE, DATE, DESC1, DESC2, DESC3 */
-   [
-      "Battleship Online",
-      "https://github.com/ipod1g/battleship",
-      "https://github.com/ipod1g/battleship",
-      "Team - with Sim Ho",
-      "Oct 22 – Present",
-      "Developed an online version of battleship using modern frameworks - <u>Next.js</u> and <u>TypeScript</u>",
-      "Collaborated with an experienced full-stack developer to gain constant insights and feedbacks for code improvements with GitHub features",
-      "Prevented exploits by managing game states and data with server-side authentication",
-   ],
-   [
-      "CV Website",
-      "#",
-      "https://github.com/ipod1g/simple-cv",
-      "Personal",
-      "Sep 22",
-      "Created a glass-morphism themed interactive and responsive resume website using <u>React</u> and <u>framer-motion</u>",
-      "Focused on clean and reusable component factored coding style for convenient updates to contents",
-      "Optimized loading time by converting assets to appropriate file types like webp",
-   ],
-   [
-      "Riot Games Client Login Screen Clone",
-      "https://testers4bono.netlify.app",
-      "https://github.com/ipod1g/riotlogin-clone-client",
-      "Personal",
-      "Aug – Sep 22",
-      "Developed a functional registration and login authorization system connected to <u>RDBMS(MySQL)</u> database using <u>React</u> and <u>Node.js</u>",
-      "Implemented custom responsive design and utilized React Hooks API",
-      "Increased performance by changing font loading method and continuously refactoring code for better efficiency",
-   ],
-   [
-      "Portfolio Website v1",
-      "https://bonoku.shop",
-      "https://github.com/ipod1g/portfolio-1/",
-      "Personal",
-      "Aug 22",
-      "Developed a simplistic interactive website with vanilla <u>Javascript</u>",
-      "Deployed in custom domain and improved crawlability by using semantic elements for enhanced SEO",
-   ],
-];
-
 export default function Projects() {
    // For scrolldimension
    const projContainerRef = useRef(null);
@@ -166,7 +168,6 @@ export default function Projects() {
                      desc1={desc1}
                      desc2={desc2}
                      desc3={desc3}
-                     // Try to fix the key issue
                      key={project}
                   ></ProjectsBox>
                )

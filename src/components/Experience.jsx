@@ -3,6 +3,32 @@ import { motion } from "framer-motion";
 import "./Contents.css";
 import ScrollBarIndicator from "./ScrollBarIndicator";
 
+const worksArray = [
+   /* WORK TITLE, ROLE, DATE, DESC1, DESC2, DESC3 */
+   [
+      "Summer Undergraduate Research Internship Program",
+      "Computational Biomolecules (hydrogel)",
+      "May - Jul 22",
+      "Simulated biophysical system with MARTINI force field and GROMACS to compare for compatibility of result under the supervision of Professor Wang Yi",
+      "Awarded the best poster presentation prize amongst 18 other teams by the professors",
+      "Utilized server-side simulation processing in LINUX-based OS and enhanced efficiency for the project by cooperating with a partner",
+   ],
+   [
+      "Republic of Korea Army (ROKA)",
+      "Mortar Squad Leader in the 28th Division",
+      "Jun 20 – Dec 21",
+      "Led, managed, and supervised a 12-person squad in 23 field trainings under variating environments",
+      "Prepared and reviewed situation reports and operational briefs for officers",
+   ],
+   [
+      "United States - Republic of Korea Combined Command Post Training",
+      "English Linguist in the Combined Ground Component Command",
+      "Jun – Aug 21",
+      "Engaged in US-ROK training as a real-time English linguist for the department of Hospitality and Personnel under deployment",
+      "Translated diplomatically and strategically in-depth documents for both parties in clear technical wordings",
+   ],
+];
+
 const ExperienceBox = ({ work, role, date, desc1, desc2, desc3 }) => {
    return (
       <>
@@ -45,32 +71,6 @@ const ExperienceBox = ({ work, role, date, desc1, desc2, desc3 }) => {
    );
 };
 
-const worksArray = [
-   /* WORK TITLE, ROLE, DATE, DESC1, DESC2, DESC3 */
-   [
-      "Summer Undergraduate Research Internship Program",
-      "Computational Biomolecules (hydrogel)",
-      "May - Jul 22",
-      "Simulated biophysical system with MARTINI force field and GROMACS to compare for compatibility of result under the supervision of Professor Wang Yi",
-      "Awarded the best poster presentation prize amongst 18 other teams by the professors",
-      "Utilized server-side simulation processing in LINUX-based OS and enhanced efficiency for the project by cooperating with a partner",
-   ],
-   [
-      "Republic of Korea Army (ROKA)",
-      "Mortar Squad Leader in the 28th Division",
-      "Jun 20 – Dec 21",
-      "Led, managed, and supervised a 12-person squad in 23 field trainings under variating environments",
-      "Prepared and reviewed situation reports and operational briefs for officers",
-   ],
-   [
-      "United States - Republic of Korea Combined Command Post Training",
-      "English Linguist in the Combined Ground Component Command",
-      "Jun – Aug 21",
-      "Engaged in US-ROK training as a real-time English linguist for the department of Hospitality and Personnel under deployment",
-      "Translated diplomatically and strategically in-depth documents for both parties in clear technical wordings",
-   ],
-];
-
 export default function Experience() {
    // For scrolldimension
    const xpContainerRef = useRef(null);
@@ -86,7 +86,6 @@ export default function Experience() {
                   desc1={desc1}
                   desc2={desc2}
                   desc3={desc3}
-                  // Try to fix the key issue
                   key={work}
                ></ExperienceBox>
             ))}
