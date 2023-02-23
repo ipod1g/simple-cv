@@ -26,7 +26,7 @@ export const projectsInfo = [
     workScale: 'Private Team',
     duration: 'Oct 22 – Present',
     description1:
-      'Developed an online version of battleship using modern frameworks - <u>Next.js</u> and <u>TypeScript</u>',
+      'Developed an online version of battleship board game using modern frameworks - <u>Next.js</u> and <u>TypeScript</u>',
     description2:
       'Collaborated with a more experienced full-stack developer to gain constant insights and feedbacks for code improvements with GitHub features',
     description3:
