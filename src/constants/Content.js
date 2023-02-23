@@ -3,10 +3,11 @@
  * PROJECTS
  *
  */
+
 export const projectsInfo = [
   {
     title: 'Talent Quest 2K23',
-    liveLink: 'https://hkstp.careerhackers.io/',
+    liveLink: 'https://hkstp.careerhackers.io/play',
     repoLink: '',
     workScale: 'Company',
     duration: 'Jan 23 - Feb 23',
@@ -42,7 +43,6 @@ export const projectsInfo = [
       'Created a glass-morphism themed interactive and responsive resume website using <u>React</u> and <u>framer-motion</u>',
     description2:
       'Focused on clean and reusable component based coding style for convenient updates to contents',
-    description3: '',
   },
   {
     title: 'Riot Games Client Login Screen Clone',
