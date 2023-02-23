@@ -5,41 +5,11 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import ScrollBarIndicator from './ScrollBarIndicator';
 import './Contents.css';
+import { extracurricularInfo } from '../constants/Content';
 
 library.add(faGithub);
 
-const extrasArray = [
-  /* PROJECT, PROJECT LINK, GITHUB LINK, ROLE, DATE, DESC1, DESC2, DESC3 */
-  [
-    'Cathay Hackathon 2022 Shortlist',
-    'https://hackathon.cathaypacific.com/index.html',
-    'https://github.com/ipod1g/battleship',
-    'UI/UX design & Frontend Developer',
-    'Nov 22',
-    'Designed and developed an AI integrated inflight service solution app using Figma, Flutter and Firebase for prototype showcasing',
-    'Qualified for the final rounds as top 20 teams amongst 100+ participating teams with a pitching video of our solution',
-  ],
-  [
-    'PLANCKS 2022 Hong Kong Round 2nd Runner Up ',
-    'https://www.dpg-physik.de/vereinigungen/fachuebergreifend/ak/akjdpg/events/wettbewerbe/plancks',
-    '',
-    'Physics Competition Participant',
-    'Mar 22',
-    'Solved 5/6 masters-level challenging physics questions in the Hong Kong preliminary rounds – in collaboration with 2 members from Hong Kong University of Science and Technology (HKUST)',
-    'Acquired critical thinking power beyond textbooks by enforcing research paper comprehension, and experienced professional discussions with academically excellent peers',
-  ],
-];
-
-const ExtrasBox = ({
-  title,
-  extrasLink,
-  githubLink,
-  role,
-  date,
-  desc1,
-  desc2,
-  desc3,
-}) => {
+const ExtrasBox = ({ extracurricular }) => {
   return (
     <>
       <div className="extras-box-wrapper">
@@ -57,20 +27,20 @@ const ExtrasBox = ({
               <div className="content-box-inner-buttons">
                 <a
                   className="company"
-                  href={extrasLink}
+                  href={extracurricular.refLink}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  {title}
+                  {extracurricular.title}
                 </a>
-                {githubLink && (
+                {extracurricular.repoLink && (
                   <>
                     |
                     <motion.a
                       className="fa-icon"
                       target="_blank"
                       rel="noreferrer"
-                      href={githubLink}
+                      href={extracurricular.repoLink}
                       title=""
                       whileHover={{
                         scale: 1.15,
@@ -85,24 +55,36 @@ const ExtrasBox = ({
                 )}
               </div>
               <div className="role-date">
-                <span className="role">{role}</span>
-                <span>{date}</span>
+                <span className="role">{extracurricular.role}</span>
+                <span>{extracurricular.duration}</span>
               </div>
               <hr />
               <ul>
-                <li dangerouslySetInnerHTML={{ __html: desc1 }}></li>
-                {desc2 ? (
+                <li
+                  dangerouslySetInnerHTML={{
+                    __html: extracurricular.description1,
+                  }}
+                ></li>
+                {extracurricular.description2 && (
                   <>
                     <br />
-                    <li dangerouslySetInnerHTML={{ __html: desc2 }}></li>
+                    <li
+                      dangerouslySetInnerHTML={{
+                        __html: extracurricular.description2,
+                      }}
+                    ></li>
                   </>
-                ) : null}
-                {desc3 ? (
+                )}
+                {extracurricular.description3 && (
                   <>
                     <br />
-                    <li dangerouslySetInnerHTML={{ __html: desc3 }}></li>
+                    <li
+                      dangerouslySetInnerHTML={{
+                        __html: extracurricular.description3,
+                      }}
+                    ></li>
                   </>
-                ) : null}
+                )}
               </ul>
             </div>
           </li>
@@ -119,30 +101,12 @@ export default function Extras() {
   return (
     <>
       <ul className="xp-container" ref={extrasContainerRef}>
-        {extrasArray.map(
-          ([
-            title,
-            extrasLink,
-            githubLink,
-            role,
-            date,
-            desc1,
-            desc2,
-            desc3,
-          ]) => (
-            <ExtrasBox
-              title={title}
-              extrasLink={extrasLink}
-              githubLink={githubLink}
-              role={role}
-              date={date}
-              desc1={desc1}
-              desc2={desc2}
-              desc3={desc3}
-              key={title}
-            ></ExtrasBox>
-          )
-        )}
+        {extracurricularInfo.map((extracurricular, i) => (
+          <ExtrasBox
+            key={'extrabox' + i}
+            extracurricular={extracurricular}
+          ></ExtrasBox>
+        ))}
       </ul>
       <ScrollBarIndicator ref={extrasContainerRef} />
     </>

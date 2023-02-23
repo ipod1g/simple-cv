@@ -2,34 +2,24 @@ import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 import './Contents.css';
 import ScrollBarIndicator from './ScrollBarIndicator';
+import { experienceInfo } from '../constants/Content';
 
-const worksArray = [
-  /* WORK TITLE, ROLE, DATE, DESC1, DESC2, DESC3 */
-  [
-    'Speakmanity Limited (Career Hackers) ',
-    'Frontend Developer Intern',
-    'Jan 23 - Present',
-    'Developed the frontend for a web puzzle minigame built with Three.js using AWS, Vue.js & TypeScript for the HKSTP career event',
-    'Designed the UI/UX for the game and the web using Figma with attention to mobile device priority',
-  ],
-  [
-    'Summer Undergraduate Research Internship Program',
-    'Computational Biomolecules (hydrogel)',
-    'May - Jul 22',
-    'Simulated biophysical system with MARTINI force field and GROMACS to compare for compatibility of result under the supervision of Professor Wang Yi',
-    'Awarded the best poster presentation prize amongst 18 other teams by the professors',
-    'Utilized server-side simulation processing in LINUX-based OS and enhanced efficiency for the project by cooperating with a partner',
-  ],
-  [
-    'United States - Republic of Korea Combined Command Post Training',
-    'English Linguist in the Combined Ground Component Command',
-    'Jun – Aug 21',
-    'Engaged in US-ROK training as a real-time English linguist for the department of Hospitality and Personnel under deployment',
-    'Translated diplomatically and strategically in-depth documents for both parties in clear technical wordings',
-  ],
-];
+const ExperienceBox = ({ experience }) => {
+  const description = () => {
+    return Object.keys(experience)
+      .filter((objKey) => objKey.startsWith('description'))
+      .map((desc) => (
+        <React.Fragment key={desc}>
+          {desc === 'description1' || <br />}
+          <li
+            dangerouslySetInnerHTML={{
+              __html: experience[desc],
+            }}
+          ></li>
+        </React.Fragment>
+      ));
+  };
 
-const ExperienceBox = ({ work, role, date, desc1, desc2, desc3 }) => {
   return (
     <>
       <div className="xp-box-wrapper">
@@ -43,26 +33,15 @@ const ExperienceBox = ({ work, role, date, desc1, desc2, desc3 }) => {
           viewport={{ once: true }}
         >
           <li className="content-box">
-            <h4>{work}</h4>
+            <h4>{experience.title}</h4>
             <div className="role-date">
-              <span className="role">{role}</span>
-              <span>{date}</span>
+              <span className="role">{experience.jobTitle}</span>
+              <span>{experience.duration}</span>
             </div>
             <hr />
             <ul>
-              <li>{desc1}</li>
-              {desc2 ? (
-                <>
-                  <br />
-                  <li>{desc2}</li>
-                </>
-              ) : null}
-              {desc3 ? (
-                <>
-                  <br />
-                  <li>{desc3}</li>
-                </>
-              ) : null}
+              {description()}
+              {/* )} */}
             </ul>
           </li>
         </motion.div>
@@ -78,15 +57,10 @@ export default function Experience() {
   return (
     <>
       <ul className="xp-container" ref={xpContainerRef}>
-        {worksArray.map(([work, role, date, desc1, desc2, desc3]) => (
+        {experienceInfo.map((experience, i) => (
           <ExperienceBox
-            work={work}
-            role={role}
-            date={date}
-            desc1={desc1}
-            desc2={desc2}
-            desc3={desc3}
-            key={work}
+            key={'experiencebox' + i}
+            experience={experience}
           ></ExperienceBox>
         ))}
       </ul>
