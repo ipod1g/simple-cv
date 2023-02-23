@@ -12,11 +12,11 @@ export const projectsInfo = [
     workScale: 'Company',
     duration: 'Jan 23 - Feb 23',
     description1:
-      'Developed the frontend for a Three.js web puzzle game with Vue, TypeScript and AWS',
+      'Developed the frontend for a Three.js web puzzle game with <u>Vue<u/>, <u>Vuex<u/>, <u>TypeScript<u/> and <u>AWS<u/>',
     description2:
-      'Led the designing process of the landing page and the game UI/UX using Figma',
+      'Led the designing process of the landing page and the game UI/UX using <u>Figma<u/>',
     description3:
-      'Collaborated and maintained with five developers via GitOps workflow',
+      'Collaborated and maintained with five developers via <u>GitOps<u/> workflow',
     description4:
       'Focused greatly on structuring the client and server-side communications to prevent gameplay exploits',
   },
