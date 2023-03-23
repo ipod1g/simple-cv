@@ -12,7 +12,7 @@ export const projectsInfo = [
     workScale: 'Company',
     duration: 'Jan 23 - Feb 23',
     description1:
-      'Developed the frontend for a Three.js web puzzle game with <u>Vue<u/>, <u>Vuex<u/>, <u>TypeScript<u/> and <u>AWS<u/>',
+      'Developed the frontend for a Three.js web puzzle game with <u>Vue<u/> , <u>Vuex<u/> , <u>TypeScript<u/> and <u>AWS<u/> - 20,000+ visits and 1000+ sign-ups',
     description2:
       'Led the designing process of the landing page and the game UI/UX using <u>Figma<u/>',
     description3:
@@ -84,7 +84,7 @@ export const experienceInfo = [
     description1:
       'Designed the UI/UX for two significant projects using Figma with attention to mobile device responsiveness',
     description2:
-      'Developed fluid and interactive websites using various modern tech stacks - Vue, React, TypeScript, TailwindCSS',
+      'Developed fluid and interactive website experience using various modern tech stacks - Vue, React, TypeScript, TailwindCSS',
   },
   {
     title: 'Summer Undergraduate Research Internship Program',
