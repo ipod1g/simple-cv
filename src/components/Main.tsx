@@ -1,12 +1,13 @@
 import React, { useRef } from 'react';
 import About from './About';
 import Experience from './Experience';
-import './Main.css';
 import Navbar from './Navbar';
 import Projects from './Projects';
 import Skills from './Skills';
 import { AnimatePresence, motion, useInView } from 'framer-motion';
 import Extras from './Extras';
+import Image from 'next/image';
+import Background from '../../public/assets/spaceloop-blur.webp';
 
 const Main = () => {
   const aboutSection = useRef(null);
@@ -26,10 +27,27 @@ const Main = () => {
 
   return (
     <>
-      <div className="main-wrapper">
-        <article className="main-container">
+      <main id="main-wrapper" className="h-fit w-full relative">
+        <Image
+          className="h-full object-cover fixed -z-10 inset-0 opacity-10 blur-sm object-left lg:object-center"
+          src={Background}
+          width={1920}
+          height={1080}
+          style={{
+            filter: 'blur(4px)',
+            zIndex: -10,
+            objectFit: 'cover',
+            objectPosition: 'left',
+            position: 'fixed',
+            inset: 0,
+            height: '100%',
+            opacity: 0.1,
+          }}
+          alt={''}
+        />
+        <article id="main-container" className="h-fit w-full">
           <hr />
-          <section className="about-section" ref={aboutSection}>
+          <section id="about-section" ref={aboutSection}>
             <About />
           </section>
           <hr />
@@ -58,7 +76,7 @@ const Main = () => {
             <Skills />
           </section>
         </article>
-      </div>
+      </main>
       <AnimatePresence>
         {isInView ? (
           ''

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
-import './Contents.css';
+// import './Contents.css';
 import ScrollBarIndicator from './ScrollBarIndicator';
 import { experienceInfo } from '../constants/Content';
 
@@ -22,7 +22,10 @@ const ExperienceBox = ({ experience }) => {
 
   return (
     <>
-      <div className="xp-box-wrapper">
+      <div
+        id="xp-box-wrapper"
+        className="before:content-[''] before:bg-white before:inline-block before:absolute before:rounded-full before:border before:border-solid before:border-greyish before:mt-[6px] before:w-[10px] before:h-[10px] before:z-50 before:left-[17px] lg:before:left-[35px]"
+      >
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           whileInView={{
@@ -32,15 +35,18 @@ const ExperienceBox = ({ experience }) => {
           transition={{ ease: 'easeOut', duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <li className="content-box">
-            <h4>{experience.title}</h4>
-            <div className="role-date">
-              <span className="role">{experience.jobTitle}</span>
+          <li
+            id="content-box"
+            className="w-[70vw] pt-0 pr-3 pb-5 pl-4 mt-4 mx-0 mb-12 list-none box-border glass"
+          >
+            <h4 className="mt-0 text-lg">{experience.title}</h4>
+            <div className="flex justify-between -mt-[18px]">
+              <span className="italic text-sm">{experience.jobTitle}</span>
               <span>{experience.duration}</span>
             </div>
             <hr />
-            <ul>
-              {description()}
+            <ul className="mb-3">
+              {/* {description()} */}
               {/* )} */}
             </ul>
           </li>
@@ -56,7 +62,7 @@ export default function Experience() {
 
   return (
     <>
-      <ul className="xp-container" ref={xpContainerRef}>
+      <ul id="xp-container" ref={xpContainerRef}>
         {experienceInfo.map((experience, i) => (
           <ExperienceBox
             key={'experiencebox' + i}

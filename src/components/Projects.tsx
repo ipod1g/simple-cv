@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import ScrollBarIndicator from './ScrollBarIndicator';
-import './Contents.css';
+// import './Contents.css';
 import { projectsInfo } from '../constants/Content';
 
 library.add(faGithub);
@@ -15,7 +15,7 @@ const ProjectsBox = ({ projects }) => {
       .filter((objKey) => objKey.startsWith('description'))
       .map((desc) => (
         <React.Fragment key={desc}>
-          {desc === 'description1' || <br />}
+          {desc === 'description1'}
           <li
             dangerouslySetInnerHTML={{
               __html: projects[desc],
@@ -27,7 +27,10 @@ const ProjectsBox = ({ projects }) => {
 
   return (
     <>
-      <div className="proj-box-wrapper">
+      <div
+        id="proj-box-wrapper"
+        className="before:content-[''] before:bg-white before:inline-block before:absolute before:rounded-full before:border before:border-solid before:border-greyish before:mt-[6px] before:w-[10px] before:h-[10px] before:z-50 before:left-[17px] lg:before:left-[35px] before:rotate-45"
+      >
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           whileInView={{
@@ -37,11 +40,16 @@ const ProjectsBox = ({ projects }) => {
           transition={{ ease: 'easeOut', duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <li className="content-box">
-            <div className="content-box-inner-container">
-              <div className="content-box-inner-buttons">
+          <li
+            id="content-box"
+            className="w-[70vw] pt-0 pr-3 pb-5 pl-4 mt-4 mx-0 mb-12 list-none box-border glass"
+          >
+            <div className="flex flex-col">
+              <div className="flex gap-3">
                 <a
-                  className="company"
+                  id="company"
+                  // color: #c199e5e0;
+                  className="transition-all hover:transition-all hover:text-purple-400/70 hover:text-line-purple hover:scale-105"
                   href={projects.liveLink}
                   target="_blank"
                   rel="noreferrer"
@@ -52,7 +60,8 @@ const ProjectsBox = ({ projects }) => {
                   <>
                     |
                     <motion.a
-                      className="fa-icon"
+                      id="fa-icon"
+                      className="text-blueish/90"
                       target="_blank"
                       rel="noreferrer"
                       href={projects.repoLink}
@@ -64,13 +73,16 @@ const ProjectsBox = ({ projects }) => {
                       whileTap={{ scale: 1 }}
                       style={{ marginTop: '1px' }}
                     >
-                      <FontAwesomeIcon icon="fa-brands fa-github" />
+                      <FontAwesomeIcon
+                        icon={faGithub}
+                        // icon="fa-brands fa-github"
+                      />
                     </motion.a>
                   </>
                 )}
               </div>
-              <div className="role-date">
-                <span className="role">{projects.workScale}</span>
+              <div className="flex justify-between -mt-[18px]">
+                <span className="italic text-sm">{projects.workScale}</span>
                 <span>{projects.duration}</span>
               </div>
               <hr />
