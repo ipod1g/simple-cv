@@ -7,6 +7,9 @@ module.exports = {
     './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    listStyleType: {
+      circle: 'circle',
+    },
     extend: {
       colors: {
         greyish: '#95a7c7',
