@@ -9,6 +9,7 @@ import Extras from './Extras';
 import Image from 'next/image';
 import Background from '../../public/assets/spaceloop-blur.webp';
 import { TNotionData } from '@/types/types';
+import Loading from '@/components/common/Loading';
 
 const Main = (props: { notionDataArray: TNotionData[] }) => {
   const aboutSection = useRef(null);
@@ -73,7 +74,7 @@ const Main = (props: { notionDataArray: TNotionData[] }) => {
               <hr />
             </>
           ) : (
-            <div>Loading...</div>
+            <Loading></Loading>
           )}
           <section id="skill-section" ref={skillsSection}>
             <Skills />
