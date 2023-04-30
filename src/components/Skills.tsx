@@ -1,20 +1,25 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import SectionTitle from '@/components/common/SectionTitle';
 
 const Skills = () => {
   return (
     <>
-      <h3>Skills</h3>
+      <SectionTitle title="Skills" />
       <div id="skills-container" className="ml-[70px] pr-[50x] pb-4 lg:pb-3">
-        <h4 className="text-xl tracking-widest underline">Technical</h4>
-        <p>
+        <h4 className="text-xl tracking-[4px] underline underline-offset-4 font-semibold">
+          Technical
+        </h4>
+        <p className="py-6">
           JavaScript | HTML/CSS | React | TypeScript | Next.js | Node.js | Figma
         </p>
-        <h4 className="text-xl tracking-widest underline">Language</h4>
-        <p> English - Native | Korean - Native </p>
+        <h4 className="text-xl tracking-[4px] underline underline-offset-4 font-semibold">
+          Language
+        </h4>
+        <p className="pt-6"> English - Native | Korean - Native </p>
       </div>
       <hr />
-      <div id="credits" className="text-sm mb-20 flex flex-col">
+      <div id="credits" className="text-xs mb-20 flex flex-col leading-10">
         <span className="ml-16">
           Background image source:
           <motion.a
@@ -26,7 +31,7 @@ const Skills = () => {
             whileHover={{ scale: 1.15, color: '#c199e5e0' }}
             whileTap={{ scale: 1 }}
           >
-            here
+            &nbsp; here
           </motion.a>
           <p>Special Thanks to YI Jisoo</p>
         </span>

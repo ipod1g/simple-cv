@@ -9,7 +9,7 @@ import Extras from './Extras';
 import Image from 'next/image';
 import Background from '../../public/assets/spaceloop-blur.webp';
 
-const Main = () => {
+const Main = (props: { notionData }) => {
   const aboutSection = useRef(null);
   const experienceSection = useRef(null);
   const projectsSection = useRef(null);
@@ -51,36 +51,31 @@ const Main = () => {
             <About />
           </section>
           <hr />
-          <section className="project-section" ref={projectsSection}>
-            <h3>Projects</h3>
-            <div className="proj-wrapper">
-              <Projects></Projects>
-            </div>
-          </section>
-          <hr />
-          <section className="xp-section" ref={experienceSection}>
-            <h3>Experience</h3>
-            <div className="xp-wrapper">
-              <Experience></Experience>
-            </div>
-          </section>
-          <hr />
-          <section className="extras-section" ref={extrasSection}>
-            <h3>Extra-curricular</h3>
-            <div className="extras-wrapper">
-              <Extras></Extras>
-            </div>
-          </section>
-          <hr />
-          <section className="skill-section" ref={skillsSection}>
+          {props.notionData ? (
+            <>
+              <section id="project-section" ref={projectsSection}>
+                <Projects notionData={props.notionData}></Projects>
+              </section>
+              <hr />
+              <section id="xp-section" ref={experienceSection}>
+                <Experience notionData={props.notionData}></Experience>
+              </section>
+              <hr />
+              <section id="extras-section" ref={extrasSection}>
+                <Extras notionData={props.notionData}></Extras>
+              </section>
+              <hr />
+            </>
+          ) : (
+            <div>Loading...</div>
+          )}
+          <section id="skill-section" ref={skillsSection}>
             <Skills />
           </section>
         </article>
       </main>
       <AnimatePresence>
-        {isInView ? (
-          ''
-        ) : (
+        {!isInView && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
