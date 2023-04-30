@@ -4,11 +4,11 @@ import { getDatabase, getPage, getBlocks } from '@/controllers/notion';
 import Link from 'next/link';
 import { DATABASE_ID } from '@/config';
 
-export const Text = ({ text }) => {
+export const Text = ({ text }: { text: any }) => {
   if (!text) {
     return null;
   }
-  return text.map((value) => {
+  return text.map((value: any) => {
     const {
       annotations: { bold, code, color, italic, strikethrough, underline },
       text,
@@ -33,7 +33,7 @@ export const Text = ({ text }) => {
   });
 };
 
-const renderNestedList = (block) => {
+const renderNestedList = (block: any) => {
   const { type } = block;
   const value = block[type];
   if (!value) return null;
@@ -41,12 +41,12 @@ const renderNestedList = (block) => {
   const isNumberedList = value.children[0].type === 'numbered_list_item';
 
   if (isNumberedList) {
-    return <ol>{value.children.map((block) => renderBlock(block))}</ol>;
+    return <ol>{value.children.map((block: any) => renderBlock(block))}</ol>;
   }
-  return <ul>{value.children.map((block) => renderBlock(block))}</ul>;
+  return <ul>{value.children.map((block: any) => renderBlock(block))}</ul>;
 };
 
-const renderBlock = (block) => {
+const renderBlock = (block: any) => {
   const { type, id } = block;
   const value = block[type];
 
@@ -78,14 +78,14 @@ const renderBlock = (block) => {
     case 'bulleted_list': {
       return (
         <ul className="list-disc list-inside leading-8">
-          {value.children.map((child) => renderBlock(child))}
+          {value.children.map((child: any) => renderBlock(child))}
         </ul>
       );
     }
     case 'numbered_list': {
       return (
         <ol className="list-decimal list-inside">
-          {value.children.map((child) => renderBlock(child))}
+          {value.children.map((child: any) => renderBlock(child))}
         </ol>
       );
     }
@@ -117,7 +117,7 @@ const renderBlock = (block) => {
           <summary>
             <Text text={value.rich_text} />
           </summary>
-          {block.children?.map((child) => (
+          {block.children?.map((child: any) => (
             <Fragment key={child.id}>{renderBlock(child)}</Fragment>
           ))}
         </details>
@@ -126,7 +126,7 @@ const renderBlock = (block) => {
       return (
         <div className="border-[1px] border-solid border-current p-5 rounded-xl">
           <strong>{value.title}</strong>
-          {block.children.map((child) => renderBlock(child))}
+          {block.children.map((child: any) => renderBlock(child))}
         </div>
       );
     case 'image':
@@ -184,12 +184,12 @@ const renderBlock = (block) => {
       return (
         <table className="notion--table dark:bg-[rgb(15,8,28)]">
           <tbody>
-            {block.children?.map((child, i) => {
+            {block.children?.map((child: any, i: number) => {
               const RowElement =
                 value.has_column_header && i == 0 ? 'th' : 'td';
               return (
                 <tr key={child.id}>
-                  {child.table_row?.cells?.map((cell, i) => {
+                  {child.table_row?.cells?.map((cell: any, i: number) => {
                     return (
                       <RowElement key={`${cell.plain_text}-${i}`}>
                         <Text text={cell} />
@@ -206,12 +206,14 @@ const renderBlock = (block) => {
     case 'column_list': {
       return (
         <div className="notion--row">
-          {block.children.map((block) => renderBlock(block))}
+          {block.children.map((block: any) => renderBlock(block))}
         </div>
       );
     }
     case 'column': {
-      return <div>{block.children.map((child) => renderBlock(child))}</div>;
+      return (
+        <div>{block.children.map((child: any) => renderBlock(child))}</div>
+      );
     }
     default:
       return `❌ Unsupported block (${
@@ -220,7 +222,7 @@ const renderBlock = (block) => {
   }
 };
 
-export default function Post({ page, blocks }) {
+export default function Post({ page, blocks }: { page: any; blocks: any }) {
   if (!page || !blocks) {
     return <div />;
   }
@@ -236,7 +238,7 @@ export default function Post({ page, blocks }) {
           <Text text={page.properties.Name.title} />
         </h1>
         <section>
-          {blocks.map((block) => (
+          {blocks.map((block: any) => (
             <Fragment key={block.id}>{renderBlock(block)}</Fragment>
           ))}
           <Link href="/" className="inline-block mb-5">
@@ -249,14 +251,14 @@ export default function Post({ page, blocks }) {
 }
 
 export const getStaticPaths = async () => {
-  const database = await getDatabase(DATABASE_ID);
+  const database: any = await getDatabase(DATABASE_ID);
   return {
-    paths: database.map((page) => ({ params: { id: page.id } })),
+    paths: database.map((page: any) => ({ params: { id: page.id } })),
     fallback: true,
   };
 };
 
-export const getStaticProps = async (context) => {
+export const getStaticProps = async (context: any) => {
   const { id } = context.params;
   const page = await getPage(id);
   const blocks = await getBlocks(id);
