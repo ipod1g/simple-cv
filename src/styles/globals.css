@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-size: 13px;
+}
+
+@media (min-width: 1050px) {
+  :root {
+    font-size: 17px;
+  }
+}
+
+html {
+  background-color: #111;
+  font-family: 'Source Sans Pro', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid rgba(238, 238, 238, 0.291);
+  margin: 24px 20% 24px 60px;
+}
+
+.glass {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.27);
+  /* border: 1px solid rgba(0, 0, 0, 0.07); */
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.text-line-purple {
+  text-shadow: 1px 3px 3px #6f4d9bad;
+}
+
+.deep-shadow-inner {
+  box-shadow: inset 17px 17px 34px #090909, inset -17px -17px 34px #1b1b1b;
+}
+
+.content-box:hover .title-text {
+  color: #c199e5e0;
+  text-shadow: 1px 3px 3px #6f4d9bad;
+  transform: scale(1.04);
+  -webkit-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+
+.notion--table {
+  border: 1px solid currentColor;
+  border-collapse: collapse;
+}
+.notion--table th {
+  border: 1px solid currentColor;
+  background-color: rgb(242, 242, 242);
+  padding: 6px 12px;
+}
+.notion--table td {
+  border: 1px solid currentColor;
+  padding: 6px 12px;
+}
+
+.notion--row {
+  display: flex;
+}
+
+.notion--row > div {
+  flex: 1;
+}
+
+.notion--container h1 {
+  font-size: 32px;
+}
+
+.notion--container img {
+  width: 100%;
+  height: auto;
+}
+
+.notion--container figure {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.notion--container figcaption {
+  opacity: 0.6;
+}
+
+@media (min-width: 1024px) {
+  .glass {
+    backdrop-filter: blur(8.7px);
+    -webkit-backdrop-filter: blur(8.7px);
+  }
+  hr {
+    margin-right: 60px;
+  }
+}
