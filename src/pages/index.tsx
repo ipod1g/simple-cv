@@ -12,10 +12,8 @@ const source = Source_Sans_Pro({
 
 export default function Home({
   notionDataArray,
-  rawData,
 }: {
   notionDataArray: TNotionData[];
-  rawData: any;
 }) {
   console.log(notionDataArray);
 
@@ -35,7 +33,6 @@ export const getStaticProps = async () => {
 
   return {
     props: {
-      rawData: database,
       notionDataArray: parsedData,
     },
     revalidate: 1,
