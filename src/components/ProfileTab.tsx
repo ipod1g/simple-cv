@@ -66,7 +66,7 @@ const ProfileTab = () => {
             className="rounded-2xl px-4 py-0 my-4 mx-auto h-14 bg-neutral-600/20"
           >
             <a
-              href="../../public/assets/CV.pdf"
+              href="/assets/CV.pdf"
               download="CV.pdf"
               className="text-gray-300 no-underline tracking-[2.5px] uppercase font-bold text-xs py-5 px-0"
             >
