@@ -19,7 +19,7 @@ const Skills = () => {
         <p className="pt-6"> English - Native | Korean - Native </p>
       </div>
       <hr />
-      <div id="credits" className="text-xs mb-20 flex flex-col leading-10">
+      <div id="credits" className="text-sm mb-20 flex flex-col leading-10">
         <span className="ml-16">
           Background image source:
           <motion.a
