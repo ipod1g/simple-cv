@@ -1,6 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-const Navbar = (props) => {
+const Navbar = (props: {
+  scrollToSection: (
+    elementRef: React.MutableRefObject<HTMLElement | null>
+  ) => void;
+  aboutSection: React.MutableRefObject<HTMLElement | null>;
+  projectsSection: React.MutableRefObject<HTMLElement | null>;
+  experienceSection: React.MutableRefObject<HTMLElement | null>;
+  extrasSection: React.MutableRefObject<HTMLElement | null>;
+  skillsSection: React.MutableRefObject<HTMLElement | null>;
+}) => {
   const navBarOptions = [
     {
       section: 'About',
@@ -9,7 +18,7 @@ const Navbar = (props) => {
     },
     {
       section: 'Project',
-      ref: props.projectSection,
+      ref: props.projectsSection,
       marginRight: '0',
     },
     {
@@ -36,7 +45,11 @@ const Navbar = (props) => {
       whileHover={{
         width: '7rem',
         paddingRight: 10,
-        border: '1px solid #ffffff22',
+        border: '1px solid rgba(238, 238, 238, 0.3)',
+        transition: { duration: 0.1 },
+      }}
+      initial={{
+        border: '0px solid rgba(238, 238, 238, 0)',
       }}
     >
       {navBarOptions.map((option) => {

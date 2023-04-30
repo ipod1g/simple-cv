@@ -55,8 +55,12 @@ const ProfileTab = () => {
           </div>
           <motion.button
             whileHover={{
-              scale: 1.1,
-              border: '1px rgba(238, 238, 238, 0.291) solid',
+              scale: 1.08,
+              border: '1px rgba(238, 238, 238, 0.3) solid',
+              transition: { duration: 0.1 },
+            }}
+            initial={{
+              border: '0px solid rgba(238, 238, 238, 0)',
             }}
             whileTap={{ scale: 0.99 }}
             className="rounded-2xl px-4 py-0 my-4 mx-auto h-14 bg-neutral-600/20"
@@ -64,8 +68,7 @@ const ProfileTab = () => {
             <a
               href="../../public/assets/CV.pdf"
               download="CV.pdf"
-              className="text-gray-300 no-underline tracking-[2.5px] uppercase font-bold text-xs py-5 px-0
-            "
+              className="text-gray-300 no-underline tracking-[2.5px] uppercase font-bold text-xs py-5 px-0"
             >
               Download CV
             </a>

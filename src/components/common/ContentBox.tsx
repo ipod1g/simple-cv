@@ -3,28 +3,10 @@ import { motion } from 'framer-motion';
 import React from 'react';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import Link from 'next/link';
-import formatDate from '@/utils/formatDate';
 import ContentDuration from './ContentDuration';
+import { TNotionData } from '@/types/types';
 
-export type ContentType = {
-  id: string;
-  title: string;
-  subTitle: string;
-  duration: {
-    start: string;
-    end: string | null;
-  };
-  projectURL: string;
-  githubURL?: string;
-  points: {
-    point1: string;
-    point2?: string;
-    point3?: string;
-    point4?: string;
-  };
-};
-
-const ContentBox = (props: { content: ContentType }) => {
+const ContentBox = (props: { content: TNotionData }) => {
   const { title, subTitle, duration, projectURL, githubURL, points } =
     props.content;
 
@@ -73,8 +55,8 @@ const ContentBox = (props: { content: ContentType }) => {
             </>
           )}
         </div>
-        <div className="flex justify-between pt-1">
-          <div className="italic text-base text-white/50 max-w-[75%]">
+        <div className="flex justify-between pt-1 items-end">
+          <div className="italic text-base text-white/50 max-w-[50%]">
             {subTitle}
           </div>
           <ContentDuration duration={duration} />

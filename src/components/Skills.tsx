@@ -6,7 +6,10 @@ const Skills = () => {
   return (
     <>
       <SectionTitle title="Skills" />
-      <div id="skills-container" className="ml-[70px] pr-[50x] pb-4 lg:pb-3">
+      <div
+        id="skills-container"
+        className="ml-[70px] pr-[50x] pb-8 lg:pb-10 max-w-[50%]"
+      >
         <h4 className="text-xl tracking-[4px] underline underline-offset-4 font-semibold">
           Technical
         </h4>
@@ -20,7 +23,7 @@ const Skills = () => {
       </div>
       <hr />
       <div id="credits" className="text-sm mb-20 flex flex-col leading-10">
-        <span className="ml-16">
+        <div className="ml-16 mb-4">
           Background image source:
           <motion.a
             className="text-blueish/90"
@@ -34,7 +37,7 @@ const Skills = () => {
             &nbsp; here
           </motion.a>
           <p>Special Thanks to YI Jisoo</p>
-        </span>
+        </div>
         <hr />
       </div>
     </>

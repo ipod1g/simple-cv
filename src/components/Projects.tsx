@@ -3,8 +3,9 @@ import ScrollBarIndicator from './ScrollBarIndicator';
 import ContentBox from './common/ContentBox';
 import ContentBoxBullet from './common/ContentBoxBullet';
 import SectionTitle from './common/SectionTitle';
+import { TNotionData } from '@/types/types';
 
-export default function Projects(props: { notionData }) {
+export default function Projects(props: { notionDataArray: TNotionData[] }) {
   const projContainerRef = useRef(null);
   return (
     <>
@@ -14,7 +15,7 @@ export default function Projects(props: { notionData }) {
           className="ml-[28px] lg:ml-8 p-4 max-w-4xl w-5/6 lg:w-3/4 relative"
           ref={projContainerRef}
         >
-          {props.notionData.map((project, idx: number) => {
+          {props.notionDataArray.map((project, idx: number) => {
             if (project.section === 'Projects') {
               return (
                 <ContentBoxBullet key={project.id} shape="diamond">

@@ -8,8 +8,9 @@ import { AnimatePresence, motion, useInView } from 'framer-motion';
 import Extras from './Extras';
 import Image from 'next/image';
 import Background from '../../public/assets/spaceloop-blur.webp';
+import { TNotionData } from '@/types/types';
 
-const Main = (props: { notionData }) => {
+const Main = (props: { notionDataArray: TNotionData[] }) => {
   const aboutSection = useRef(null);
   const experienceSection = useRef(null);
   const projectsSection = useRef(null);
@@ -18,9 +19,12 @@ const Main = (props: { notionData }) => {
 
   const isInView = useInView(aboutSection);
 
-  const scrollToSection = (elementRef) => {
+  const scrollToSection = (
+    elementRef: React.MutableRefObject<HTMLElement | null>
+  ) => {
+    if (!window) return;
     window.scrollTo({
-      top: elementRef.current.offsetTop,
+      top: elementRef.current!.offsetTop,
       behavior: 'smooth',
     });
   };
@@ -51,18 +55,20 @@ const Main = (props: { notionData }) => {
             <About />
           </section>
           <hr />
-          {props.notionData ? (
+          {props.notionDataArray ? (
             <>
               <section id="project-section" ref={projectsSection}>
-                <Projects notionData={props.notionData}></Projects>
+                <Projects notionDataArray={props.notionDataArray}></Projects>
               </section>
               <hr />
               <section id="xp-section" ref={experienceSection}>
-                <Experience notionData={props.notionData}></Experience>
+                <Experience
+                  notionDataArray={props.notionDataArray}
+                ></Experience>
               </section>
               <hr />
               <section id="extras-section" ref={extrasSection}>
-                <Extras notionData={props.notionData}></Extras>
+                <Extras notionDataArray={props.notionDataArray}></Extras>
               </section>
               <hr />
             </>
