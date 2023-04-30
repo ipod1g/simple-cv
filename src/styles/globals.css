@@ -2,17 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  background-color: #111;
+:root {
+  font-size: 13px;
 }
 
-h3 {
-  padding: 15px 15px 15px 0px;
-  margin-left: 55px;
-  letter-spacing: 8px;
-  font-size: 1.6rem;
-  margin-bottom: 10px;
-  font-weight: bold;
+@media (min-width: 1050px) {
+  :root {
+    font-size: 17px;
+  }
+}
+
+html {
+  background-color: #111;
+  font-family: 'Source Sans Pro', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 hr {
@@ -38,14 +42,53 @@ hr {
   box-shadow: inset 17px 17px 34px #090909, inset -17px -17px 34px #1b1b1b;
 }
 
-line {
-  stroke-dashoffset: 0;
-  stroke-width: 5px;
-  fill: none;
+.content-box:hover .title-text {
+  color: #c199e5e0;
+  text-shadow: 1px 3px 3px #6f4d9bad;
+  transform: scale(1.04);
+  -webkit-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear;
 }
 
-.progress .indicator {
-  stroke: url(#linear);
+.notion--table {
+  border: 1px solid currentColor;
+  border-collapse: collapse;
+}
+.notion--table th {
+  border: 1px solid currentColor;
+  background-color: rgb(242, 242, 242);
+  padding: 6px 12px;
+}
+.notion--table td {
+  border: 1px solid currentColor;
+  padding: 6px 12px;
+}
+
+.notion--row {
+  display: flex;
+}
+
+.notion--row > div {
+  flex: 1;
+}
+
+.notion--container h1 {
+  font-size: 32px;
+}
+
+.notion--container img {
+  width: 100%;
+  height: auto;
+}
+
+.notion--container figure {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.notion--container figcaption {
+  opacity: 0.6;
 }
 
 @media (min-width: 1024px) {
