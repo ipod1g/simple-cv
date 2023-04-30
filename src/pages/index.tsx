@@ -15,7 +15,7 @@ export default function Home({
 }: {
   notionDataArray: TNotionData[];
 }) {
-  console.log(notionDataArray);
+  // console.log(notionDataArray);
 
   return (
     <div
