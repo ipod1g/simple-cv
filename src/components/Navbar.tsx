@@ -1,7 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-// import './Navbar.css';
-
 const Navbar = (props) => {
   const navBarOptions = [
     {
@@ -34,8 +32,12 @@ const Navbar = (props) => {
   return (
     <motion.nav
       id="nav-bar"
-      className="fixed my-[7%] mx-0 right-3 w-[55px] rounded-3xl h-3/4 flex flex-col justify-around items-end py-[150px] pl-[20px] opacity-50 transition-all glass hover:opacity-100 lg:w-16"
-      whileHover={{ scale: 1.1 }}
+      className="fixed my-[7%] mx-0 right-4 w-20 rounded-3xl h-3/4 flex flex-col justify-around items-end py-40 opacity-70 glass hover:opacity-100 gap-10 origin-right"
+      whileHover={{
+        width: '7rem',
+        paddingRight: 10,
+        border: '1px solid #ffffff22',
+      }}
     >
       {navBarOptions.map((option) => {
         return (
@@ -45,9 +47,9 @@ const Navbar = (props) => {
               props.scrollToSection(option.ref);
             }}
             style={{ marginRight: option.marginRight }}
-            whileHover={{ scale: 1.2, letterSpacing: '4px' }}
+            whileHover={{ scale: 1, letterSpacing: '4px' }}
             whileTap={{ scale: 1 }}
-            className="hover:cursor-pointer"
+            className="hover:cursor-pointer font-bold pr-1"
           >
             {option.section}
           </motion.button>
