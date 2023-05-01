@@ -1,4 +1,4 @@
-import React, { lazy, useRef } from 'react';
+import React, { Suspense, lazy, useRef } from 'react';
 import { AnimatePresence, motion, useInView } from 'framer-motion';
 import { TNotionData } from '@/types/types';
 import About from './About';
@@ -7,6 +7,8 @@ import Projects from './Projects';
 import Experience from './Experience';
 import Extras from './Extras';
 import Skills from './Skills';
+import SectionTitle from '@/components/common/SectionTitle';
+import Skeleton from '@/components/common/Skeleton';
 
 const Main = (props: { notionDataArray: TNotionData[] }) => {
   const aboutSection = useRef(null);
@@ -37,15 +39,24 @@ const Main = (props: { notionDataArray: TNotionData[] }) => {
           </section>
           <hr />
           <section id="project-section" ref={projectsSection}>
-            <Projects notionDataArray={props.notionDataArray}></Projects>
+            <SectionTitle title="Projects" />
+            <Suspense fallback={<Skeleton />}>
+              <Projects notionDataArray={props.notionDataArray}></Projects>
+            </Suspense>
           </section>
           <hr />
           <section id="xp-section" ref={experienceSection}>
-            <Experience notionDataArray={props.notionDataArray}></Experience>
+            <SectionTitle title="Experiences" />
+            <Suspense fallback={<Skeleton />}>
+              <Experience notionDataArray={props.notionDataArray}></Experience>
+            </Suspense>
           </section>
           <hr />
           <section id="extras-section" ref={extrasSection}>
-            <Extras notionDataArray={props.notionDataArray}></Extras>
+            <SectionTitle title="Extra-curricular" />
+            <Suspense fallback={<Skeleton />}>
+              <Extras notionDataArray={props.notionDataArray}></Extras>
+            </Suspense>
           </section>
           <hr />
           <section id="skill-section" ref={skillsSection}>
