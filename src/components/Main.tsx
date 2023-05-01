@@ -3,12 +3,23 @@ import { AnimatePresence, motion, useInView } from 'framer-motion';
 import { TNotionData } from '@/types/types';
 import About from './About';
 import Navbar from './Navbar';
-import Projects from './Projects';
-import Experience from './Experience';
-import Extras from './Extras';
 import Skills from './Skills';
 import SectionTitle from '@/components/common/SectionTitle';
 import Skeleton from '@/components/common/Skeleton';
+import dynamic from 'next/dynamic';
+
+const LazyProjects = dynamic(() => import('./Projects'), {
+  ssr: false,
+  loading: () => <Skeleton />,
+});
+const LazyExperience = dynamic(() => import('./Experience'), {
+  ssr: false,
+  loading: () => <Skeleton />,
+});
+const LazyExtras = dynamic(() => import('./Extras'), {
+  ssr: false,
+  loading: () => <Skeleton />,
+});
 
 const Main = (props: { notionDataArray: TNotionData[] }) => {
   const aboutSection = useRef(null);
@@ -31,7 +42,7 @@ const Main = (props: { notionDataArray: TNotionData[] }) => {
 
   return (
     <>
-      <main id="main-wrapper" className="h-fit w-full relative">
+      <main id="main-wrapper" className="h-fit w-full relative overflow-hidden">
         <article id="main-container" className="h-fit w-full">
           <hr />
           <section id="about-section" ref={aboutSection}>
@@ -40,23 +51,17 @@ const Main = (props: { notionDataArray: TNotionData[] }) => {
           <hr />
           <section id="project-section" ref={projectsSection}>
             <SectionTitle title="Projects" />
-            <Suspense fallback={<Skeleton />}>
-              <Projects notionDataArray={props.notionDataArray}></Projects>
-            </Suspense>
+            <LazyProjects notionDataArray={props.notionDataArray} />
           </section>
           <hr />
           <section id="xp-section" ref={experienceSection}>
             <SectionTitle title="Experiences" />
-            <Suspense fallback={<Skeleton />}>
-              <Experience notionDataArray={props.notionDataArray}></Experience>
-            </Suspense>
+            <LazyExperience notionDataArray={props.notionDataArray} />
           </section>
           <hr />
           <section id="extras-section" ref={extrasSection}>
             <SectionTitle title="Extra-curricular" />
-            <Suspense fallback={<Skeleton />}>
-              <Extras notionDataArray={props.notionDataArray}></Extras>
-            </Suspense>
+            <LazyExtras notionDataArray={props.notionDataArray} />
           </section>
           <hr />
           <section id="skill-section" ref={skillsSection}>
