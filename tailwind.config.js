@@ -21,6 +21,21 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      keyframes: ({ theme }) => ({
+        shimmer: {
+          '100%': {
+            transform: 'translateX(100%)',
+          },
+        },
+        rerender: {
+          '0%': {
+            ['border-color']: theme('colors.greyish'),
+          },
+          '40%': {
+            ['border-color']: theme('colors.greyish'),
+          },
+        },
+      }),
     },
   },
   plugins: [],

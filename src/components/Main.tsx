@@ -1,14 +1,25 @@
-import React, { useRef } from 'react';
-import About from './About';
-import Experience from './Experience';
-import Navbar from './Navbar';
-import Projects from './Projects';
-import Skills from './Skills';
+import React, { Suspense, lazy, useRef } from 'react';
 import { AnimatePresence, motion, useInView } from 'framer-motion';
-import Extras from './Extras';
-import Image from 'next/image';
-import Background from '../../public/assets/spaceloop-blur.webp';
 import { TNotionData } from '@/types/types';
+import About from './About';
+import Navbar from './Navbar';
+import Skills from './Skills';
+import SectionTitle from '@/components/common/SectionTitle';
+import Skeleton from '@/components/common/Skeleton';
+import dynamic from 'next/dynamic';
+
+const LazyProjects = dynamic(() => import('./Projects'), {
+  ssr: false,
+  loading: () => <Skeleton />,
+});
+const LazyExperience = dynamic(() => import('./Experience'), {
+  ssr: false,
+  loading: () => <Skeleton />,
+});
+const LazyExtras = dynamic(() => import('./Extras'), {
+  ssr: false,
+  loading: () => <Skeleton />,
+});
 
 const Main = (props: { notionDataArray: TNotionData[] }) => {
   const aboutSection = useRef(null);
@@ -31,50 +42,28 @@ const Main = (props: { notionDataArray: TNotionData[] }) => {
 
   return (
     <>
-      <main id="main-wrapper" className="h-fit w-full relative">
-        <Image
-          className="h-full object-cover fixed -z-10 inset-0 opacity-10 blur-sm object-left lg:object-center"
-          src={Background}
-          width={1920}
-          height={1080}
-          style={{
-            filter: 'blur(4px)',
-            zIndex: -10,
-            objectFit: 'cover',
-            objectPosition: 'left',
-            position: 'fixed',
-            inset: 0,
-            height: '100%',
-            opacity: 0.1,
-          }}
-          alt={''}
-        />
+      <main id="main-wrapper" className="h-fit w-full relative overflow-hidden">
         <article id="main-container" className="h-fit w-full">
           <hr />
           <section id="about-section" ref={aboutSection}>
             <About />
           </section>
           <hr />
-          {props.notionDataArray ? (
-            <>
-              <section id="project-section" ref={projectsSection}>
-                <Projects notionDataArray={props.notionDataArray}></Projects>
-              </section>
-              <hr />
-              <section id="xp-section" ref={experienceSection}>
-                <Experience
-                  notionDataArray={props.notionDataArray}
-                ></Experience>
-              </section>
-              <hr />
-              <section id="extras-section" ref={extrasSection}>
-                <Extras notionDataArray={props.notionDataArray}></Extras>
-              </section>
-              <hr />
-            </>
-          ) : (
-            <div>Loading...</div>
-          )}
+          <section id="project-section" ref={projectsSection}>
+            <SectionTitle title="Projects" />
+            <LazyProjects notionDataArray={props.notionDataArray} />
+          </section>
+          <hr />
+          <section id="xp-section" ref={experienceSection}>
+            <SectionTitle title="Experiences" />
+            <LazyExperience notionDataArray={props.notionDataArray} />
+          </section>
+          <hr />
+          <section id="extras-section" ref={extrasSection}>
+            <SectionTitle title="Extra-curricular" />
+            <LazyExtras notionDataArray={props.notionDataArray} />
+          </section>
+          <hr />
           <section id="skill-section" ref={skillsSection}>
             <Skills />
           </section>

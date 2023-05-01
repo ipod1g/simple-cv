@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+import Skeleton from './Skeleton';
 
 /** Not defining shape returns the default circle bullet */
 const ContentBoxBullet = (props: {
@@ -10,7 +11,7 @@ const ContentBoxBullet = (props: {
       return (
         <div
           className="before:bg-white before:absolute before:rotate-45 before:w-3
-      before:h-3 before:mt-7 before:z-50 before:left-0 before:content-['']"
+          before:h-3 before:mt-7 before:z-50 before:left-0 before:content-['']"
         >
           {props.children}
         </div>
