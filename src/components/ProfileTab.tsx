@@ -26,6 +26,8 @@ const ProfileTab = () => {
               src={Selfie}
               className="rounded-full object-contain saturate-[.85] h-full w-full p-[32px]"
               alt="My selfie"
+              height={96}
+              width={96}
               placeholder="blur"
             />
           </div>
