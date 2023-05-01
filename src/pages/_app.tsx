@@ -32,7 +32,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
         </Head>
         {/* <Analytics /> */}
-        <Component {...pageProps} />;
+        <Component {...pageProps} />
       </Layout>
     </>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 
+// make it appear before js load -> preload
 const Loading = () => {
   return (
     <>
