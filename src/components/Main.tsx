@@ -68,26 +68,26 @@ const Main = (props: { notionDataArray: TNotionData[] }) => {
             <Skills />
           </section>
         </article>
+        <AnimatePresence>
+          {!isInView && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed right-0 top-0"
+            >
+              <Navbar
+                scrollToSection={scrollToSection}
+                aboutSection={aboutSection}
+                projectsSection={projectsSection}
+                extrasSection={extrasSection}
+                experienceSection={experienceSection}
+                skillsSection={skillsSection}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
-      <AnimatePresence>
-        {!isInView && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            style={{ position: 'fixed' }}
-          >
-            <Navbar
-              scrollToSection={scrollToSection}
-              aboutSection={aboutSection}
-              projectsSection={projectsSection}
-              extrasSection={extrasSection}
-              experienceSection={experienceSection}
-              skillsSection={skillsSection}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
     </>
   );
 };
