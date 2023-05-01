@@ -11,7 +11,6 @@ export default function Home({
   // console.log(notionDataArray);
   return (
     <div>
-      <div>test hydrations</div>
       <Main notionDataArray={notionDataArray} />
     </div>
   );
