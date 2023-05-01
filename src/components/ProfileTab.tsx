@@ -29,7 +29,7 @@ const ProfileTab = () => {
             />
           </div>
           <aside className="text-sm">
-            <h3 className="text-lg text-[#c199e5e0]">
+            <h3 className="text-lg text-purple-400">
               Ku Bon Kwan (Bono) <br />
             </h3>
             <h4 className="leading-6">
