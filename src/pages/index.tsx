@@ -9,11 +9,7 @@ export default function Home({
   notionDataArray: TNotionData[];
 }) {
   // console.log(notionDataArray);
-  return (
-    <div>
-      <Main notionDataArray={notionDataArray} />
-    </div>
-  );
+  return <Main notionDataArray={notionDataArray} />;
 }
 
 export const getStaticProps = async () => {

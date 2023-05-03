@@ -1,32 +1,16 @@
-import React, { Suspense, lazy } from 'react';
-import { AnimatePresence, motion, useInView } from 'framer-motion';
+import React from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { TNotionData } from '@/types/types';
 import About from './About';
 import Navbar from './Navbar';
 import Skills from './Skills';
 import SectionTitle from '@/components/common/SectionTitle';
 import Skeleton from '@/components/common/Skeleton';
-import dynamic from 'next/dynamic';
-
-const LazyProjects = dynamic(() => import('./Projects'), {
-  loading: () => <Skeleton />,
-});
-const LazyExperience = dynamic(() => import('./Experience'), {
-  loading: () => <Skeleton />,
-});
-const LazyExtras = dynamic(() => import('./Extras'), {
-  loading: () => <Skeleton />,
-});
+import Projects from '@/components/Projects';
+import Experience from '@/components/Experience';
+import Extras from '@/components/Extras';
 
 const Main = (props: { notionDataArray: TNotionData[] }) => {
-  // const aboutSection = useRef(null);
-  // const experienceSection = useRef(null);
-  // const projectsSection = useRef(null);
-  // const extrasSection = useRef(null);
-  // const skillsSection = useRef(null);
-
-  // const isInView = useInView(aboutSection);
-
   const scrollToSection = (
     elementRef: React.MutableRefObject<HTMLElement | null>
   ) => {
@@ -42,63 +26,53 @@ const Main = (props: { notionDataArray: TNotionData[] }) => {
       <main id="main-wrapper" className="h-fit w-full relative overflow-hidden">
         <article id="main-container" className="h-fit w-full">
           <hr />
-          <section
-            id="about-section"
-            //  ref={aboutSection}
-          >
+          <section id="about-section">
             <About />
           </section>
           <hr />
-          <section
-            id="project-section"
-            // ref={projectsSection}
-          >
+          <section id="project-section">
             <SectionTitle title="Projects" />
-            <LazyProjects notionDataArray={props.notionDataArray} />
+            {props.notionDataArray ? (
+              <Projects notionDataArray={props.notionDataArray} />
+            ) : (
+              <Skeleton />
+            )}
           </section>
           <hr />
-          <section
-            id="xp-section"
-            //  ref={experienceSection}
-          >
+          <section id="work-section">
             <SectionTitle title="Experiences" />
-            <LazyExperience notionDataArray={props.notionDataArray} />
+            {props.notionDataArray ? (
+              <Experience notionDataArray={props.notionDataArray} />
+            ) : (
+              <Skeleton />
+            )}
           </section>
           <hr />
-          <section
-            id="extras-section"
-            // ref={extrasSection}
-          >
+          <section id="extra-section">
             <SectionTitle title="Extra-curricular" />
-            <LazyExtras notionDataArray={props.notionDataArray} />
+            {props.notionDataArray ? (
+              <Extras notionDataArray={props.notionDataArray} />
+            ) : (
+              <Skeleton />
+            )}
           </section>
           <hr />
-          <section
-            id="skill-section"
-            //  ref={skillsSection}
-          >
+          <section id="skill-section">
             <Skills />
           </section>
         </article>
-        {/* <AnimatePresence>
-          {!isInView && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed right-0 top-0"
-            >
-              <Navbar
-                scrollToSection={scrollToSection}
-                aboutSection={aboutSection}
-                projectsSection={projectsSection}
-                extrasSection={extrasSection}
-                experienceSection={experienceSection}
-                skillsSection={skillsSection}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence> */}
+        <AnimatePresence>
+          {/* {!isInView && ( */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed right-0 top-0"
+          >
+            <Navbar scrollToSection={scrollToSection} />
+          </motion.div>
+          {/* )} */}
+        </AnimatePresence>
       </main>
     </>
   );
