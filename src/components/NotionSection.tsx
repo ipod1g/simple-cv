@@ -6,7 +6,7 @@ import Experience from '@/components/Experience';
 import Extras from '@/components/Extras';
 import { TNotionData } from '@/types/types';
 import useNotionData from '@/hooks/useNotionData';
-import { parseDatabase } from '@/controllers/notion';
+import { parseDatabase } from '@/controllers/notionController';
 
 const NotionSection = () => {
   const { data, isLoading, isError } = useNotionData('cv_database');
@@ -16,6 +16,9 @@ const NotionSection = () => {
   useEffect(() => {
     if (data) {
       setNotionDataArray(parseDatabase(data));
+    }
+    if (isError) {
+      console.error('Error fetching data from Notion');
     }
   }, [data]);
 
