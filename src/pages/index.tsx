@@ -12,7 +12,7 @@ export default function Home({
   return <Main notionDataArray={notionDataArray} />;
 }
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const database = await getDatabase(DATABASE_ID);
   const parsedData = parseDatabase(database);
 
@@ -20,6 +20,5 @@ export const getStaticProps = async () => {
     props: {
       notionDataArray: parsedData,
     },
-    revalidate: 1,
   };
 };
