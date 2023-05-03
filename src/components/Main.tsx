@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useRef } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { AnimatePresence, motion, useInView } from 'framer-motion';
 import { TNotionData } from '@/types/types';
 import About from './About';
@@ -19,13 +19,13 @@ const LazyExtras = dynamic(() => import('./Extras'), {
 });
 
 const Main = (props: { notionDataArray: TNotionData[] }) => {
-  const aboutSection = useRef(null);
-  const experienceSection = useRef(null);
-  const projectsSection = useRef(null);
-  const extrasSection = useRef(null);
-  const skillsSection = useRef(null);
+  // const aboutSection = useRef(null);
+  // const experienceSection = useRef(null);
+  // const projectsSection = useRef(null);
+  // const extrasSection = useRef(null);
+  // const skillsSection = useRef(null);
 
-  const isInView = useInView(aboutSection);
+  // const isInView = useInView(aboutSection);
 
   const scrollToSection = (
     elementRef: React.MutableRefObject<HTMLElement | null>
@@ -42,30 +42,45 @@ const Main = (props: { notionDataArray: TNotionData[] }) => {
       <main id="main-wrapper" className="h-fit w-full relative overflow-hidden">
         <article id="main-container" className="h-fit w-full">
           <hr />
-          <section id="about-section" ref={aboutSection}>
+          <section
+            id="about-section"
+            //  ref={aboutSection}
+          >
             <About />
           </section>
           <hr />
-          <section id="project-section" ref={projectsSection}>
+          <section
+            id="project-section"
+            // ref={projectsSection}
+          >
             <SectionTitle title="Projects" />
             <LazyProjects notionDataArray={props.notionDataArray} />
           </section>
           <hr />
-          <section id="xp-section" ref={experienceSection}>
+          <section
+            id="xp-section"
+            //  ref={experienceSection}
+          >
             <SectionTitle title="Experiences" />
             <LazyExperience notionDataArray={props.notionDataArray} />
           </section>
           <hr />
-          <section id="extras-section" ref={extrasSection}>
+          <section
+            id="extras-section"
+            // ref={extrasSection}
+          >
             <SectionTitle title="Extra-curricular" />
             <LazyExtras notionDataArray={props.notionDataArray} />
           </section>
           <hr />
-          <section id="skill-section" ref={skillsSection}>
+          <section
+            id="skill-section"
+            //  ref={skillsSection}
+          >
             <Skills />
           </section>
         </article>
-        <AnimatePresence>
+        {/* <AnimatePresence>
           {!isInView && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -83,7 +98,7 @@ const Main = (props: { notionDataArray: TNotionData[] }) => {
               />
             </motion.div>
           )}
-        </AnimatePresence>
+        </AnimatePresence> */}
       </main>
     </>
   );
