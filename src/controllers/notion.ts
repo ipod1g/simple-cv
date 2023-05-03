@@ -10,25 +10,6 @@ const notion = new Client({
   auth: TOKEN,
 });
 
-// const options = {
-//   method: 'POST',
-//   headers: {
-//     accept: 'application/json',
-//     'Notion-Version': '2022-06-28',
-//     'content-type': 'application/json',
-//     Authorization: `Bearer ${TOKEN}`,
-//   },
-//   body: JSON.stringify({
-//     page_size: 100,
-//     sorts: [
-//       {
-//         property: 'Duration',
-//         direction: 'descending',
-//       },
-//     ],
-//   }),
-// };
-
 export const getDatabase = async (databaseId: any) => {
   try {
     const response = await notion.databases.query({
@@ -41,12 +22,6 @@ export const getDatabase = async (databaseId: any) => {
       ],
     });
     return response.results;
-    // const res = await fetch(
-    //   `https://api.notion.com/v1/databases/${databaseId}/query`,
-    //   options
-    // );
-    // const response = await res.json();
-    // return response.results;
   } catch (error: unknown) {
     if (isNotionClientError(error)) {
       // error is now strongly typed to NotionClientError
