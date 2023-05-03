@@ -1,5 +1,4 @@
-import React, { Suspense } from 'react';
-import Skeleton from './Skeleton';
+import React from 'react';
 
 /** Not defining shape returns the default circle bullet */
 const ContentBoxBullet = (props: {

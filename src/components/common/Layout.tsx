@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
-import ProfileTab from '../ProfileTab';
-import Background from '../Background';
+import ProfileTab from '@/components/ProfileTab';
+import Background from '@/components/Background';
+import Main from '@/components/Main';
 import { Source_Sans_Pro } from 'next/font/google';
 
 const source = Source_Sans_Pro({
@@ -14,7 +15,7 @@ const Layout = (props: { children: ReactNode }) => {
       className={`${source.className} overflow-x-hidden h-fit w-full flex lg:flex-row flex-col text-pale/90 tracking-[2px] leading-20`}
     >
       <ProfileTab />
-      {props.children}
+      <Main>{props.children}</Main>
       <Background />
     </div>
   );
