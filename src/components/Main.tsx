@@ -7,7 +7,16 @@ import Skills from './Skills';
 import SectionTitle from '@/components/common/SectionTitle';
 import Skeleton from '@/components/common/Skeleton';
 import dynamic from 'next/dynamic';
-import LazySections from './LazySections';
+
+const LazyProjects = dynamic(() => import('./Projects'), {
+  loading: () => <Skeleton />,
+});
+const LazyExperience = dynamic(() => import('./Experience'), {
+  loading: () => <Skeleton />,
+});
+const LazyExtras = dynamic(() => import('./Extras'), {
+  loading: () => <Skeleton />,
+});
 
 const Main = (props: { notionDataArray: TNotionData[] }) => {
   const aboutSection = useRef(null);
@@ -37,7 +46,21 @@ const Main = (props: { notionDataArray: TNotionData[] }) => {
             <About />
           </section>
           <hr />
-          <LazySections notionDataArray={props.notionDataArray} />
+          <section id="project-section" ref={projectsSection}>
+            <SectionTitle title="Projects" />
+            <LazyProjects notionDataArray={props.notionDataArray} />
+          </section>
+          <hr />
+          <section id="xp-section" ref={experienceSection}>
+            <SectionTitle title="Experiences" />
+            <LazyExperience notionDataArray={props.notionDataArray} />
+          </section>
+          <hr />
+          <section id="extras-section" ref={extrasSection}>
+            <SectionTitle title="Extra-curricular" />
+            <LazyExtras notionDataArray={props.notionDataArray} />
+          </section>
+          <hr />
           <section id="skill-section" ref={skillsSection}>
             <Skills />
           </section>

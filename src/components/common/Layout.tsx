@@ -14,8 +14,8 @@ const Layout = (props: { children: ReactNode }) => {
       className={`${source.className} overflow-x-hidden h-fit w-full flex lg:flex-row flex-col text-pale/90 tracking-[2px] leading-20`}
     >
       <ProfileTab />
-      <Background />
       {props.children}
+      <Background />
     </div>
   );
 };
