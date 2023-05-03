@@ -2,11 +2,11 @@ import React from 'react';
 import { forwardRef } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 
+/** Intersection offset when [going down, going up]
+    offset: ["target container", "target container"], */
 const ScrollBarIndicator = forwardRef((props, ref) => {
   const { scrollYProgress } = useScroll({
     target: ref as React.RefObject<HTMLElement>,
-    /* intersection offset when [going down, going up]
-    offset: ["target container", "target container"], */
     offset: ['start 0.5', '0.5 0'],
   });
 

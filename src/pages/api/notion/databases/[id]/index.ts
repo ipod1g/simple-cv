@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { TOKEN, DATABASE_ID } from '@/config';
-import { getDatabase } from '@/controllers/notion';
+import { DATABASE_ID } from '@/config';
+import { getDatabase } from '@/controllers/notionController';
 
 export default async function handler(
   req: NextApiRequest,

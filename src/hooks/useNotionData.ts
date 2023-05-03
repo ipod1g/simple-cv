@@ -1,4 +1,3 @@
-import { getDatabase, parseDatabase } from '@/controllers/notion';
 import fetcher from '@/utils/fetcher';
 import useSWR from 'swr';
 

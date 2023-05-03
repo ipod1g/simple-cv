@@ -103,8 +103,6 @@ function getRandomInt(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// export function parseDatabase(data: any): ProjectType[] | any {
-
 // add some error handling here
 export function parseDatabase(data: any): any {
   if (data === undefined || data === null) return null;
