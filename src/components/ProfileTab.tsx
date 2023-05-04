@@ -66,11 +66,12 @@ const ProfileTab = () => {
             className="rounded-2xl px-4 py-0 my-4 mx-auto h-14 bg-neutral-600/20"
           >
             <a
-              href="/assets/CV.pdf"
-              download="CV.pdf"
+              // href="/assets/CV.pdf"
+              // download="CV.pdf"
+              href="https://docs.google.com/document/d/1iOCAEYbtnJaxwnk-93Wl93FD0sGByxqgnPY7pwAdHWQ/"
               className="text-gray-300 no-underline tracking-[2.5px] uppercase font-bold text-xs py-5 px-0"
             >
-              Download CV
+              VIEW MY CV
             </a>
           </motion.button>
         </div>
