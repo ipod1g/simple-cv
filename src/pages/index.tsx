@@ -4,7 +4,7 @@ import { getDatabase, parseDatabase } from '@/controllers/notionController';
 import { TNotionData } from '@/types/types';
 import { SWRConfig } from 'swr';
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const database = await getDatabase(DATABASE_ID);
   const parsedData = parseDatabase(database);
 
