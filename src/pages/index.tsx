@@ -10,18 +10,17 @@ export const getServerSideProps = async () => {
 
   return {
     props: {
-      fallback: {
-        notionDataArray: parsedData,
-      },
+      notionDataArray: parsedData,
     },
     // revalidate: 1,
   };
 };
 
-export default function Home({ fallback }: { fallback: TNotionData[] }) {
-  return (
-    <SWRConfig value={{ fallback }}>
-      <NotionSection />
-    </SWRConfig>
-  );
+export default function Home({
+  notionDataArray,
+}: {
+  notionDataArray: TNotionData[];
+}) {
+  // export default function Home() {
+  return <NotionSection notionDataArray={notionDataArray} />;
 }

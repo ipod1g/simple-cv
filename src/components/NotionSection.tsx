@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import SectionTitle from '@/components/common/SectionTitle';
 import Skeleton from '@/components/common/Skeleton';
 import Projects from '@/components/Projects';
@@ -8,19 +8,31 @@ import { TNotionData } from '@/types/types';
 import useNotionData from '@/hooks/useNotionData';
 import { parseDatabase } from '@/controllers/notionController';
 
-const NotionSection = () => {
-  const { data, isLoading, isError } = useNotionData('cv_database');
+const NotionSection = ({
+  notionDataArray,
+}: {
+  notionDataArray: TNotionData[];
+}) => {
+  // const { data, isLoading, isError } = useNotionData('cv_database');
+  // const [notionDataArray, setNotionDataArray] = useState<TNotionData[]>();
 
-  const [notionDataArray, setNotionDataArray] = React.useState<TNotionData[]>();
+  // useEffect(() => {
+  //   if (data) {
+  //     setNotionDataArray(parseDatabase(data));
+  //   }
+  //   if (isError) {
+  //     console.error('Error fetching data from Notion');
+  //   }
+  // }, [data]);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (data) {
-      setNotionDataArray(parseDatabase(data));
+    if (notionDataArray) {
+      setIsLoading(false);
     }
-    if (isError) {
-      console.error('Error fetching data from Notion');
-    }
-  }, [data]);
+    return () => {};
+  }, [notionDataArray]);
 
   return (
     <>
