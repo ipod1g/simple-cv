@@ -29,7 +29,7 @@ const NotionSection = () => {
         {!isLoading && notionDataArray ? (
           <Projects notionDataArray={notionDataArray} />
         ) : (
-          <Skeleton />
+          <Skeleton shape="diamond" />
         )}
       </section>
       <hr />
@@ -38,7 +38,7 @@ const NotionSection = () => {
         {!isLoading && notionDataArray ? (
           <Experience notionDataArray={notionDataArray} />
         ) : (
-          <Skeleton />
+          <Skeleton shape="circle" />
         )}
       </section>
       <hr />
@@ -47,7 +47,7 @@ const NotionSection = () => {
         {!isLoading && notionDataArray ? (
           <Extras notionDataArray={notionDataArray} />
         ) : (
-          <Skeleton />
+          <Skeleton shape="triangle" />
         )}
       </section>
       <hr />
