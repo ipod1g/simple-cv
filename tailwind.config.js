@@ -14,6 +14,7 @@ module.exports = {
       colors: {
         greyish: '#95a7c7',
         pale: 'rgb(209,225,238)',
+        // pale: 'rgb(229,229,229)',
         blueish: 'rgb(209, 225, 238)',
       },
       backgroundImage: {

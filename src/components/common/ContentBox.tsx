@@ -24,7 +24,7 @@ const ContentBox = (props: { content: TNotionData }) => {
       >
         <div className="flex gap-1">
           <a
-            className="title-text font-semibold text-xl transition-all cursor-pointer max-w-[75%]"
+            className="title-text font-semibold text-xl transition-all cursor-pointer max-w-[75%] text-white"
             target="_blank"
             rel="noreferrer"
             href={projectURL}

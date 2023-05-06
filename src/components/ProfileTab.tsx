@@ -32,10 +32,10 @@ const ProfileTab = () => {
             <h3 className="text-lg text-purple-400">
               Ku Bon Kwan (Bono) <br />
             </h3>
-            <h4 className="leading-6">
+            <h4 className="leading-6 text-white">
               BSc in Physics, CUHK <br />
             </h4>
-            <h4 className="leading-6">
+            <h4 className="leading-6 text-white">
               Frontend |&nbsp;
               <FontAwesomeIcon icon={faReact} color="rgb(12, 211, 218)" />
               &nbsp; React
