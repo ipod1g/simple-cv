@@ -5,16 +5,6 @@ import Navbar from './Navbar';
 import Skills from './Skills';
 
 const Main = (props: { children: React.ReactNode }) => {
-  const scrollToSection = (
-    elementRef: React.MutableRefObject<HTMLElement | null>
-  ) => {
-    if (!window) return;
-    window.scrollTo({
-      top: elementRef.current!.offsetTop,
-      behavior: 'smooth',
-    });
-  };
-
   return (
     <>
       <main id="main-wrapper" className="h-fit w-full relative overflow-hidden">
@@ -29,14 +19,7 @@ const Main = (props: { children: React.ReactNode }) => {
             <Skills />
           </section>
         </article>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed right-0 top-0"
-        >
-          <Navbar scrollToSection={scrollToSection} />
-        </motion.div>
+        <Navbar />
       </main>
     </>
   );
