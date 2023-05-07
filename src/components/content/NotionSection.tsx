@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import SectionTitle from '@/components/common/SectionTitle';
 import Skeleton from '@/components/common/Skeleton';
 import Projects from '@/components/content/Projects';
@@ -8,26 +8,25 @@ import { TNotionData } from '@/types/types';
 import useNotionData from '@/hooks/useNotionData';
 import { parseDatabase } from '@/controllers/notionController';
 
-const NotionSection = () => {
-  const { data, isLoading, isError } = useNotionData('cv_database');
+const NotionSection = (props: { notionDataArray: TNotionData[] }) => {
+  // const { data, isLoading, isError } = useNotionData('cv_database');
+  // const [notionDataArray, setNotionDataArray] = useState<TNotionData[]>();
 
-  const [notionDataArray, setNotionDataArray] = React.useState<TNotionData[]>();
-
-  useEffect(() => {
-    if (data) {
-      setNotionDataArray(parseDatabase(data));
-    }
-    if (isError) {
-      console.error('Error fetching data from Notion');
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data) {
+  //     setNotionDataArray(parseDatabase(data));
+  //   }
+  //   if (isError) {
+  //     console.error('Error fetching data from Notion');
+  //   }
+  // }, [data]);
 
   return (
     <>
       <section id="project-section">
         <SectionTitle title="Projects" />
-        {!isLoading && notionDataArray ? (
-          <Projects notionDataArray={notionDataArray} />
+        {props.notionDataArray ? (
+          <Projects notionDataArray={props.notionDataArray} />
         ) : (
           <Skeleton shape="diamond" />
         )}
@@ -35,8 +34,8 @@ const NotionSection = () => {
       <hr />
       <section id="work-section">
         <SectionTitle title="Experiences" />
-        {!isLoading && notionDataArray ? (
-          <Experience notionDataArray={notionDataArray} />
+        {props.notionDataArray ? (
+          <Experience notionDataArray={props.notionDataArray} />
         ) : (
           <Skeleton shape="circle" />
         )}
@@ -44,8 +43,8 @@ const NotionSection = () => {
       <hr />
       <section id="extra-section">
         <SectionTitle title="Extra-curricular" />
-        {!isLoading && notionDataArray ? (
-          <Extras notionDataArray={notionDataArray} />
+        {props.notionDataArray ? (
+          <Extras notionDataArray={props.notionDataArray} />
         ) : (
           <Skeleton shape="triangle" />
         )}
