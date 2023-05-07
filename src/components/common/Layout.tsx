@@ -16,7 +16,6 @@ const Layout = (props: { children: ReactNode }) => {
     >
       <ProfileTab />
       <Main>{props.children}</Main>
-      <Background />
     </div>
   );
 };
