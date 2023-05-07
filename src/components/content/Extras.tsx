@@ -16,7 +16,7 @@ export default function Extras(props: { notionDataArray: TNotionData[] }) {
           {props.notionDataArray.map((project, idx: number) => {
             if (project.section === 'Extra') {
               return (
-                <ContentBoxBullet key={project.id} shape="circle">
+                <ContentBoxBullet key={project.id} shape="square">
                   <ContentBox content={project} />
                 </ContentBoxBullet>
               );

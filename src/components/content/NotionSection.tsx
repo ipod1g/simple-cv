@@ -46,7 +46,7 @@ const NotionSection = (props: { notionDataArray: TNotionData[] }) => {
         {props.notionDataArray ? (
           <Extras notionDataArray={props.notionDataArray} />
         ) : (
-          <Skeleton shape="triangle" />
+          <Skeleton shape="square" />
         )}
       </section>
       <hr />

@@ -31,10 +31,10 @@ const Skeleton = (props: { shape?: string }) => {
         </div>
       );
 
-    case 'triangle':
+    case 'square':
       return (
         <div className="ml-[26px] lg:ml-8 p-4 max-w-4xl w-5/6 lg:w-3/4 relative">
-          <ContentBoxBullet shape="triangle">
+          <ContentBoxBullet shape="square">
             <div className={`h-64 w-full absolute ${shimmer}`}>
               <p className="ml-12 mt-12 text-xl text-purple-300 animate-pulse">
                 Loading...

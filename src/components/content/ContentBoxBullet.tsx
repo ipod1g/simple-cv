@@ -11,7 +11,7 @@ const ContentBoxBullet = (props: {
         <div
           className="
           ml-6 lg:ml-0
-          before:bg-white before:absolute before:rotate-45 before:w-3 before:h-3 before:mt-7 before:z-50 before:left-0 before:content-['']"
+          before:border-black before:border-2 dark:before:border-none before:bg-white before:absolute before:rotate-45 before:w-3 before:h-3 before:mt-7 before:z-50 before:left-0 before:content-['']"
         >
           {props.children}
         </div>
@@ -22,18 +22,18 @@ const ContentBoxBullet = (props: {
         <div
           className="
           ml-6 lg:ml-0
-          before:bg-white before:absolute before:w-3 before:h-3 before:mt-7 before:z-50 before:left-0 before:content-[''] before:rounded-full"
+          before:border-black before:border-2 dark:before:border-none before:bg-white before:absolute before:w-3 before:h-3 before:mt-7 before:z-50 before:left-0 before:content-[''] before:rounded-full"
         >
           {props.children}
         </div>
       );
 
-    case 'triangle':
+    case 'square':
       return (
         <div
           className="
-          ml-7 lg:ml-0
-          before:bg-transparent before:absolute before:w-3 before:h-3 before:mt-7 before:z-50 before:-left-[1px] before:content-[''] before:border-l-[8px] before:border-l-transparent before:border-t-[14px] before:border-t-white before:border-r-[8px] before:border-r-transparent"
+          ml-6 lg:ml-0
+          before:border-black before:border-2 dark:before:border-none before:bg-white before:absolute before:w-3 before:h-3 before:mt-7 before:z-50 before:left-0 before:content-['']"
         >
           {props.children}
         </div>

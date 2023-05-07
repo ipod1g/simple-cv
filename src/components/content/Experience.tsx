@@ -16,7 +16,7 @@ export default function Experience(props: { notionDataArray: TNotionData[] }) {
           {props.notionDataArray.map((project, idx: number) => {
             if (project.section === 'Experience') {
               return (
-                <ContentBoxBullet key={project.id} shape="triangle">
+                <ContentBoxBullet key={project.id} shape="circle">
                   <ContentBox content={project} />
                 </ContentBoxBullet>
               );
