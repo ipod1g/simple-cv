@@ -12,10 +12,7 @@ export default function Home({
 }) {
   return (
     <>
-      <Main>
-        <NotionSection notionDataArray={notionDataArray} />;
-      </Main>
-      <Background />
+      <NotionSection notionDataArray={notionDataArray} />
     </>
   );
 }
