@@ -6,33 +6,30 @@
   font-size: 13px;
 }
 
-@media (min-width: 1050px) {
+@media (min-width: 1024px) {
   :root {
     font-size: 17px;
   }
 }
 
 html {
-  background-color: #111;
   font-family: 'Source Sans Pro', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
+  background: #111;
 }
 
 hr {
-  border: 0;
-  border-top: 1px solid rgba(238, 238, 238, 0.291);
-  margin: 24px 20% 24px 60px;
+  @apply border-0 border-t border-black/50 my-6 mr-[20%] ml-[60px] dark:border-gray-300/30;
 }
 
 .glass {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.27);
   /* border: 1px solid rgba(0, 0, 0, 0.07); */
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  background: rgba(0, 0, 0, 0.2);
+  @apply bg-gradient-to-tr from-neutral-400 to-neutral-200 dark:bg-black/20 dark:from-black/30 dark:to-black/20 border-[1px] dark:border-black/30;
 }
 
 .text-line-purple {
@@ -40,16 +37,20 @@ hr {
 }
 
 .deep-shadow-inner {
+  box-shadow: inset 17px 17px 34px #b9b9b950, inset -14px -14px 34px #616161;
+}
+
+:is([data-theme='dark'] .deep-shadow-inner) {
   box-shadow: inset 17px 17px 34px #090909, inset -17px -17px 34px #1b1b1b;
 }
 
 .content-box:hover .title-text {
-  color: #c199e5e0;
   text-shadow: 1px 3px 3px #6f4d9bad;
   transform: scale(1.04);
   -webkit-transition: all 0.2s linear;
   -o-transition: all 0.2s linear;
   transition: all 0.2s linear;
+  @apply text-purple-700 dark:text-purple-300;
 }
 
 .notion--table {

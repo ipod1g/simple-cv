@@ -20,11 +20,11 @@ const ContentBox = (props: { content: TNotionData }) => {
         }}
         transition={{ ease: 'easeOut', duration: 0.5 }}
         viewport={{ once: true }}
-        className="bg-black/30 px-10 py-4 mb-20 ml-0 lg:ml-6 content-box"
+        className="bg-white/30 dark:bg-black/30 px-10 py-4 mb-20 ml-0 lg:ml-6 content-box"
       >
         <div className="flex gap-1">
           <a
-            className="title-text font-semibold text-xl transition-all cursor-pointer max-w-[75%] text-white"
+            className="title-text font-semibold text-xl transition-all cursor-pointer max-w-[75%] dark:text-white"
             target="_blank"
             rel="noreferrer"
             href={projectURL}
@@ -56,7 +56,7 @@ const ContentBox = (props: { content: TNotionData }) => {
           )}
         </div>
         <div className="flex justify-between pt-1 items-end">
-          <div className="italic text-base text-white/50 max-w-[50%]">
+          <div className="italic text-base text-black/60 dark:text-white/50 max-w-[50%]">
             {subTitle}
           </div>
           <ContentDuration duration={duration} />
