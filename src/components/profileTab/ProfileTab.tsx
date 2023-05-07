@@ -23,7 +23,7 @@ const ProfileTab = () => {
           </div>
           <div
             id="selfie-wrapper"
-            className="rounded-full my-6 mx-auto flex justify-center items-center h-[160px] w-[160px] aspect-square bg-neutral-300 dark:bg-neutral-900 deep-shadow-inner "
+            className="rounded-full my-6 mx-auto flex justify-center items-center h-[160px] w-[160px] aspect-square bg-neutral-300 dark:bg-neutral-900 morphism-inner "
           >
             <Image
               id="selfie"
@@ -59,15 +59,17 @@ const ProfileTab = () => {
           </div>
           <motion.button
             whileHover={{
-              scale: 1.08,
               border: '1px rgba(238, 238, 238, 0.3) solid',
               transition: { duration: 0.1 },
             }}
             initial={{
               border: '0px solid rgba(238, 238, 238, 0)',
             }}
+            // bg-gradient-to-tr from-neutral-300 to-neutral-200 dark:bg-neutral-600/20 dark:from-neutral-600/20 dark:to-neutral-600/30 border-[1px] dark:border-black/30
             whileTap={{ scale: 0.99 }}
-            className="rounded-2xl px-4 py-0 my-4 mx-auto h-14 bg-gradient-to-tr from-neutral-300 to-neutral-200 dark:bg-neutral-600/20 dark:from-neutral-600/20 dark:to-neutral-600/30 border-[1px] dark:border-black/30"
+            className="rounded-2xl px-4 py-0 my-4 mx-auto h-14 
+            morphism-outer dark:bg-gradient-to-tr from-neutral-700/50 to-neutral-700/30
+            "
           >
             <a
               // href="/assets/CV.pdf"
