@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
           __html: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-KXS0HTW0P4', {page_path: window.location.pathname,});`,
         }}
       />
-      <ThemeProvider>
+      <ThemeProvider defaultTheme="dark">
         <Layout>
           <Head>
             <title>Bono</title>

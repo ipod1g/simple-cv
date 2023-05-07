@@ -1,3 +1,5 @@
+import Background from '@/components/common/Background';
+import Main from '@/components/content/Main';
 import NotionSection from '@/components/content/NotionSection';
 import { DATABASE_ID } from '@/config';
 import { getDatabase, parseDatabase } from '@/controllers/notionController';
@@ -8,7 +10,14 @@ export default function Home({
 }: {
   notionDataArray: TNotionData[];
 }) {
-  return <NotionSection notionDataArray={notionDataArray} />;
+  return (
+    <>
+      <Main>
+        <NotionSection notionDataArray={notionDataArray} />;
+      </Main>
+      <Background />
+    </>
+  );
 }
 
 export const getServerSideProps = async () => {

@@ -18,18 +18,21 @@ const ProfileTab = () => {
           id="profile-tab"
           className="px-5 py-0 text-center glass rounded-b-2xl lg:h-full lg:flex lg:flex-col lg:justify-center lg:items-center lg:fixed lg:rounded-r-2xl"
         >
-          <div>
+          <div className="absolute top-8 left-8">
             <DarkModeToggleButton />
           </div>
           <div
             id="selfie-wrapper"
-            className="rounded-full my-6 mx-auto flex justify-center items-center h-[160px] w-[160px] aspect-square bg-neutral-300 dark:bg-neutral-900 morphism-inner "
+            className="rounded-full my-6 mx-auto flex justify-center items-center h-[160px] w-[160px] aspect-square bg-[#e5e5e5] dark:bg-neutral-900 morphism-inner "
           >
             <Image
               id="selfie"
               src={Selfie}
               className="rounded-full object-contain saturate-[.85] h-full w-full p-[32px]"
               alt="My selfie"
+              width={160}
+              height={160}
+              priority
             />
           </div>
           <aside className="text-sm">
@@ -46,7 +49,7 @@ const ProfileTab = () => {
             </h4>
             <p
               id="intro"
-              className="italic text-[.8rem] leading-loose my-3 max-w-[280px] mx-auto text-neutral-600 dark:text-neutral-400"
+              className="italic text-[.8rem] leading-loose mt-1 mb-2 max-w-[280px] mx-auto text-neutral-600 dark:text-neutral-400"
             >
               Prospective mentality, a self-motivator, and a creative and
               persevering deep problem solver
@@ -67,7 +70,7 @@ const ProfileTab = () => {
             }}
             // bg-gradient-to-tr from-neutral-300 to-neutral-200 dark:bg-neutral-600/20 dark:from-neutral-600/20 dark:to-neutral-600/30 border-[1px] dark:border-black/30
             whileTap={{ scale: 0.99 }}
-            className="rounded-2xl px-4 py-0 my-4 mx-auto h-14 
+            className="rounded-2xl px-4 py-0 my-8 mx-auto h-14 
             morphism-outer dark:bg-gradient-to-tr from-neutral-700/50 to-neutral-700/30
             "
           >

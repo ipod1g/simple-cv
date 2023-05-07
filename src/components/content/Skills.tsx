@@ -25,17 +25,15 @@ const Skills = () => {
       <div id="credits" className="text-sm mb-20 flex flex-col leading-10">
         <div className="ml-16 mb-4">
           Background image source:
-          <motion.a
-            className="text-blueish/90"
+          <a
+            className="text-black dark:text-blueish/90"
             target="_blank"
             rel="noreferrer"
             href="https://gifer.com/en/2r4z"
             title=""
-            whileHover={{ scale: 1.15, color: '#c199e5e0' }}
-            whileTap={{ scale: 1 }}
           >
             &nbsp; here
-          </motion.a>
+          </a>
           <p>Special Thanks to YI Jisoo</p>
         </div>
         <hr />

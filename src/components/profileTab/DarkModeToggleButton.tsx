@@ -4,10 +4,10 @@ export default function DarkModeToggleButton() {
   const { theme, setTheme } = useTheme();
   return (
     <button
-      className="inline-flex flex-row items-center justify-between border-0 p-1 mx-3 rounded-xl w-14
-      bg-gray-200 hover:bg-gray-300 dark:text-slate-400
-      dark:bg-slate-600 dark:hover:bg-gray-500
-      focus:outline-none  hover:text-orange-400 dark:hover:text-yellow-300"
+      className="inline-flex flex-row items-center justify-between p-1 rounded-2xl w-14
+      morphism-inner dark:shadow-none dark:bg-black border-2 dark:border-neutral-600 dark:border-2
+      bg-neutral-300 dark:text-yellow-400 text-yellow-500
+      focus:outline-none hover:text-orange-400 dark:hover:text-yellow-300"
       type="button"
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
     >
@@ -31,7 +31,7 @@ export default function DarkModeToggleButton() {
           clipRule="evenodd"
         />
       </svg>
-      <div className="w-5 h-5 bg-white absolute rounded-xl translate-x-7 dark:translate-x-0 duration-100" />
+      <div className="w-[1.2rem] h-[1.1rem] bg-white dark:bg-neutral-50 absolute rounded-full translate-x-6 dark:translate-x-0 duration-100" />
     </button>
   );
 }

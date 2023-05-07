@@ -20,7 +20,7 @@ const ContentBox = (props: { content: TNotionData }) => {
         }}
         transition={{ ease: 'easeOut', duration: 0.5 }}
         viewport={{ once: true }}
-        className="bg-white/30 dark:bg-black/30 px-10 py-4 mb-20 ml-0 lg:ml-6 content-box"
+        className="bg-white dark:bg-black/30 px-10 py-4 mb-20 ml-0 lg:ml-6 content-box"
       >
         <div className="flex gap-1">
           <a

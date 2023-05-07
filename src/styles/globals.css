@@ -17,7 +17,6 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
-  background: #111;
 }
 
 hr {
@@ -25,11 +24,11 @@ hr {
 }
 
 .glass {
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
   /* border: 1px solid rgba(0, 0, 0, 0.07); */
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  @apply bg-gradient-to-tr from-[#e5e5e5] to-neutral-200 dark:bg-black/20 dark:from-black/30 dark:to-black/20 border-[1px] dark:border-black/30;
+  @apply bg-gradient-to-tr from-[#e5e5e5] to-neutral-100 dark:bg-black/20 dark:from-black/30 dark:to-black/20 border-[1px] dark:border-black/30;
 }
 
 .text-line-purple {
