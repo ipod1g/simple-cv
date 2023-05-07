@@ -1,4 +1,4 @@
-import NotionSection from '@/components/NotionSection';
+import NotionSection from '@/components/content/NotionSection';
 
 export default function Home() {
   return <NotionSection />;

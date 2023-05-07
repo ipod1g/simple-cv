@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import CloseButton from './common/CloseButton';
-import HamburgerButton from './common/HamburgerButton';
+import CloseButton from './CloseButton';
+import HamburgerButton from './HamburgerButton';
 
 const Navbar = () => {
   const [showNavbar, setShowNavbar] = useState(false);
@@ -42,12 +42,18 @@ const Navbar = () => {
   return (
     <div className="fixed right-0 top-0 h-screen">
       <motion.div
-        className={`absolute top-8 right-8 w-8 h-fit cursor-pointer text-3xl z-40  ${
+        className={`absolute top-8 right-8 w-8 h-fit cursor-pointer text-3xl z-40 ${
           showNavbar ? 'pointer-events-none' : 'pointer-events-auto'
         }`}
         initial={{ opacity: 0 }}
         variants={navVariant}
         animate="hamburger"
+        whileHover={
+          {
+            // filter:
+            //   'grayscale(100%) brightness(50%) sepia(50%) hue-rotate(-130deg) saturate(800%) contrast(1)',
+          }
+        }
         onClick={() => setShowNavbar(true)}
       >
         <HamburgerButton />

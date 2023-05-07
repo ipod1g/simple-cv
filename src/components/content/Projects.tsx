@@ -1,29 +1,29 @@
 import React, { useRef } from 'react';
 import ScrollBarIndicator from './ScrollBarIndicator';
-import ContentBox from '@/components/common/ContentBox';
-import ContentBoxBullet from '@/components/common/ContentBoxBullet';
+import ContentBox from './ContentBox';
+import ContentBoxBullet from './ContentBoxBullet';
 import { TNotionData } from '@/types/types';
 
-export default function Extras(props: { notionDataArray: TNotionData[] }) {
-  const extrasContainerRef = useRef(null);
+export default function Projects(props: { notionDataArray: TNotionData[] }) {
+  const projContainerRef = useRef(null);
   return (
     <>
       <div className="flex flex-row-reverse justify-end h-fit relative">
         <ol
           className="ml-[28px] lg:ml-8 p-4 max-w-4xl w-5/6 lg:w-3/4 relative"
-          ref={extrasContainerRef}
+          ref={projContainerRef}
         >
           {props.notionDataArray.map((project, idx: number) => {
-            if (project.section === 'Extra') {
+            if (project.section === 'Projects') {
               return (
-                <ContentBoxBullet key={project.id} shape="circle">
+                <ContentBoxBullet key={project.id} shape="diamond">
                   <ContentBox content={project} />
                 </ContentBoxBullet>
               );
             }
           })}
         </ol>
-        <ScrollBarIndicator ref={extrasContainerRef} />
+        <ScrollBarIndicator ref={projContainerRef} />
       </div>
     </>
   );

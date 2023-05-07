@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
-import ProfileTab from '@/components/ProfileTab';
-import Background from '@/components/Background';
-import Main from '@/components/Main';
+import ProfileTab from '@/components/profileTab/ProfileTab';
+import Background from '@/components/common/Background';
+import Main from '@/components/content/Main';
 import { Source_Sans_Pro } from 'next/font/google';
 
 const source = Source_Sans_Pro({

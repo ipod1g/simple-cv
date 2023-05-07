@@ -2,10 +2,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReact } from '@fortawesome/free-brands-svg-icons';
-import Selfie from '../../public/assets/selfie.jpeg';
+import Selfie from '/public/assets/selfie.jpeg';
 import Image from 'next/image';
-import Footer from './Footer';
-import DarkModeToggleButton from './common/DarkModeToggleButton';
+import Footer from '../common/Footer';
+import DarkModeToggleButton from './DarkModeToggleButton';
 
 const ProfileTab = () => {
   return (

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import React from 'react';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import Link from 'next/link';
-import ContentDuration from './ContentDuration';
+import ContentDuration from '../common/ContentDuration';
 import { TNotionData } from '@/types/types';
 
 const ContentBox = (props: { content: TNotionData }) => {

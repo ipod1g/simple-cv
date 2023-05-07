@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import SectionTitle from '@/components/common/SectionTitle';
 import Skeleton from '@/components/common/Skeleton';
-import Projects from '@/components/Projects';
-import Experience from '@/components/Experience';
-import Extras from '@/components/Extras';
+import Projects from '@/components/content/Projects';
+import Experience from '@/components/content/Experience';
+import Extras from '@/components/content/Extras';
 import { TNotionData } from '@/types/types';
 import useNotionData from '@/hooks/useNotionData';
 import { parseDatabase } from '@/controllers/notionController';

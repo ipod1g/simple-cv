@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import About from './About';
-import Navbar from './Navbar';
+import Navbar from '../common/Navbar';
 import Skills from './Skills';
 
 const Main = (props: { children: React.ReactNode }) => {
