@@ -49,7 +49,7 @@ const ProfileTab = () => {
             </h4>
             <p
               id="intro"
-              className="italic text-[.8rem] leading-loose mt-1 mb-2 max-w-[280px] mx-auto text-neutral-600 dark:text-neutral-400"
+              className="italic text-[.8rem] lg:text-[.7rem] leading-normal my-4 max-w-[280px] mx-auto text-neutral-600 dark:text-neutral-400"
             >
               Prospective mentality, a self-motivator, and a creative and
               persevering deep problem solver
