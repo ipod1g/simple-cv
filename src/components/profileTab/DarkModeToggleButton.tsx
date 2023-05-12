@@ -31,7 +31,7 @@ export default function DarkModeToggleButton() {
           clipRule="evenodd"
         />
       </svg>
-      <div className="w-[1.2rem] h-[1.1rem] bg-white dark:bg-neutral-50 absolute rounded-full translate-x-6 dark:translate-x-0 duration-100" />
+      <div className="w-[1.2rem] h-[1.2rem] bg-white dark:bg-neutral-50 absolute rounded-full translate-x-6 dark:translate-x-0 duration-100" />
     </button>
   );
 }

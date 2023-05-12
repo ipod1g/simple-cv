@@ -12,7 +12,7 @@ const Footer = () => {
   return (
     <footer
       id="footer"
-      className="fixed bottom-0 pt-3 pb-2 z-50 glass w-full flex flex-col items-center lg:border-none lg:shadow-none lg:w-[322px] lg:rounded-br-2xl lg:pb-4 lg:bg-transparent"
+      className="fixed bottom-0 pt-3 pb-2 z-50 glass w-full flex flex-col items-center lg:border-none lg:shadow-none lg:w-[325px] lg:rounded-br-2xl lg:pb-4 lg:bg-transparent"
     >
       <div id="social" className="flex gap-4 text-xl">
         <motion.a
