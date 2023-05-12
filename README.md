@@ -2,7 +2,7 @@
 
 <aside>
 💡 GitHub Dev Source https://github.com/ipod1g/simple-cv
-Live https://cvbono.netlify.app/
+Live https://cvbono.vercel.app/
 
 </aside>
 
