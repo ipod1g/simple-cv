@@ -1,7 +1,7 @@
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import '@fortawesome/fontawesome-svg-core/styles.css';
-// import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from '@vercel/analytics/react';
 import Layout from '@/components/common/Layout';
 import Script from 'next/script';
 import Head from 'next/head';
@@ -33,7 +33,7 @@ export default function App({ Component, pageProps }: AppProps) {
             <link rel="icon" href="/favicon.ico" />
             <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
           </Head>
-          {/* <Analytics /> */}
+          <Analytics />
           <Component {...pageProps} />
         </Layout>
       </ThemeProvider>
