@@ -23,6 +23,10 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      animation: {
+        fadeOut1: 'fadeOut1 1s ease-out',
+        fadeOut2: 'fadeOut2 1s ease-out',
+      },
       keyframes: ({ theme }) => ({
         shimmer: {
           '100%': {
@@ -35,6 +39,22 @@ module.exports = {
           },
           '40%': {
             ['border-color']: theme('colors.greyish'),
+          },
+        },
+        fadeOut1: {
+          '0%': {
+            opacity: 1,
+          },
+          '100%': {
+            opacity: 0,
+          },
+        },
+        fadeOut2: {
+          '0%': {
+            opacity: 1,
+          },
+          '100%': {
+            opacity: 0,
           },
         },
       }),

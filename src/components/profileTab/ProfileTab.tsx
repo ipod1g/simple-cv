@@ -23,7 +23,7 @@ const ProfileTab = () => {
           </div>
           <div
             id="selfie-wrapper"
-            className="rounded-full my-6 mx-auto flex justify-center items-center h-[160px] w-[160px] aspect-square bg-[#e5e5e5] dark:bg-neutral-900 morphism-inner "
+            className="rounded-full my-6 mx-auto flex justify-center items-center h-[160px] w-[160px] aspect-square bg-[#e5e5e5] dark:bg-neutral-900 morphism-inner transition-colors duration-500 "
           >
             <Image
               id="selfie"
@@ -36,20 +36,20 @@ const ProfileTab = () => {
             />
           </div>
           <aside className="text-sm">
-            <h3 className="text-lg text-purple-800 dark:text-purple-400">
+            <h3 className="text-lg text-purple-800 dark:text-purple-400 transition-colors duration-200">
               Ku Bon Kwan (Bono) <br />
             </h3>
-            <h4 className="leading-6 dark:text-white">
+            <h4 className="leading-6 dark:text-white transition-colors duration-100">
               BSc in Physics, CUHK <br />
             </h4>
-            <h4 className="leading-6 dark:text-white">
+            <h4 className="leading-6 dark:text-white transition-colors duration-100">
               Frontend |&nbsp;
               <FontAwesomeIcon icon={faReact} color="rgb(12, 211, 218)" />
               &nbsp; React
             </h4>
             <p
               id="intro"
-              className="italic text-[.8rem] lg:text-[.7rem] leading-normal my-4 max-w-[280px] mx-auto text-neutral-600 dark:text-neutral-400"
+              className="italic text-[.8rem] lg:text-[.7rem] leading-normal my-4 max-w-[280px] mx-auto text-neutral-600 dark:text-neutral-400 transition-colors duration-200"
             >
               Prospective mentality, a self-motivator, and a creative and
               persevering deep problem solver
@@ -71,14 +71,14 @@ const ProfileTab = () => {
             // bg-gradient-to-tr from-neutral-300 to-neutral-200 dark:bg-neutral-600/20 dark:from-neutral-600/20 dark:to-neutral-600/30 border-[1px] dark:border-black/30
             whileTap={{ scale: 0.99 }}
             className="rounded-2xl px-4 py-0 my-8 mx-auto h-14 
-            morphism-outer dark:bg-gradient-to-tr from-neutral-700/50 to-neutral-700/30
+            morphism-outer dark:bg-gradient-to-tr from-neutral-700/50 to-neutral-700/30 transition-colors duration-200
             "
           >
             <a
               // href="/assets/CV.pdf"
               // download="CV.pdf"
               href="https://docs.google.com/document/d/1iOCAEYbtnJaxwnk-93Wl93FD0sGByxqgnPY7pwAdHWQ/"
-              className="dark:text-gray-300 no-underline tracking-[2.5px] uppercase font-bold text-xs py-5 px-0"
+              className="dark:text-gray-300 no-underline tracking-[2.5px] uppercase font-bold text-xs py-5 px-0 transition-colors duration-200"
             >
               VIEW MY CV
             </a>

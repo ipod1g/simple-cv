@@ -33,8 +33,15 @@ const Background = () => {
 
   return (
     <picture>
+      <div
+        className={`h-screen w-screen fixed inset-0 transition-opacity duration-1000 -z-10 opacity-0 ${
+          resolvedTheme === 'dark'
+            ? 'bg-white/50 animate-fadeOut1'
+            : 'bg-black animate-fadeOut2'
+        }`}
+      ></div>
       <Image
-        className="h-screen w-full object-cover fixed -z-10 inset-0 opacity-20 dark:opacity-10 blur-sm object-left lg:object-center"
+        className="h-screen w-full object-cover fixed -z-10 inset-0 opacity-20 dark:opacity-30 blur-sm object-left lg:object-center"
         src={src}
         width={1920}
         height={1080}

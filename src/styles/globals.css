@@ -28,6 +28,10 @@ hr {
   /* border: 1px solid rgba(0, 0, 0, 0.07); */
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
+  transition-property: color, background-color, text-decoration-color, fill,
+    stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 3500ms;
   @apply bg-gradient-to-tr from-[#e5e5e5] to-neutral-100 dark:bg-black/20 dark:from-black/30 dark:to-black/20 border-[1px] dark:border-black/30;
 }
 

@@ -20,11 +20,11 @@ const ContentBox = (props: { content: TNotionData }) => {
         }}
         transition={{ ease: 'easeOut', duration: 0.5 }}
         viewport={{ once: true }}
-        className="bg-white dark:bg-black/70 px-10 py-4 mb-20 ml-0 lg:ml-6 content-box"
+        className="bg-white dark:bg-black/70 px-10 py-4 mb-20 ml-0 lg:ml-6 content-box transition-colors duration-600"
       >
         <div className="flex gap-1">
           <a
-            className="title-text font-semibold text-xl transition-all cursor-pointer max-w-[75%] dark:text-white"
+            className="title-text font-semibold text-xl transition-all cursor-pointer max-w-[75%] dark:text-white duration-1000"
             target="_blank"
             rel="noreferrer"
             href={projectURL}
