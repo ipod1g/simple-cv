@@ -1,7 +1,7 @@
 import formatDate from '@/utils/formatDate';
 import React from 'react';
 
-const ContentDuration = (props: {
+const DurationText = (props: {
   duration: {
     start: string;
     end: string | null;
@@ -24,4 +24,4 @@ const ContentDuration = (props: {
   );
 };
 
-export default ContentDuration;
+export default DurationText;
