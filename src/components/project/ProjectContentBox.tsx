@@ -29,17 +29,16 @@ const ProjectContentBox = (props: ContentBoxProps) => {
 
   return (
     <motion.li
-      initial={{ opacity: 0, scale: 0.5 }}
+      initial={{ opacity: 0 }}
       whileInView={{
         opacity: 1,
-        scale: 1,
       }}
       transition={{ ease: 'easeOut', duration: 0.5 }}
       viewport={{ once: true }}
       className="group bg-white dark:bg-black/70 p-10 mb-20 ml-0 lg:ml-6 transition-colors flex flex-col duration-600"
     >
       <div className="flex w-full justify-between">
-        <PrimaryTitle title={title} />
+        <PrimaryTitle title={title}/>
         <div className="flex justify-center items-center gap-4">
           {githubURL && (
             <>
