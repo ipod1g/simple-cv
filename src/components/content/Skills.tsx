@@ -6,10 +6,7 @@ const Skills = () => {
   return (
     <>
       <SectionTitle title="Skills" />
-      <div
-        id="skills-container"
-        className="ml-[70px] pr-[50x] pb-8 lg:pb-10 max-w-[50%]"
-      >
+      <div id="skills-container" className="p-4 md:ml-12 pb-8">
         <h4 className="text-xl tracking-[4px] underline underline-offset-4 font-semibold">
           Technical
         </h4>
@@ -23,7 +20,7 @@ const Skills = () => {
       </div>
       <hr />
       <div id="credits" className="text-sm mb-20 flex flex-col leading-10">
-        <div className="ml-16 mb-4">
+        <div className="p-4 md:ml-12 mb-2">
           Background image source:
           <a
             className="text-black dark:text-blueish/90"
@@ -36,7 +33,6 @@ const Skills = () => {
           </a>
           <p>Special Thanks to YI Jisoo</p>
         </div>
-        <hr />
       </div>
     </>
   );
