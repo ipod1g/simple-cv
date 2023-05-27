@@ -2,6 +2,7 @@ import React from 'react';
 import SectionTitle from '@/components/common/SectionTitle';
 
 const About = () => {
+  // future: replace the bottom pr with text-wrap balance
   return (
     <div
       id="about-container"
@@ -10,7 +11,7 @@ const About = () => {
       <div className="flex justify-between items-center font-bold">
         <SectionTitle title="About" />
       </div>
-      <div className="leading-7 mb-[2px] ml-16">
+      <div className="leading-7 mb-[2px] pl-4 md:pl-16">
         <p>
           Hi, I&apos;m a penultimate undergraduate in Physics at The Chinese
           University of Hong Kong, CUHK.

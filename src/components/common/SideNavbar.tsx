@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import CloseButton from './CloseButton';
 import HamburgerButton from './HamburgerButton';
 
-const Navbar = () => {
+const SideNavbar = () => {
   const [showNavbar, setShowNavbar] = useState(false);
 
   const navBarOptions = [
@@ -111,4 +111,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default SideNavbar;

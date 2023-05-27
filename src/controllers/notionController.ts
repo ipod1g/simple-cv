@@ -136,15 +136,9 @@ export function parseDatabase(data: any): any {
           ? null
           : contentData.properties['Point 4'].rich_text[0].plain_text,
     },
-
-    // description:
-    //   contentData.properties.Description.rich_text.length === 0
-    //     ? null
-    //     : contentData.properties.Description.rich_text[0].plain_text,
-    // coverImage: contentData.cover
-    //   ? contentData.cover.external
-    //     ? contentData.cover.external.url
-    //     : contentData.cover.file.url
-    //   : null,
+    // Must use external url because NOTION API has expiry of 1 hr for img url
+    thumbnail: contentData.properties.Thumbnail.files[0]?.external
+      ? contentData.properties.Thumbnail.files[0].external.url
+      : null,
   }));
 }

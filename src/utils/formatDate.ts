@@ -5,7 +5,8 @@ const formatDate = (dateString: string | null | undefined) => {
 
   const date = new Date(dateString);
   const monthAbbrev = date.toLocaleString('en', { month: 'short' });
-  const year = date.getFullYear().toString().substr(-2);
+  // const year = date.getFullYear().toString().substr(-2);
+  const year = date.getFullYear().toString();
   return `${monthAbbrev} ${year}`;
 };
 

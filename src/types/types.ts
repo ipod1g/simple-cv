@@ -15,4 +15,14 @@ export type TNotionData = {
     point3: string | null;
     point4: string | null;
   };
+  thumbnail: string | null;
+};
+
+export type TNotionBulletPoints = {
+  points: {
+    point1: string;
+    point2: string | null;
+    point3: string | null;
+    point4: string | null;
+  };
 };
