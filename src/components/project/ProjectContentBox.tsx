@@ -51,10 +51,12 @@ const ProjectContentBox = (props: ContentBoxProps) => {
         </div>
       </div>
       <div className="flex flex-col xl:flex-row py-6 relative gap-6 lg:gap-8">
-        <div className="w-full h-auto flex-1 flex justify-center">
+        <figure className="w-full h-auto flex-1 flex justify-center">
           <Thumbnail thumbnail={thumbnail} />
+        </figure>
+        <div className="flex-1">
+          <ProjectContentBulletPoints points={points} />
         </div>
-        <ProjectContentBulletPoints points={points} />
       </div>
       <div className="flex justify-between">
         <ContentDuration duration={duration} />

@@ -4,7 +4,7 @@ import CloseButton from './CloseButton';
 import HamburgerButton from './HamburgerButton';
 
 const SideNavbar = () => {
-  const [showNavbar, setShowNavbar] = useState(true);
+  const [showNavbar, setShowNavbar] = useState(false);
 
   const navBarOptions = [
     {

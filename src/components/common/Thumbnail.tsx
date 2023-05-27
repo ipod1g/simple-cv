@@ -12,7 +12,7 @@ const Thumbnail = ({ thumbnail }: { thumbnail: string | null | undefined }) => {
       height={0}
       quality={80}
       alt="thumbnail"
-      className="aspect-video object-cover object-center max-h-64"
+      className="aspect-video object-cover object-center max-h-64 h-auto w-auto"
     />
   );
 };
