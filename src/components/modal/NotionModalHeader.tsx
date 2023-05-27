@@ -1,29 +1,31 @@
 import React from 'react';
 import Image from 'next/image';
+import PrimaryTitle from '../common/PrimaryTitle';
 
 export const NotionModalHeader = ({ project }: any) => {
   return (
     <div className="my-4">
-      <h1 className="text-4xl font-bold my-2">{project.title}</h1>
+      <div className="text-4xl font-bold pt-6 md:pt-10 px-[12%]">
+        <PrimaryTitle
+          title={project.title}
+          style={{ fontSize: '2rem' }}
+          className="-ml-2"
+        />
+      </div>
       <Image
         width="600"
         height="0"
         priority
         style={{ objectFit: 'cover', height: '400px' }}
-        className="w-full rounded-xl border"
+        className="my-6 w-11/12 md:w-3/4 mx-auto max-h-64 rounded-sm"
         src={
-          project.coverImage
-            ? project.coverImage
+          project.thumbnail
+            ? project.thumbnail
             : 'https://www.grouphealth.ca/wp-content/uploads/2018/05/placeholder-image.png'
         }
         alt="project image"
         quality={50}
       />
-      <h2 className="font-semibold my-2">Tech Stacks</h2>
-      <div className="flex flex-row items-center flex-wrap"></div>
-      <div className="flex flex-col justify-center items-center my-8">
-        <div className="border-2 w-12 rounded-md border-sky-200 dark:border-sky-700" />
-      </div>
     </div>
   );
 };
