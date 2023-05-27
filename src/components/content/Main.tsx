@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import About from './About';
-import Navbar from '../common/Navbar';
+import SideNavbar from '../common/SideNavbar';
 import Skills from './Skills';
 
 const Main = (props: { children: React.ReactNode }) => {
@@ -21,7 +21,7 @@ const Main = (props: { children: React.ReactNode }) => {
             <Skills />
           </section>
         </article>
-        <Navbar />
+        <SideNavbar />
       </main>
     </>
   );
