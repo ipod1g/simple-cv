@@ -21,7 +21,7 @@ export const NotionModalHeader = ({ project }: any) => {
         src={
           project.thumbnail
             ? project.thumbnail
-            : 'https://www.grouphealth.ca/wp-content/uploads/2018/05/placeholder-image.png'
+            : 'https://static.vecteezy.com/system/resources/previews/001/971/958/original/blue-abstract-line-art-background-with-text-placeholder-vector.jpg'
         }
         alt="project image"
         quality={50}
