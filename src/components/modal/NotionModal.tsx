@@ -63,8 +63,12 @@ const NotionModal: React.FC<Props> = ({
   const renderNotionPage = () => {
     const results = memoizedContent.results;
     const groupedResults = groupBulletedListItems(results);
-    if (!results || !groupedResults) {
-      return null;
+    if (!results || results.length === 0) {
+      return (
+        <p className="text-lg font-semibold py-6 text-orange-500 dark:text-yellow-300">
+          Documentation is not ready yet
+        </p>
+      );
     }
     return groupedResults.map((result: any) => {
       switch (result.type) {
