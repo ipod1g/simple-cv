@@ -1,7 +1,5 @@
-import React, { useRef } from 'react';
-import ScrollBarIndicator from '../content/ScrollBarIndicator';
+import React from 'react';
 import ExperienceBox from '@/components/experience/ExperienceBox';
-import ContentBoxBullet from '@/components/content/ContentBoxBullet';
 import { TNotionData } from '@/types/types';
 
 export default function Experience(props: { notionDataArray: TNotionData[] }) {

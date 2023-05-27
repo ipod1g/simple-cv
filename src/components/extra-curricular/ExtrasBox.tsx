@@ -26,10 +26,9 @@ const ExtrasBox = (props: ContentBoxProps) => {
 
   return (
     <motion.li
-      initial={{ opacity: 0, scale: 0.5 }}
+      initial={{ opacity: 0 }}
       whileInView={{
         opacity: 1,
-        scale: 1,
       }}
       transition={{ ease: 'easeOut', duration: 0.5 }}
       viewport={{ once: true }}
@@ -48,11 +47,12 @@ const ExtrasBox = (props: ContentBoxProps) => {
           {projectURL && <ExternalLinkButton link={projectURL} />}
         </div>
       </div>
-      <div className="flex flex-col xl:flex-row py-6 relative gap-6 xl:gap-16">
-        <div className="w-full h-auto flex justify-center">
+      <div className="flex flex-col xl:flex-row py-6 relative gap-6 xl:gap-8">
+        <figure className="w-full h-auto flex-1 flex flex-col justify-start">
           <Thumbnail thumbnail={thumbnail} />
-        </div>
-        <div>
+          <figcaption className="mt-2 hidden xl:block">{subTitle}</figcaption>
+        </figure>
+        <div className="flex-1">
           <div className="text-white mb-2">
             <h2 className="text-xl">{subTitle}</h2>
             <ContentDuration duration={duration} />
@@ -60,7 +60,6 @@ const ExtrasBox = (props: ContentBoxProps) => {
           <ProjectContentBulletPoints points={points} />
         </div>
       </div>
-      <div className="flex justify-between">{subTitle}</div>
     </motion.li>
   );
 };

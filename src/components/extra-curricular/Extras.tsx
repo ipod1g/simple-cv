@@ -1,7 +1,5 @@
 import React from 'react';
-import ScrollBarIndicator from '../content/ScrollBarIndicator';
 import ExtrasBox from '@/components/extra-curricular/ExtrasBox';
-import ContentBoxBullet from '@/components/content/ContentBoxBullet';
 import { TNotionData } from '@/types/types';
 
 export default function Extras(props: { notionDataArray: TNotionData[] }) {
