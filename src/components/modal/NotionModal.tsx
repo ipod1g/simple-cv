@@ -33,19 +33,44 @@ const NotionModal: React.FC<Props> = ({
     return pageContent;
   }, [pageContent]);
 
+  // Helper function to group bulleted_list_item
+  const groupBulletedListItems = (results: any) => {
+    const groupedItems = [];
+    let currentGroup: any[] | null = null;
+
+    results.forEach((result: any) => {
+      if (result.type === 'bulleted_list_item') {
+        if (!currentGroup) {
+          currentGroup = [];
+        }
+        currentGroup.push(result);
+      } else {
+        if (currentGroup) {
+          groupedItems.push({ type: 'bulleted_list', items: currentGroup });
+          currentGroup = null;
+        }
+        groupedItems.push(result);
+      }
+    });
+
+    if (currentGroup) {
+      groupedItems.push({ type: 'bulleted_list', items: currentGroup });
+    }
+
+    return groupedItems;
+  };
+
   const renderNotionPage = () => {
     const results = memoizedContent.results;
-    if (!results) {
+    const groupedResults = groupBulletedListItems(results);
+    if (!results || !groupedResults) {
       return null;
     }
-    return results.map((result: any) => {
+    return groupedResults.map((result: any) => {
       switch (result.type) {
         case 'paragraph':
           return (
-            <p
-              key={result.id}
-              className="text-slate-700 dark:text-gray-200 my-2"
-            >
+            <p key={result.id} className="my-2">
               {result.paragraph.rich_text.length === 0 ? (
                 <div className="my-6" />
               ) : (
@@ -57,7 +82,10 @@ const NotionModal: React.FC<Props> = ({
           );
         case 'heading_1':
           return (
-            <h1 key={result.id} className="font-extrabold text-4xl my-2">
+            <h1
+              key={result.id}
+              className="font-extrabold text-4xl dark:text-white my-2"
+            >
               {result.heading_1.rich_text
                 .map((text: any) => text.plain_text)
                 .join('')}
@@ -65,7 +93,10 @@ const NotionModal: React.FC<Props> = ({
           );
         case 'heading_2':
           return (
-            <h2 key={result.id} className="font-semibold text-2xl my-2">
+            <h2
+              key={result.id}
+              className="font-bold text-2xl dark:text-white my-2"
+            >
               {result.heading_2.rich_text
                 .map((text: any) => text.plain_text)
                 .join('')}
@@ -73,7 +104,10 @@ const NotionModal: React.FC<Props> = ({
           );
         case 'heading_3':
           return (
-            <h3 key={result.id} className="font-semibold text-lg my-2">
+            <h3
+              key={result.id}
+              className="font-bold text-lg dark:text-white my-2"
+            >
               {result.heading_3.rich_text
                 .map((text: any) => text.plain_text)
                 .join('')}
@@ -81,7 +115,9 @@ const NotionModal: React.FC<Props> = ({
           );
 
         case 'divider':
-          return <div key={result.id} className="border-b w-full my-6"></div>;
+          return (
+            <div key={result.id} className="border-b w-full mt-3 mb-6"></div>
+          );
 
         // case 'video':
         //   return (
@@ -92,16 +128,18 @@ const NotionModal: React.FC<Props> = ({
         //       controls={true}
         //     />
         //   );
-
-        case 'bulleted_list_item':
+        case 'bulleted_list':
           return (
-            <li key={result.id} className="my-2">
-              {result.bulleted_list_item.rich_text
-                .map((text: any) => text.plain_text)
-                .join('')}
-            </li>
+            <ul key={result.items[0].id} className="mb-8 list-circle px-5">
+              {result.items.map((item: any) => (
+                <li key={item.id} className="my-2">
+                  {item.bulleted_list_item.rich_text
+                    .map((text: any) => text.plain_text)
+                    .join('')}
+                </li>
+              ))}
+            </ul>
           );
-
         case 'image':
           return (
             <Image
@@ -156,9 +194,11 @@ const NotionModal: React.FC<Props> = ({
   return visible ? (
     <div className="bg-black/50 w-screen h-screen fixed inset-0 z-50 flex justify-center items-center">
       <div className="fixed w-full h-full" onClick={handleBackDropClick}></div>
-      <div className="h-[85svh] overflow-auto w-11/12 max-w-screen-md dark:bg-slate-800 bg-white z-20">
+      <div className="h-[85svh] overflow-auto  w-11/12 max-w-screen-md dark:bg-black bg-white text-black dark:text-pale z-20">
         {project ? <NotionModalHeader project={project} /> : <></>}
-        {memoizedContent ? renderNotionPage() : <Loading />}
+        <div className="px-[12%]">
+          {memoizedContent ? renderNotionPage() : <Loading />}
+        </div>
       </div>
     </div>
   ) : null;
