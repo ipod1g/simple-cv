@@ -14,14 +14,16 @@ const ExperienceBox = (props: ContentBoxProps) => {
     props.content;
 
   return (
-    <motion.li
+    <motion.a
       initial={{ opacity: 0 }}
       whileInView={{
         opacity: 1,
       }}
       transition={{ ease: 'easeOut', duration: 0.5 }}
       viewport={{ once: true }}
-      className="group bg-white dark:bg-black/70 p-10 mb-6 transition-all flex flex-col flex-shrink-0 duration-600 min-w-[240px] lg:max-w-[330px] w-[40vw] border border-neutral-300/20 justify-between"
+      href={projectURL}
+      target="_blank"
+      className="group bg-white hover:bg-purple-200 dark:bg-black/70 dark:hover:bg-purple-950 cursor-pointer p-10 mb-6 transition-all flex flex-col flex-shrink-0 duration-600 min-w-[240px] lg:max-w-[330px] w-[40vw] border border-neutral-300/20 justify-center"
     >
       <PrimaryTitle title={title} />
       {/* <h2 className="font-semibold text-white">{title}</h2> */}
@@ -33,11 +35,13 @@ const ExperienceBox = (props: ContentBoxProps) => {
         </div>
         <ContentDuration duration={duration} />
         <div className="flex justify-between">
-          <div className="text-base text-white">{subTitle}</div>
+          <div className="text-base font-semibold dark:font-normal dark:text-white">
+            {subTitle}
+          </div>
           {/* {projectURL && <ExternalLinkButton link={projectURL} />} */}
         </div>
       </div>
-    </motion.li>
+    </motion.a>
   );
 };
 export default ExperienceBox;
