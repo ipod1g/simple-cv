@@ -10,7 +10,7 @@ import Thumbnail from '@/components/common/Thumbnail';
 
 interface ContentBoxProps {
   content: TNotionData;
-  onClick: (id) => void;
+  onClick: (id: string) => void;
 }
 
 const ProjectContentBox = (props: ContentBoxProps) => {
@@ -38,7 +38,7 @@ const ProjectContentBox = (props: ContentBoxProps) => {
       className="group bg-white dark:bg-black/70 p-10 mb-20 ml-0 lg:ml-6 transition-colors flex flex-col duration-600"
     >
       <div className="flex w-full justify-between">
-        <PrimaryTitle title={title}/>
+        <PrimaryTitle title={title} />
         <div className="flex justify-center items-center gap-4">
           {githubURL && (
             <>
@@ -59,7 +59,7 @@ const ProjectContentBox = (props: ContentBoxProps) => {
       <div className="flex justify-between">
         <ContentDuration duration={duration} />
         <button
-          className="text-purple-300 self-end text-lg tracking-widest"
+          className="text-purple-600 font-semibold dark:font-normal dark:text-purple-300 self-end text-lg tracking-widest"
           onClick={() => onClick(id)}
         >
           Read More

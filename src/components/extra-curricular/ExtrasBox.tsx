@@ -53,7 +53,7 @@ const ExtrasBox = (props: ContentBoxProps) => {
           <figcaption className="mt-2 hidden xl:block">{subTitle}</figcaption>
         </figure>
         <div className="flex-1">
-          <div className="text-white mb-2">
+          <div className="dark:text-white mb-2">
             <h2 className="text-xl">{subTitle}</h2>
             <ContentDuration duration={duration} />
           </div>

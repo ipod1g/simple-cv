@@ -4,7 +4,7 @@ import { TNotionData } from '@/types/types';
 
 interface ProjectsProps {
   notionDataArray: TNotionData[];
-  onClick: (id) => void;
+  onClick: (id: string) => void;
 }
 
 export default function Projects({ notionDataArray, ...rest }: ProjectsProps) {

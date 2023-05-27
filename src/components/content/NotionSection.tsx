@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import SectionTitle from '@/components/common/SectionTitle';
 import Skeleton from '@/components/common/Skeleton';
 import Projects from '@/components/project/Projects';
 import Experience from '@/components/experience/Experience';
 import Extras from '@/components/extra-curricular/Extras';
 import { TNotionData } from '@/types/types';
-import useNotionData from '@/hooks/useNotionData';
-import { parseDatabase } from '@/controllers/notionController';
 import NotionModal from '@/components/modal/NotionModal';
 
 const NotionSection = (props: { notionDataArray: TNotionData[] }) => {
@@ -14,10 +12,8 @@ const NotionSection = (props: { notionDataArray: TNotionData[] }) => {
   const [pageId, setPageId] = useState('');
   const [modalProject, setModalProject] = useState<any | null>(null);
 
-  const handleClick = (id) => {
+  const handleClick = (id: string) => {
     setPageId(id);
-    console.log(id);
-    // setModalProject(project);
     const matchingObject = props.notionDataArray.find((obj) => obj.id === id);
     if (matchingObject) {
       setModalProject(matchingObject);
