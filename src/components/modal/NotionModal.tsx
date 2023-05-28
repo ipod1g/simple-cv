@@ -196,9 +196,9 @@ const NotionModal: React.FC<Props> = ({
   }, [pageId, visible]);
 
   return visible ? (
-    <div className="bg-black/50 w-screen h-screen fixed inset-0 z-50 flex justify-center items-center">
+    <div className="bg-black/50 backdrop-blur-sm w-screen h-screen fixed inset-0 z-50 flex justify-center items-center">
       <div className="fixed w-full h-full" onClick={handleBackDropClick}></div>
-      <div className="h-[85svh] overflow-auto  w-11/12 max-w-screen-md dark:bg-black bg-white text-black dark:text-pale z-20">
+      <div className="h-[85svh] border border-black/50 dark:border-pale/50 overflow-auto w-11/12 max-w-screen-md dark:bg-black bg-white text-black dark:text-pale z-20">
         {project ? <NotionModalHeader project={project} /> : <></>}
         <div className="px-[12%]">
           {memoizedContent ? renderNotionPage() : <Loading />}
