@@ -35,7 +35,7 @@ const ProjectContentBox = (props: ContentBoxProps) => {
       }}
       transition={{ ease: 'easeOut', duration: 0.5 }}
       viewport={{ once: true }}
-      className="group bg-white dark:bg-black/70 p-10 mb-20 ml-0 lg:ml-6 transition-colors flex flex-col duration-600"
+      className="group bg-white dark:bg-black/70 border border-neutral-300/20 p-10 mb-20 ml-0 lg:ml-6 transition-colors flex flex-col duration-600"
     >
       <div className="flex w-full justify-between">
         <PrimaryTitle title={title} />

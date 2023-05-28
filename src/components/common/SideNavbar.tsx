@@ -76,7 +76,7 @@ const SideNavbar = () => {
         id="nav-bar"
         variants={navVariant}
         animate="navbar"
-        className={`opacity-0 absolute top-4 right-4 rounded-3xl h-[70svh] flex flex-col justify-around items-end py-40 hover:opacity-100 gap-10 origin-right
+        className={`opacity-0 absolute top-4 right-4 rounded-lg h-[70svh] flex flex-col justify-around items-end py-40 hover:opacity-100 gap-10 origin-right
       dark:from-neutral-500/20 dark:to-black/80 z-20 
         bg-gradient-to-t from-neutral-300/50 to-white/80 
         ${showNavbar ? 'pointer-events-auto' : 'pointer-events-none'}

@@ -70,7 +70,7 @@ const ProfileTab = () => {
             }}
             // bg-gradient-to-tr from-neutral-300 to-neutral-200 dark:bg-neutral-600/20 dark:from-neutral-600/20 dark:to-neutral-600/30 border-[1px] dark:border-black/30
             whileTap={{ scale: 0.99 }}
-            className="rounded-2xl px-4 py-0 my-8 mx-auto h-14 
+            className="rounded-md px-4 py-0 my-8 mx-auto h-14 
             morphism-outer dark:bg-gradient-to-tr from-neutral-700/50 to-neutral-700/30 transition-colors duration-200
             "
           >
