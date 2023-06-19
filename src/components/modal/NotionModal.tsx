@@ -187,6 +187,7 @@ const NotionModal: React.FC<Props> = ({
 
       // Disable scrolling when the modal is open
       document.body.style.overflow = 'hidden';
+      document.body.style.scrollbarGutter = 'stable';
     }
 
     return () => {
