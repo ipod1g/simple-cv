@@ -45,6 +45,7 @@ const Background = () => {
         src={src}
         width={1920}
         height={1080}
+        priority
         alt={'Background Image'}
       />
     </picture>
