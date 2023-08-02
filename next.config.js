@@ -14,6 +14,15 @@ const nextConfig = {
       'www.grouphealth.ca',
     ],
   },
+  webpack(config) {
+    // shader support
+    config.module.rules.push({
+      test: /\.(glsl|vs|fs|vert|frag)$/,
+      exclude: /node_modules/,
+      use: ['raw-loader', 'glslify-loader'],
+    });
+    return config;
+  },
   async headers() {
     const headers = [];
     if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview') {
