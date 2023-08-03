@@ -18,7 +18,7 @@ const Layout = (props: { children: ReactNode }) => {
         <ProfileTab />
         <Main>{props.children}</Main>
       </div>
-      <div className="w-full h-screen"></div>
+      <div className="w-full h-0 mb-[100vh]"></div>
     </>
   );
 };

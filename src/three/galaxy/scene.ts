@@ -7,7 +7,6 @@ import vertex from './vertex.glsl';
 import particleTexture from '/public/assets/particle.webp';
 import { TMeshOptions } from './type';
 import { particleoptions } from './particleConfig';
-
 export default class Galaxy {
   renderer: THREE.WebGLRenderer;
   camera: THREE.PerspectiveCamera;
@@ -22,7 +21,8 @@ export default class Galaxy {
   raycaster: THREE.Raycaster;
   pointer: THREE.Vector2;
   point: THREE.Vector3;
-  controls: OrbitControls;
+  // controls: OrbitControls;
+  gui?: any;
   isPlaying: boolean;
   dracoLoader: DRACOLoader;
   gltf: GLTFLoader;
@@ -52,18 +52,19 @@ export default class Galaxy {
 
     this.camera = new THREE.PerspectiveCamera(
       70,
-      //   50,
+      // 50,
       window.innerWidth / window.innerHeight,
       0.001,
-      100
+      1000
     );
 
     // var frustumSize = 10;
-    // var aspect = window.innerWidth / window.innerHeight;
+    // var aspect = window.innerWidth / window.innerHeight;12
     // this.camera = new THREE.OrthographicCamera( frustumSize * aspect / - 2, frustumSize * aspect / 2, frustumSize / 2, frustumSize / - 2, -1000, 1000 );
-    // this.camera.position.set(0, 2, 2);
-    this.camera.position.set(5, 3, 4);
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    // this.camera.position.set(3, 2, 9);
+    this.camera.position.set(2.82, 2.58, 6.26);
+    this.camera.rotation.set(-0.3, 0.44, 0.14);
+    // this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.time = 0;
 
     this.dracoLoader = new DRACOLoader();
@@ -84,6 +85,7 @@ export default class Galaxy {
     this.raycasterEvent();
     this.render();
     this.setupResize();
+
     // this.settings();
   }
 
@@ -112,14 +114,22 @@ export default class Galaxy {
     });
   }
 
-  //   settings() {
-  //     let that = this;
-  //     this.settings = {
-  //       progress: 0,
-  //     };
-  //     this.gui = new GUI();
-  //     this.gui.add(this.settings, 'progress', 0, 1, 0.01);
-  //   }
+  settings() {
+    if (typeof window !== 'undefined') {
+      const { GUI } = require('lil-gui');
+      this.gui = new GUI();
+      const camRotateFolder = this.gui.addFolder('Rotation');
+      camRotateFolder.add(this.camera.rotation, 'x', -Math.PI * 2, Math.PI * 2);
+      camRotateFolder.add(this.camera.rotation, 'y', -Math.PI * 2, Math.PI * 2);
+      camRotateFolder.add(this.camera.rotation, 'z', -Math.PI * 2, Math.PI * 2);
+      camRotateFolder.open();
+      const camPositionFolder = this.gui.addFolder('Position');
+      camPositionFolder.add(this.camera.position, 'x', -10, 10);
+      camPositionFolder.add(this.camera.position, 'y', -10, 10);
+      camPositionFolder.add(this.camera.position, 'z', -10, 10);
+      camPositionFolder.open();
+    }
+  }
 
   setupResize() {
     window.addEventListener('resize', this.resize.bind(this));
