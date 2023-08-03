@@ -86,7 +86,7 @@ export default class Galaxy {
     this.render();
     this.setupResize();
 
-    this.settings();
+    // this.settings();
   }
 
   raycasterEvent() {
