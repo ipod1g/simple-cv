@@ -21,7 +21,7 @@ export default class Galaxy {
   raycaster: THREE.Raycaster;
   pointer: THREE.Vector2;
   point: THREE.Vector3;
-  // controls: OrbitControls;
+  controls?: OrbitControls;
   gui?: any;
   isPlaying: boolean;
   dracoLoader: DRACOLoader;
@@ -64,7 +64,7 @@ export default class Galaxy {
     // this.camera.position.set(3, 2, 9);
     this.camera.position.set(2.82, 2.58, 6.26);
     this.camera.rotation.set(-0.3, 0.44, 0.14);
-    // this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.time = 0;
 
     this.dracoLoader = new DRACOLoader();
@@ -86,7 +86,7 @@ export default class Galaxy {
     this.render();
     this.setupResize();
 
-    // this.settings();
+    this.settings();
   }
 
   raycasterEvent() {
