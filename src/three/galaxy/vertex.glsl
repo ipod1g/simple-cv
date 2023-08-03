@@ -292,8 +292,8 @@ void main()
   vec3 particle_w_pos = (modelMatrix * vec4(world_pos+offset+offset2, 1.0)).xyz;
 
   // mouse
-  vDistanceToMouse = 1.0-saturate((length(_MouseWorldPosition.xz-particle_w_pos.xz)-0.4));
-  particle_w_pos = get_point_on_mouse(particle_w_pos, pow(vDistanceToMouse, 2.0));
+  vDistanceToMouse = 1.0-saturate((length(_MouseWorldPosition.xz-particle_w_pos.xz)-0.8));
+  particle_w_pos = get_point_on_mouse(particle_w_pos, pow(vDistanceToMouse, 4.0));
 
 
   //final
