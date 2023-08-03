@@ -2,7 +2,7 @@ import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { Analytics } from '@vercel/analytics/react';
-import Layout from '@/components/common/Layout';
+import Layout from '@/components/Layout';
 import Script from 'next/script';
 import Head from 'next/head';
 import { ThemeProvider } from 'next-themes';
