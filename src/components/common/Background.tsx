@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
+import { useThreeCanvas } from '@/hooks/useThreeCanvas';
 // static import can allow use of placeholder easier
 
 const Background = () => {
@@ -40,15 +41,32 @@ const Background = () => {
             : 'bg-black animate-fadeOut2'
         }`}
       ></div>
-      <Image
-        className="h-screen w-full object-cover fixed -z-10 inset-0 opacity-20 dark:opacity-30 blur-sm object-left lg:object-center"
-        src={src}
-        width={1920}
-        height={1080}
-        alt={'Background Image'}
-      />
+      {resolvedTheme === 'dark' ? (
+        <Canvas />
+      ) : (
+        <Image
+          className="h-screen w-full object-cover fixed -z-10 inset-0 opacity-20 dark:opacity-30 blur-sm object-left lg:object-center"
+          src={'/assets/ingrid-salmanca-Y6OKbIFe4Z0-unsplash_3.jpg'}
+          width={1920}
+          height={1080}
+          priority
+          alt={'Background Image'}
+        />
+      )}
     </picture>
   );
 };
 
 export default Background;
+
+const Canvas = () => {
+  const instance = useThreeCanvas('canvas', 'galaxy');
+
+  return (
+    <div
+      id="canvas"
+      className="w-screen h-screen fixed inset-0 opacity-50 -z-10"
+      // className="w-screen h-screen fixed inset-0 z-50"
+    ></div>
+  );
+};
