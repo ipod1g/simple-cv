@@ -11,12 +11,15 @@ const source = Source_Sans_Pro({
 
 const Layout = (props: { children: ReactNode }) => {
   return (
-    <div
-      className={`${source.className} overflow-x-hidden h-fit w-full flex lg:flex-row flex-col text-black font-medium dark:text-pale/90 tracking-[2px] leading-20`}
-    >
-      <ProfileTab />
-      <Main>{props.children}</Main>
-    </div>
+    <>
+      <div
+        className={`${source.className} overflow-x-hidden h-fit w-full flex lg:flex-row flex-col text-black dark:bg-black/50 font-medium dark:text-pale/90 tracking-[2px] leading-20`}
+      >
+        <ProfileTab />
+        <Main>{props.children}</Main>
+      </div>
+      <div className="w-full h-screen"></div>
+    </>
   );
 };
 

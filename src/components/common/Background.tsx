@@ -65,7 +65,7 @@ const Canvas = () => {
   return (
     <div
       id="canvas"
-      className="w-screen h-screen fixed inset-0 opacity-50 -z-10"
+      className="w-screen h-screen fixed inset-0 -z-10"
       // className="w-screen h-screen fixed inset-0 z-50"
     ></div>
   );
