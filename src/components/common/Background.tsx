@@ -60,7 +60,7 @@ const Background = () => {
 export default Background;
 
 const Canvas = () => {
-  const instance = useThreeCanvas('canvas', 'galaxy');
+  useThreeCanvas('canvas', 'galaxy');
 
   return (
     <div

@@ -28,7 +28,10 @@ export const useThreeCanvas = (id: string, scene: 'galaxy') => {
 
   useEffect(() => {
     init();
-    return () => {};
+    return () => {
+      // const element = document.getElementById(id);
+      // element?.removeChild(instance.current?.renderer.domElement);
+    };
   }, [init]);
 
   return instance;

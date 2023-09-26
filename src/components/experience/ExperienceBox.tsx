@@ -9,6 +9,7 @@ interface ContentBoxProps {
   content: TNotionData;
 }
 
+// TODO: fix 'Links are not crawlable' SEO issue
 const ExperienceBox = (props: ContentBoxProps) => {
   const { id, title, subTitle, duration, projectURL, thumbnail } =
     props.content;
