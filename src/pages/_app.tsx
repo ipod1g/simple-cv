@@ -29,9 +29,16 @@ export default function App({ Component, pageProps }: AppProps) {
               name="viewport"
               content="width=device-width, initial-scale=1"
             />
-            <meta name="description" content={"Bono's resume / CV website"} />
+            <meta name="description" content="Bono's portfolio website" />
             <link rel="icon" href="/favicon.ico" />
             <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+            <meta property="og:title" content="Bono" />
+            <meta property="og:type" content="portfolio" />
+            <meta
+              property="og:image"
+              content="https://res.cloudinary.com/djaqwuchk/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1696920690/meta-image_dd6tp6.jpg?_s=public-apps"
+            />
+            <meta property="og:url" content="https://cvbono.vercel.app" />
           </Head>
           <Analytics />
           <Component {...pageProps} />
