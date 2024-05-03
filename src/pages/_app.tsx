@@ -1,11 +1,11 @@
-import '@/styles/globals.css';
-import type { AppProps } from 'next/app';
-import '@fortawesome/fontawesome-svg-core/styles.css';
-import { Analytics } from '@vercel/analytics/react';
-import Layout from '@/components/Layout';
-import Script from 'next/script';
-import Head from 'next/head';
-import { ThemeProvider } from 'next-themes';
+import "@/styles/globals.css";
+import type { AppProps } from "next/app";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { Analytics } from "@vercel/analytics/react";
+import Layout from "@/components/Layout";
+import Script from "next/script";
+import Head from "next/head";
+import { ThemeProvider } from "next-themes";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -30,7 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
               content="width=device-width, initial-scale=1"
             />
             <meta name="description" content="Bono's portfolio website" />
-            <link rel="icon" href="/favicon.ico" />
+            <link rel="icon" type="image/x-icon" href="/favicon.ico" />
             <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
             <meta property="og:title" content="Bono" />
             <meta property="og:type" content="portfolio" />
