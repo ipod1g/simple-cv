@@ -1,12 +1,12 @@
-import { motion } from 'framer-motion';
-import React from 'react';
-import { TNotionData } from '@/types/types';
-import ContentDuration from '@/components/common/DurationText';
-import ExternalLinkButton from '@/components/common/ExternalLinkButton';
-import GithubLinkButton from '@/components/common/GithubLinkButton';
-import PrimaryTitle from '@/components/common/PrimaryTitle';
-import ProjectContentBulletPoints from '@/components/project/ProjectContentBulletPoints';
-import Thumbnail from '@/components/common/Thumbnail';
+import { motion } from "framer-motion";
+import React from "react";
+import { TNotionData } from "@/types";
+import ContentDuration from "@/components/common/DurationText";
+import ExternalLinkButton from "@/components/common/ExternalLinkButton";
+import GithubLinkButton from "@/components/common/GithubLinkButton";
+import PrimaryTitle from "@/components/common/PrimaryTitle";
+import ProjectContentBulletPoints from "@/components/project/ProjectContentBulletPoints";
+import Thumbnail from "@/components/common/Thumbnail";
 
 interface ContentBoxProps {
   content: TNotionData;
@@ -33,7 +33,7 @@ const ProjectContentBox = (props: ContentBoxProps) => {
       whileInView={{
         opacity: 1,
       }}
-      transition={{ ease: 'easeOut', duration: 0.5 }}
+      transition={{ ease: "easeOut", duration: 0.5 }}
       viewport={{ once: true }}
       className="group bg-white dark:bg-black/70 border border-neutral-300/20 p-10 mb-20 ml-0 lg:ml-6 transition-colors flex flex-col duration-600"
     >

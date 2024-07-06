@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import SectionTitle from '@/components/common/SectionTitle';
-import Skeleton from '@/components/common/Skeleton';
-import Projects from '@/components/project/Projects';
-import Experience from '@/components/experience/Experience';
-import Extras from '@/components/extra-curricular/Extras';
-import { TNotionData } from '@/types/types';
-import NotionModal from '@/components/modal/NotionModal';
+import React, { useState } from "react";
+import SectionTitle from "@/components/common/SectionTitle";
+import Skeleton from "@/components/common/Skeleton";
+import Projects from "@/components/project/Projects";
+import Experience from "@/components/experience/Experience";
+import Extras from "@/components/extra-curricular/Extras";
+import { TNotionData } from "@/types";
+import NotionModal from "@/components/modal/NotionModal";
 
 const NotionSection = (props: { notionDataArray: TNotionData[] }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [pageId, setPageId] = useState('');
+  const [pageId, setPageId] = useState("");
   const [modalProject, setModalProject] = useState<any | null>(null);
 
   const handleClick = (id: string) => {

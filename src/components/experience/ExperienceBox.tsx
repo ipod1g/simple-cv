@@ -1,9 +1,9 @@
-import React from 'react';
-import { TNotionData } from '@/types/types';
-import ContentDuration from '@/components/common/DurationText';
-import PrimaryTitle from '@/components/common/PrimaryTitle';
-import CompanyLogo from '@/components/experience/CompanyLogo';
-import { motion } from 'framer-motion';
+import React from "react";
+import { TNotionData } from "@/types";
+import ContentDuration from "@/components/common/DurationText";
+import PrimaryTitle from "@/components/common/PrimaryTitle";
+import CompanyLogo from "@/components/experience/CompanyLogo";
+import { motion } from "framer-motion";
 
 interface ContentBoxProps {
   content: TNotionData;
@@ -20,7 +20,7 @@ const ExperienceBox = (props: ContentBoxProps) => {
       whileInView={{
         opacity: 1,
       }}
-      transition={{ ease: 'easeOut', duration: 0.5 }}
+      transition={{ ease: "easeOut", duration: 0.5 }}
       viewport={{ once: true }}
       href={projectURL}
       target="_blank"

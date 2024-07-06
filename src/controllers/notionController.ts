@@ -1,11 +1,11 @@
 import { TOKEN } from "@/config";
+import type { CustomNotionDatabaseItem } from "@/types";
 import {
   Client,
   APIErrorCode,
   ClientErrorCode,
   isNotionClientError,
 } from "@notionhq/client";
-import { DatabaseObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
 const notion = new Client({
   auth: TOKEN,
@@ -104,22 +104,6 @@ function getRandomInt(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-interface ParsedDatabaseItem {
-  id: string;
-  title: string | null;
-  duration: any;
-  subTitle: string | null;
-  projectURL: string | null;
-  githubURL: string | null;
-  section: string | null;
-  points: {
-    point1: string | null;
-    point2: string | null;
-    point3: string | null;
-    point4: string | null;
-  };
-  thumbnail: string | null;
-}
 function getPropertyValue(property: any, path: string[]): any {
   try {
     return path.reduce((acc, cur) => acc[cur], property) || null;
@@ -128,9 +112,7 @@ function getPropertyValue(property: any, path: string[]): any {
   }
 }
 
-export function parseDatabase(
-  data: DatabaseObjectResponse[]
-): ParsedDatabaseItem[] | null {
+export function parseDatabase(data: CustomNotionDatabaseItem[]) {
   if (!Array.isArray(data)) return null;
 
   return data.map((contentData) => {

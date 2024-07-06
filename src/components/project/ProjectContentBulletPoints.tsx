@@ -1,5 +1,5 @@
-import { TNotionBulletPoints } from '@/types/types';
-import React from 'react';
+import { TNotionBulletPoints } from "@/types";
+import React from "react";
 
 const ProjectContentBulletPoints = ({ points }: TNotionBulletPoints) => {
   return (
