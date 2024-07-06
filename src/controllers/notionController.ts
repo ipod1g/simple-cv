@@ -1,10 +1,11 @@
-import { TOKEN } from '@/config';
+import { TOKEN } from "@/config";
 import {
   Client,
   APIErrorCode,
   ClientErrorCode,
   isNotionClientError,
-} from '@notionhq/client';
+} from "@notionhq/client";
+import { DatabaseObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
 const notion = new Client({
   auth: TOKEN,
@@ -16,8 +17,8 @@ export const getDatabase = async (databaseId: any) => {
       database_id: databaseId,
       sorts: [
         {
-          property: 'Duration',
-          direction: 'descending',
+          property: "Duration",
+          direction: "descending",
         },
       ],
     });
@@ -27,13 +28,13 @@ export const getDatabase = async (databaseId: any) => {
       // error is now strongly typed to NotionClientError
       switch (error.code) {
         case ClientErrorCode.RequestTimeout:
-          console.debug('Request timed out!');
+          console.debug("Request timed out!");
           break;
         case APIErrorCode.ObjectNotFound:
-          console.debug('Object not found!');
+          console.debug("Object not found!");
           break;
         case APIErrorCode.Unauthorized:
-          console.debug('Unauthorized!');
+          console.debug("Unauthorized!");
           break;
         default:
           console.log(error);
@@ -50,7 +51,7 @@ export const getPage = async (pageId: any) => {
 };
 
 export const getBlocks = async (blockId: string) => {
-  blockId = blockId.replaceAll('-', '');
+  blockId = blockId.replaceAll("-", "");
 
   const { results } = await notion.blocks.children.list({
     block_id: blockId,
@@ -69,23 +70,23 @@ export const getBlocks = async (blockId: string) => {
 
   return await Promise.all(childBlocks).then((blocks) => {
     return blocks.reduce((acc, curr) => {
-      if (curr.type === 'bulleted_list_item') {
-        if (acc[acc.length - 1]?.type === 'bulleted_list') {
+      if (curr.type === "bulleted_list_item") {
+        if (acc[acc.length - 1]?.type === "bulleted_list") {
           acc[acc.length - 1][acc[acc.length - 1].type].children?.push(curr);
         } else {
           acc.push({
             id: getRandomInt(10 ** 99, 10 ** 100).toString(),
-            type: 'bulleted_list',
+            type: "bulleted_list",
             bulleted_list: { children: [curr] },
           });
         }
-      } else if (curr.type === 'numbered_list_item') {
-        if (acc[acc.length - 1]?.type === 'numbered_list') {
+      } else if (curr.type === "numbered_list_item") {
+        if (acc[acc.length - 1]?.type === "numbered_list") {
           acc[acc.length - 1][acc[acc.length - 1].type].children?.push(curr);
         } else {
           acc.push({
             id: getRandomInt(10 ** 99, 10 ** 100).toString(),
-            type: 'numbered_list',
+            type: "numbered_list",
             numbered_list: { children: [curr] },
           });
         }
@@ -103,42 +104,80 @@ function getRandomInt(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// add some error handling here
-export function parseDatabase(data: any): any {
-  if (data === undefined || data === null) return null;
+interface ParsedDatabaseItem {
+  id: string;
+  title: string | null;
+  duration: any;
+  subTitle: string | null;
+  projectURL: string | null;
+  githubURL: string | null;
+  section: string | null;
+  points: {
+    point1: string | null;
+    point2: string | null;
+    point3: string | null;
+    point4: string | null;
+  };
+  thumbnail: string | null;
+}
+function getPropertyValue(property: any, path: string[]): any {
+  try {
+    return path.reduce((acc, cur) => acc[cur], property) || null;
+  } catch {
+    return null;
+  }
+}
 
-  return data.map((contentData: any) => ({
-    id: contentData.id,
-    title: contentData.properties.Name.title[0].plain_text,
-    duration: contentData.properties.Duration.date,
-    subTitle:
-      contentData.properties.Subtitle.select === null
-        ? null
-        : contentData.properties.Subtitle.select.name,
-    projectURL: contentData.properties['Project URL']?.url,
-    githubURL: contentData.properties['Github']?.url,
-    section: contentData.properties.Section.select.name,
-    points: {
-      point1:
-        contentData.properties['Point 1'].rich_text.length === 0
-          ? null
-          : contentData.properties['Point 1'].rich_text[0].plain_text,
-      point2:
-        contentData.properties['Point 2'].rich_text.length === 0
-          ? null
-          : contentData.properties['Point 2'].rich_text[0].plain_text,
-      point3:
-        contentData.properties['Point 3'].rich_text.length === 0
-          ? null
-          : contentData.properties['Point 3'].rich_text[0].plain_text,
-      point4:
-        contentData.properties['Point 4'].rich_text.length === 0
-          ? null
-          : contentData.properties['Point 4'].rich_text[0].plain_text,
-    },
-    // Must use external url because NOTION API has expiry of 1 hr for img url
-    thumbnail: contentData.properties.Thumbnail.files[0]?.external
-      ? contentData.properties.Thumbnail.files[0].external.url
-      : null,
-  }));
+export function parseDatabase(
+  data: DatabaseObjectResponse[]
+): ParsedDatabaseItem[] | null {
+  if (!Array.isArray(data)) return null;
+
+  return data.map((contentData) => {
+    const { properties } = contentData;
+    return {
+      id: contentData.id,
+      title: getPropertyValue(properties, [
+        "Name",
+        "title",
+        "0",
+        "text",
+        "content",
+      ]),
+      duration: properties.Duration.date,
+      subTitle: getPropertyValue(properties, ["Subtitle", "select", "name"]),
+      projectURL: properties["Project URL"]?.url,
+      githubURL: properties["Github"]?.url,
+      section: getPropertyValue(properties, ["Section", "select", "name"]),
+      points: {
+        point1: getPropertyValue(properties, [
+          "Point 1",
+          "rich_text",
+          "0",
+          "plain_text",
+        ]),
+        point2: getPropertyValue(properties, [
+          "Point 2",
+          "rich_text",
+          "0",
+          "plain_text",
+        ]),
+        point3: getPropertyValue(properties, [
+          "Point 3",
+          "rich_text",
+          "0",
+          "plain_text",
+        ]),
+        point4: getPropertyValue(properties, [
+          "Point 4",
+          "rich_text",
+          "0",
+          "plain_text",
+        ]),
+      },
+      thumbnail: properties.Thumbnail.files[0]?.external
+        ? properties.Thumbnail.files[0].external.url
+        : null,
+    };
+  });
 }
