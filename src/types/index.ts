@@ -96,6 +96,9 @@ export type CustomNotionDatabaseItem = Partial<DatabaseObjectResponse> & {
           external: {
             url: string;
           };
+          file: {
+            url: string;
+          };
         }
       ];
     };

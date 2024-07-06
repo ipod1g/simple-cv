@@ -159,6 +159,8 @@ export function parseDatabase(data: CustomNotionDatabaseItem[]) {
       },
       thumbnail: properties.Thumbnail.files[0]?.external
         ? properties.Thumbnail.files[0].external.url
+        : properties.Thumbnail.files[0]?.file
+        ? properties.Thumbnail.files[0].file.url
         : null,
     };
   });
