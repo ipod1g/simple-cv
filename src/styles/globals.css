@@ -13,7 +13,7 @@
 }
 
 html {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
@@ -44,7 +44,7 @@ hr {
     -10px -10px 18px rgba(255, 255, 255, 0.8);
 }
 
-:is([data-theme='dark'] .morphism-outer) {
+:is([data-theme="dark"] .morphism-outer) {
   box-shadow: none;
 }
 
@@ -54,8 +54,8 @@ hr {
     inset 26px 26px 28px rgba(13, 39, 80, 0.16);
 }
 
-:is([data-theme='dark'] .morphism-inner) {
-  box-shadow: inset 17px 17px 34px #090909, inset -17px -17px 34px #1b1b1b;
+:is([data-theme="dark"] .morphism-inner) {
+  box-shadow: inset 48px 36px 36px #090909, inset -16px -16px 32px #1b1b1b;
 }
 
 .content-box:hover .title-text {
