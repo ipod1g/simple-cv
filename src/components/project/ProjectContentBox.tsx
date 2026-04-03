@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import React from "react";
-import { TNotionData } from "@/types";
+import type { TNotionData } from "@/types";
 import ContentDuration from "@/components/common/DurationText";
 import ExternalLinkButton from "@/components/common/ExternalLinkButton";
 import GithubLinkButton from "@/components/common/GithubLinkButton";

@@ -4,7 +4,7 @@ import Skeleton from "@/components/common/Skeleton";
 import Projects from "@/components/project/Projects";
 import Experience from "@/components/experience/Experience";
 import Extras from "@/components/extra-curricular/Extras";
-import { TNotionData } from "@/types";
+import type { TNotionData } from "@/types";
 import NotionModal from "@/components/modal/NotionModal";
 
 const NotionSection = (props: { notionDataArray: TNotionData[] }) => {

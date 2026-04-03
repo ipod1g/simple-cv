@@ -1,6 +1,6 @@
 import React from "react";
 import ExperienceBox from "@/components/experience/ExperienceBox";
-import { TNotionData } from "@/types";
+import type { TNotionData } from "@/types";
 
 export default function Experience(props: { notionDataArray: TNotionData[] }) {
   return (

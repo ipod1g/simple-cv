@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import CloseButton from './CloseButton';
 import HamburgerButton from './HamburgerButton';
 
@@ -29,7 +29,7 @@ const SideNavbar = () => {
     },
   ];
 
-  const navVariant = {
+  const navVariant: Variants = {
     hamburger: showNavbar
       ? { opacity: 0, transition: { duration: 0.3, type: 'spring' } }
       : { opacity: 1, transition: { type: 'spring' } },

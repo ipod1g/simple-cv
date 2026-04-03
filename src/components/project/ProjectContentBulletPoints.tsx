@@ -1,4 +1,4 @@
-import { TNotionBulletPoints } from "@/types";
+import type { TNotionBulletPoints } from "@/types";
 import React from "react";
 
 const ProjectContentBulletPoints = ({ points }: TNotionBulletPoints) => {
@@ -8,7 +8,7 @@ const ProjectContentBulletPoints = ({ points }: TNotionBulletPoints) => {
         return point !== undefined && point !== null ? (
           <li
             key={index}
-            className="list-circle mb-6 lg:mb-4 text-base w-11/12 break-words"
+            className="list-[circle] mb-6 lg:mb-4 text-base w-11/12 wrap-break-word"
           >
             {point}
           </li>

@@ -1,6 +1,6 @@
 import React from "react";
 import ExtrasBox from "@/components/extra-curricular/ExtrasBox";
-import { TNotionData } from "@/types";
+import type { TNotionData } from "@/types";
 
 export default function Extras(props: { notionDataArray: TNotionData[] }) {
   return (

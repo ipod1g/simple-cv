@@ -1,4 +1,4 @@
-import { useTheme } from 'next-themes';
+import { useTheme } from "@/context/ThemeContext";
 
 export default function DarkModeToggleButton() {
   const { theme, setTheme } = useTheme();
@@ -9,7 +9,7 @@ export default function DarkModeToggleButton() {
       bg-neutral-300 dark:text-yellow-400 text-yellow-500
       focus:outline-none hover:text-orange-400 dark:hover:text-yellow-300"
       type="button"
-      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

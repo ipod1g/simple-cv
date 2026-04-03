@@ -1,5 +1,5 @@
 import React from "react";
-import { TNotionData } from "@/types";
+import type { TNotionData } from "@/types";
 import ContentDuration from "@/components/common/DurationText";
 import PrimaryTitle from "@/components/common/PrimaryTitle";
 import CompanyLogo from "@/components/experience/CompanyLogo";

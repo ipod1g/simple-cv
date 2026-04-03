@@ -1,11 +1,10 @@
-import React from 'react';
-import Image from 'next/image';
+import React from "react";
 
 const CompanyLogo = ({ logo }: { logo: string | null }) => {
   return (
     <div>
       {logo ? (
-        <Image
+        <img
           src={logo}
           className="h-[80px] w-[80px] object-contain"
           width={80}

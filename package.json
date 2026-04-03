@@ -1,53 +1,47 @@
 {
   "name": "simple-cv",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "lint": "astro check"
+  },
   "dependencies": {
+    "@astrojs/react": "^4.2.0",
+    "@astrojs/vercel": "^8.0.0",
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-brands-svg-icons": "^6.2.0",
     "@fortawesome/free-regular-svg-icons": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@notionhq/client": "^2.2.4",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/node": "18.16.1",
-    "@types/react": "18.2.0",
-    "@types/react-dom": "18.2.1",
+    "@react-three/fiber": "^9.5.0",
+    "@react-three/postprocessing": "^3.0.4",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "@vercel/analytics": "^1.0.1",
-    "autoprefixer": "10.4.14",
-    "eslint": "8.39.0",
-    "eslint-config-next": "13.3.1",
-    "framer-motion": "^7.5.1",
+    "astro": "^5.1.0",
+    "framer-motion": "^12.0.0",
     "lil-gui": "^0.18.2",
-    "next": "13.3.1",
-    "next-themes": "^0.2.1",
-    "postcss": "8.4.23",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "swr": "^2.1.5",
-    "tailwindcss": "3.3.2",
-    "three": "^0.155.0",
-    "typescript": "5.0.4"
+    "postprocessing": "^6.39.0",
+    "react": "~19.2.0",
+    "react-dom": "~19.2.0",
+    "tailwindcss": "^4.2.0",
+    "three": "^0.170.0",
+    "typescript": "^5"
   },
   "devDependencies": {
-    "@types/three": "^0.155.0",
+    "@astrojs/check": "^0.9.8",
+    "@tailwindcss/vite": "^4.2.0",
+    "@types/bun": "latest",
+    "@types/node": "^22.0.0",
+    "@types/three": "^0.170.0",
     "glslify": "^7.1.1",
-    "glslify-loader": "^2.0.0",
-    "raw-loader": "^4.0.2"
-  },
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "vite-plugin-glsl": "^1.3.0"
   },
   "browserslist": {
     "production": [
@@ -60,5 +54,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "peerDependencies": {
+    "typescript": "^5"
   }
 }

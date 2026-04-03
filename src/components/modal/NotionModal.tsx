@@ -1,9 +1,7 @@
 // import { ProjectType } from '@/pages/project';
-import { useState, useEffect, useMemo } from 'react';
-import { TOKEN, DATABASE_ID } from '../../config/index';
-import Loading from '@/components/common/Loading';
-import Image from 'next/image';
-import { NotionModalHeader } from '@/components/modal/NotionModalHeader';
+import { useState, useEffect, useMemo } from "react";
+import Loading from "@/components/common/Loading";
+import { NotionModalHeader } from "@/components/modal/NotionModalHeader";
 // import ReactPlayer from 'react-player';
 
 interface Props {
@@ -12,8 +10,6 @@ interface Props {
   visible: boolean;
   onClose: () => void;
 }
-
-const NOTION_API_KEY = TOKEN;
 
 const NotionModal: React.FC<Props> = ({
   pageId,
@@ -134,7 +130,7 @@ const NotionModal: React.FC<Props> = ({
         //   );
         case 'bulleted_list':
           return (
-            <ul key={result.items[0].id} className="mb-8 list-circle px-5">
+            <ul key={result.items[0].id} className="mb-8 list-[circle] px-5">
               {result.items.map((item: any) => (
                 <li key={item.id} className="my-2">
                   {item.bulleted_list_item.rich_text
@@ -144,17 +140,16 @@ const NotionModal: React.FC<Props> = ({
               ))}
             </ul>
           );
-        case 'image':
+        case "image":
           return (
-            <Image
+            <img
               width={1000}
-              height={0}
-              priority
-              style={{ objectFit: 'contain', maxHeight: 400 }}
+              height={400}
+              style={{ objectFit: "contain", maxHeight: 400 }}
               className="rounded-t-xl"
               src={result.image.file.url}
               alt="project image"
-              quality={50}
+              fetchPriority="high"
             />
           );
 
@@ -169,14 +164,10 @@ const NotionModal: React.FC<Props> = ({
       try {
         const response = await fetch(`/api/notion/blocks/${pageId}`, {
           headers: {
-            'Notion-Version': '2022-06-28',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${NOTION_API_KEY}`,
+            "Content-Type": "application/json",
           },
-          mode: 'cors',
         });
         const data: any = await response.json();
-        console.log(data);
         setPageContent(data);
       } catch (error) {
         console.error(error);

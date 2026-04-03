@@ -1,6 +1,6 @@
 import React from "react";
 import ProjectContentBox from "./ProjectContentBox";
-import { TNotionData } from "@/types";
+import type { TNotionData } from "@/types";
 
 interface ProjectsProps {
   notionDataArray: TNotionData[];
