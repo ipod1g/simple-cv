@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
 /** Dimensions must be specified by parent wrapper */
 const CloseButton = () => {
   return (
     <button
       id="close-button"
-      className="rounded-md inline-flex items-center justify-center text-black dark:text-white hover:text-purple-800 dark:hover:text-purple-400 transition-colors focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+      className="rounded-md inline-flex items-center justify-center text-black dark:text-white hover:[#c9a96e] dark:hover:[#f2d39e] transition-colors focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
     >
       <svg
         className="h-full w-full"

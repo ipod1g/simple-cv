@@ -24,7 +24,7 @@ const ExperienceBox = (props: ContentBoxProps) => {
       viewport={{ once: true }}
       href={projectURL}
       target="_blank"
-      className="group bg-white hover:bg-purple-200 dark:bg-black/70 dark:hover:bg-purple-950 cursor-pointer p-10 mb-6 transition-all flex flex-col flex-shrink-0 duration-600 min-w-[240px] lg:max-w-[330px] w-[40vw] border border-neutral-300/20 justify-center"
+      className="group bg-white hover:bg-[#c9a96e]/50 dark:bg-black/70 dark:hover:bg-[#c9a96e]/30 cursor-pointer p-10 mb-6 transition-all flex flex-col shrink-0 duration-400 min-w-[240px] lg:max-w-[330px] w-[40vw] border border-neutral-300/20 justify-center"
     >
       <PrimaryTitle title={title} />
       {/* <h2 className="font-semibold text-white">{title}</h2> */}

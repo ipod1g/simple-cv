@@ -1,12 +1,12 @@
-import React from 'react';
-import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
+import React from "react";
+import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import {
   faGithub,
   faLinkedin,
   faInstagram,
-} from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { motion } from 'framer-motion';
+} from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { motion } from "framer-motion";
 
 const Footer = () => {
   return (
@@ -21,8 +21,7 @@ const Footer = () => {
           rel="noreferrer"
           href="https://github.com/ipod1g"
           title=""
-          whileHover={{ scale: 1.15, color: '#c199e5e0' }}
-          whileTap={{ scale: 1 }}
+          whileHover={{ color: "#c9a96e" }}
         >
           <FontAwesomeIcon icon={faGithub} />
         </motion.a>
@@ -32,8 +31,7 @@ const Footer = () => {
           rel="noreferrer"
           href="https://www.instagram.com/bono420/"
           title=""
-          whileHover={{ scale: 1.15, color: '#c199e5e0' }}
-          whileTap={{ scale: 1 }}
+          whileHover={{ color: "#c9a96e" }}
         >
           <FontAwesomeIcon icon={faInstagram} />
         </motion.a>
@@ -43,8 +41,7 @@ const Footer = () => {
           rel="noreferrer"
           href="https://www.linkedin.com/in/bon-kwan-ku-340082245/"
           title=""
-          whileHover={{ scale: 1.15, color: '#c199e5e0' }}
-          whileTap={{ scale: 1 }}
+          whileHover={{ color: "#c9a96e" }}
         >
           <FontAwesomeIcon icon={faLinkedin} />
         </motion.a>
@@ -54,14 +51,13 @@ const Footer = () => {
           rel="noreferrer"
           href="mailto:kubonkwan99@gmail.com"
           title=""
-          whileHover={{ scale: 1.15, color: '#c199e5e0' }}
-          whileTap={{ scale: 1 }}
+          whileHover={{ color: "#c9a96e" }}
         >
           <FontAwesomeIcon icon={faEnvelope} />
         </motion.a>
       </div>
-      <div style={{ fontSize: '11px', marginTop: '4px' }}>
-        © 2023 Bono | All Rights Reserved.
+      <div className="text-xs mt-1 leading-normal">
+        © 2026 Bono | All Rights Reserved.
       </div>
     </footer>
   );

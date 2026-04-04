@@ -60,12 +60,12 @@ const ProjectContentBox = (props: ContentBoxProps) => {
       </div>
       <div className="flex justify-between">
         <ContentDuration duration={duration} />
-        <button
-          className="text-purple-600 font-semibold dark:font-normal dark:text-purple-300 self-end text-lg tracking-widest"
+        {/* <button
+          className="text-[#b48d43] font-semibold dark:font-normal dark:text-[#f2d39e] self-end text-lg tracking-widest"
           onClick={() => onClick(id)}
         >
-          Read More
-        </button>
+          Read More...
+        </button> */}
       </div>
     </motion.li>
   );

@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
 const HamburgerButton = () => {
   return (
     <button
       id="hamburger-button"
-      className="text-black dark:text-white hover:text-purple-800 dark:hover:text-purple-400"
+      className="text-black dark:text-white hover:[#c9a96e] dark:hover:[#f2d39e]"
     >
       {/* <div
         className="absolute top-4 -mt-0.5 h-[3px] w-8 rounded-sm bg-black dark:bg-white/90 transition-transform duration-300

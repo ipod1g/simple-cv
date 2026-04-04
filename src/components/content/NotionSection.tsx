@@ -23,6 +23,15 @@ const NotionSection = (props: { notionDataArray: TNotionData[] }) => {
 
   return (
     <>
+      <section id="work-section">
+        <SectionTitle title="Experiences" />
+        {props.notionDataArray ? (
+          <Experience notionDataArray={props.notionDataArray} />
+        ) : (
+          <Skeleton shape="circle" />
+        )}
+      </section>
+      <hr />
       <section id="project-section">
         <SectionTitle title="Projects" />
         {props.notionDataArray ? (
@@ -32,15 +41,6 @@ const NotionSection = (props: { notionDataArray: TNotionData[] }) => {
           />
         ) : (
           <Skeleton shape="diamond" />
-        )}
-      </section>
-      <hr />
-      <section id="work-section">
-        <SectionTitle title="Experiences" />
-        {props.notionDataArray ? (
-          <Experience notionDataArray={props.notionDataArray} />
-        ) : (
-          <Skeleton shape="circle" />
         )}
       </section>
       <hr />

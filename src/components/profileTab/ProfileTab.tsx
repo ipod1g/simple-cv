@@ -34,16 +34,16 @@ const ProfileTab = () => {
             />
           </div>
           <aside className="text-sm">
-            <h3 className="text-lg text-purple-800 dark:text-purple-400 transition-colors">
+            <h3 className="text-lg text-[#b48d43] dark:text-[#f2d39e]">
               Ku Bon Kwan (Bono) <br />
             </h3>
-            <h4 className="leading-6 dark:text-white transition-colors duration-100">
-              BSc in Physics, CUHK <br />
-            </h4>
-            <h4 className="leading-6 dark:text-white transition-colors duration-100">
-              Frontend |&nbsp;
-              <FontAwesomeIcon icon={faReact} color="rgb(12, 211, 218)" />
-              &nbsp; React
+            <h4 className="leading-6 dark:text-white">
+              Software Engineer
+              <FontAwesomeIcon
+                className="ml-1"
+                icon={faReact}
+                color="rgb(12, 211, 218)"
+              />
             </h4>
             <p
               id="intro"
@@ -66,7 +66,6 @@ const ProfileTab = () => {
             initial={{
               border: "1px solid rgba(238, 238, 238, 0)",
             }}
-            // bg-gradient-to-tr from-neutral-300 to-neutral-200 dark:bg-neutral-600/20 dark:from-neutral-600/20 dark:to-neutral-600/30 border-[1px] dark:border-black/30
             whileTap={{ scale: 0.99 }}
             className="rounded-md px-4 my-8 mx-auto h-14 flex items-center justify-center morphism-outer dark:bg-linear-to-tr from-neutral-700/50 to-neutral-700/30 transition-colors dark:text-gray-300 no-underline tracking-[2.5px] uppercase font-bold text-xs py-5 
             "

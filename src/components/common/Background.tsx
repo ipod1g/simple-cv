@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
-import Dither from "@/three/dither/Dither";
+import LightPillar from "@/three/light-pillar/LightPillar";
 
 const Background = () => {
   const { resolvedTheme } = useTheme();
@@ -26,30 +26,33 @@ const Background = () => {
       ></div>
       <div className="w-full h-full fixed inset-0 -z-10">
         {resolvedTheme === "dark" ? (
-          <Dither
-            backgroundColor={[0, 0, 0]}
-            waveColor={[0.3, 0.3, 0.3]}
-            invertPattern={false}
-            disableAnimation={false}
-            enableMouseInteraction
-            mouseRadius={0.2}
-            colorNum={4}
-            waveAmplitude={0.5}
-            waveFrequency={4}
-            waveSpeed={0.01}
+          <LightPillar
+            topColor="#c9a96e"
+            bottomColor="#f2d39e"
+            intensity={1}
+            rotationSpeed={0.4}
+            className="w-full h-full"
+            glowAmount={0.0035}
+            pillarWidth={2.4}
+            pillarHeight={0.4}
+            pillarRotation={64}
+            noiseIntensity={1}
+            mixBlendMode="screen"
           />
         ) : (
-          <Dither
-            backgroundColor={[0.94, 0.93, 0.9]}
-            waveColor={[0.42, 0.45, 0.5]}
-            invertPattern={false}
-            disableAnimation={false}
-            enableMouseInteraction
-            mouseRadius={0.2}
-            colorNum={4}
-            waveAmplitude={0.5}
-            waveFrequency={4}
-            waveSpeed={0.01}
+          <LightPillar
+            backgroundColor="#dbd7d1"
+            topColor="#6d6258"
+            bottomColor="#9a8b7a"
+            intensity={1}
+            rotationSpeed={0.4}
+            className="w-full h-full"
+            glowAmount={0.003}
+            pillarWidth={2.4}
+            pillarHeight={0.4}
+            pillarRotation={64}
+            noiseIntensity={1}
+            mixBlendMode="screen"
           />
         )}
       </div>

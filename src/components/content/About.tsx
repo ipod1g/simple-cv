@@ -1,8 +1,7 @@
-import React from 'react';
-import SectionTitle from '@/components/common/SectionTitle';
+import React from "react";
+import SectionTitle from "@/components/common/SectionTitle";
 
 const About = () => {
-  // future: replace the bottom pr with text-wrap balance
   return (
     <div
       id="about-container"
@@ -13,12 +12,9 @@ const About = () => {
       </div>
       <div className="leading-7 mb-[2px] pl-4 md:pl-16">
         <p>
-          Hi, I&apos;m a graduate in Physics at The Chinese
-          University of Hong Kong, CUHK.
-        </p>
-        <p>
-          Now I&apos;m a self-taught Software Engineer passionate about
-          creating aesthetic and functional experiences on the web! 😊
+          Hi, I'm a Physics graduate turned Software Engineer — I build reliable
+          and scalable web systems with a focus on performance, and the kind of
+          UI details most people don't notice until they're missing.
         </p>
         <p>Check out my projects through the links!</p>
       </div>
