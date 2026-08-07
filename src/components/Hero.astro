@@ -1,0 +1,122 @@
+---
+import { Image } from "astro:assets";
+import selfie from "@/assets/selfie.jpeg";
+import { SITE } from "@/config/site";
+---
+
+<section id="hero-section" class="hero" aria-labelledby="hero-name">
+  <div class="hero__text">
+    <p class="hero__eyebrow">ME</p>
+    <p class="hero__role">{SITE.role}</p>
+    <h1 id="hero-name" class="hero__name">
+      Bono<br /><span class="hero__dot" aria-hidden="true">.</span>Ku
+    </h1>
+  </div>
+
+  <div class="hero__figure">
+    {/* Filler geometry until the Figma artwork lands. */}
+    <span class="hero__slab" aria-hidden="true"></span>
+    <span class="hero__slab hero__slab--low" aria-hidden="true"></span>
+
+    <span class="hero__mark shape-anchor" data-shape-anchor="me"></span>
+
+    <Image
+      src={selfie}
+      alt={`Portrait of ${SITE.fullName}`}
+      widths={[256, 512]}
+      sizes="(min-width: 768px) 22rem, 60vw"
+      loading="eager"
+      fetchpriority="high"
+      class="hero__portrait"
+    />
+  </div>
+</section>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: center;
+    min-height: 78svh;
+    padding: 4rem 0 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .hero {
+      grid-template-columns: 1fr auto;
+      gap: 3rem;
+    }
+  }
+
+  .hero__eyebrow {
+    font-size: 0.875rem;
+    letter-spacing: 0.15em;
+    color: var(--color-muted);
+  }
+
+  .hero__role {
+    margin-top: 3rem;
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+
+  .hero__name {
+    font-size: clamp(3rem, 11vw, 5.5rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--color-heading);
+  }
+
+  .hero__dot {
+    color: #f43f3f;
+  }
+
+  .hero__figure {
+    position: relative;
+    display: grid;
+    place-items: end center;
+    width: min(22rem, 70vw);
+    aspect-ratio: 3 / 4;
+    margin-inline: auto;
+  }
+
+  /* Grey slabs sitting behind the portrait. */
+  .hero__slab {
+    position: absolute;
+    top: 4%;
+    left: 50%;
+    translate: -50% 0;
+    width: 62%;
+    height: 26%;
+    background: var(--color-slab);
+  }
+
+  .hero__slab--low {
+    top: auto;
+    bottom: 4%;
+    width: 46%;
+    height: 20%;
+  }
+
+  /* Sits above the portrait, as in the reference: the mark overlaps the figure. */
+  .hero__mark {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    bottom: 6%;
+    translate: -50% 0;
+    width: 46%;
+    aspect-ratio: 1;
+  }
+
+  .hero__portrait {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: bottom;
+  }
+</style>

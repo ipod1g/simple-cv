@@ -1,0 +1,99 @@
+---
+import Icon from "@/components/Icon.astro";
+---
+
+<button
+  id="theme-toggle"
+  type="button"
+  class="theme-toggle"
+  aria-pressed="false"
+  aria-label="Switch to light theme"
+>
+  <Icon name="sun" size={20} class="theme-toggle__icon theme-toggle__icon--sun" />
+  <Icon
+    name="moon"
+    size={20}
+    class="theme-toggle__icon theme-toggle__icon--moon"
+  />
+  <span class="theme-toggle__knob" aria-hidden="true"></span>
+</button>
+
+<script>
+  const STORAGE_KEY = "cv-theme";
+  const button = document.getElementById("theme-toggle");
+
+  function sync(theme: string) {
+    if (!button) return;
+    const isDark = theme === "dark";
+    button.setAttribute("aria-pressed", String(!isDark));
+    button.setAttribute(
+      "aria-label",
+      isDark ? "Switch to light theme" : "Switch to dark theme"
+    );
+  }
+
+  sync(document.documentElement.dataset.theme ?? "dark");
+
+  button?.addEventListener("click", () => {
+    const next =
+      document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    try {
+      localStorage.setItem(STORAGE_KEY, next);
+    } catch {
+      /* storage unavailable — theme still applies for this page view */
+    }
+    sync(next);
+  });
+</script>
+
+<style>
+  .theme-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 3.5rem;
+    padding: 0.25rem;
+    color: var(--color-toggle-icon);
+    background: var(--color-toggle-bg);
+    border: 2px solid var(--color-toggle-border);
+    border-radius: 1rem;
+    cursor: pointer;
+  }
+
+  .theme-toggle:hover {
+    color: var(--color-toggle-icon-hover);
+  }
+
+  .theme-toggle__icon {
+    position: relative;
+    z-index: 1;
+  }
+
+  :root[data-theme="dark"] .theme-toggle__icon--sun,
+  :root[data-theme="light"] .theme-toggle__icon--moon {
+    visibility: hidden;
+  }
+
+  .theme-toggle__knob {
+    position: absolute;
+    left: 0.25rem;
+    height: 1.2rem;
+    width: 1.2rem;
+    background: #fff;
+    border-radius: 9999px;
+    transform: translateX(1.5rem);
+    transition: transform 100ms ease;
+  }
+
+  :root[data-theme="dark"] .theme-toggle__knob {
+    transform: translateX(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .theme-toggle__knob {
+      transition-duration: 1ms;
+    }
+  }
+</style>

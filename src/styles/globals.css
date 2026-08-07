@@ -1,39 +1,75 @@
 @import "tailwindcss";
 
-/* Dark/light: <html data-theme="dark"|"light"> (see ThemeContext) — no .dark class */
+/* Dark/light: <html data-theme="dark"|"light"> — set before first paint. */
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme {
   --color-greyish: #95a7c7;
   --color-pale: rgb(209, 225, 238);
   --color-blueish: rgb(209, 225, 238);
-
-  --leading-20: 5rem;
-
-  --animate-fadeOut1: fadeOut1 1s ease-out;
-  --animate-fadeOut2: fadeOut2 1s ease-out;
 }
 
-@keyframes fadeOut1 {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes fadeOut2 {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
+/* ---------------------------------------------------------------
+   Design tokens. Phase 2 (Figma) should only need to touch these.
+   --------------------------------------------------------------- */
 :root {
+  --color-accent: #c9a96e;
+  --color-accent-strong: #b48d43;
+
+  --color-bg: #ffffff;
+  --color-text: #000000;
+  --color-heading: #000000;
+  --color-muted: rgb(82 82 82);
+
+  --color-surface: #ffffff;
+  --color-surface-hover: color-mix(in srgb, var(--color-accent) 50%, #fff);
+  --color-border: rgb(212 212 212 / 0.6);
+  --color-border-strong: rgb(0 0 0 / 0.5);
+  --color-rule: rgb(0 0 0 / 0.5);
+
+  --color-avatar-bg: #e5e5e5;
+  --color-cv-bg: transparent;
+  --color-toggle-bg: rgb(212 212 212);
+  --color-toggle-border: transparent;
+  --color-toggle-icon: rgb(234 179 8);
+  --color-toggle-icon-hover: rgb(251 146 60);
+
+  --color-chip-bg: rgb(250 250 250 / 0.9);
+  --color-chip-border: rgb(229 229 229 / 0.8);
+  --color-chip-text: rgb(38 38 38);
+
   font-size: 13px;
+}
+
+:root[data-theme="dark"] {
+  --color-accent: #c9a96e;
+  --color-accent-strong: #f2d39e;
+
+  --color-bg: #000000;
+  --color-text: color-mix(in srgb, var(--color-pale) 90%, transparent);
+  --color-heading: #ffffff;
+  --color-muted: rgb(163 163 163);
+
+  --color-surface: rgb(0 0 0 / 0.7);
+  --color-surface-hover: color-mix(in srgb, var(--color-accent) 30%, #000);
+  --color-border: rgb(115 115 115 / 0.25);
+  --color-border-strong: color-mix(in srgb, var(--color-pale) 50%, transparent);
+  --color-rule: rgb(209 213 219 / 0.3);
+
+  --color-avatar-bg: rgb(23 23 23);
+  --color-cv-bg: linear-gradient(
+    to top right,
+    rgb(64 64 64 / 0.5),
+    rgb(64 64 64 / 0.3)
+  );
+  --color-toggle-bg: #000000;
+  --color-toggle-border: rgb(82 82 82);
+  --color-toggle-icon: rgb(250 204 21);
+  --color-toggle-icon-hover: rgb(253 224 71);
+
+  --color-chip-bg: rgb(23 23 23 / 0.6);
+  --color-chip-border: rgb(64 64 64 / 0.8);
+  --color-chip-text: rgb(245 245 245);
 }
 
 @media (min-width: 1024px) {
@@ -43,96 +79,142 @@
 }
 
 html {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Source Sans 3", "Source Sans Pro", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: smooth;
+  color-scheme: light;
 }
 
-hr {
-  @apply border-0 border-t border-black/50 my-6 mr-[20%] ml-[60px] dark:border-gray-300/30;
-}
-
-.glass {
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  transition-property: color, background-color, text-decoration-color, fill,
-    stroke;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 3500ms;
-  @apply bg-gradient-to-tr from-[#e5e5e5] to-neutral-100 dark:bg-black/20 dark:from-black/30 dark:to-black/20 border-[1px] dark:border-black/30;
-}
-
-.text-line-purple {
-  text-shadow: 1px 3px 3px #6f4d9bad;
-}
-
-.morphism-outer {
-  box-shadow: 5px 8px 20px rgba(0, 0, 0, 0.25),
-    -10px -10px 18px rgba(255, 255, 255, 0.8);
-}
-
-[data-theme="dark"] .morphism-outer {
-  box-shadow: none;
-}
-
-.morphism-inner {
-  box-shadow: inset -31px -31px 23px rgba(255, 255, 255, 0.64),
-    inset 26px 26px 28px rgba(13, 39, 80, 0.16);
-}
-
-[data-theme="dark"] .morphism-inner {
-  box-shadow: inset 48px 36px 36px #090909, inset -16px -16px 32px #1b1b1b;
-}
-
-.content-box:hover .title-text {
-  text-shadow: 1px 3px 3px #6f4d9bad;
-  transform: scale(1.04);
-  -webkit-transition: all 0.2s linear;
-  -o-transition: all 0.2s linear;
-  transition: all 0.2s linear;
-  @apply text-purple-700 dark:text-purple-300;
-}
-
-.notion--table {
-  border: 1px solid currentColor;
-  border-collapse: collapse;
-}
-.notion--table th {
-  border: 1px solid currentColor;
-  background-color: rgb(242, 242, 242);
-  padding: 6px 12px;
-}
-.notion--table td {
-  border: 1px solid currentColor;
-  padding: 6px 12px;
-}
-
-.notion--row {
-  display: flex;
-}
-
-.notion--row > div {
-  flex: 1;
-}
-
-.notion--container h1 {
-  font-size: 32px;
-}
-
-.notion--container img {
-  width: 100%;
+/* Lenis drives smooth scrolling; native smooth would fight it. */
+html.lenis,
+html.lenis body {
   height: auto;
 }
 
-.notion--container figure {
-  margin-left: 0;
-  margin-right: 0;
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
 }
 
-.notion--container figcaption {
-  opacity: 0.6;
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  /* Horizontal overflow guard lives here, not on inner wrappers — `clip`
+     (unlike `hidden`) does not create a scroll container, so the shape
+     marks' layout animations are not clipped mid-flight by ancestors. */
+  overflow-x: clip;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Accessibility primitives
+   --------------------------------------------------------------- */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: -3rem;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 0.375rem;
+  transition: top 150ms ease;
+}
+
+.skip-link:focus {
+  top: 0.5rem;
+}
+
+/* ---------------------------------------------------------------
+   Scroll reveal — class flipped by an IntersectionObserver.
+   --------------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 500ms ease-out, transform 500ms ease-out;
+}
+
+.reveal.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------------------------------------------------------------
+   Surfaces carried over from the current design
+   --------------------------------------------------------------- */
+hr {
+  border: 0;
+  border-top: 1px solid var(--color-rule);
+  margin: 1.5rem 20% 1.5rem 60px;
+}
+
+@media (min-width: 1024px) {
+  hr {
+    margin-right: 60px;
+  }
+}
+
+.glass {
+  box-shadow: 0 14px 30px rgb(0 0 0 / 0.1);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  background-image: linear-gradient(to top right, #e5e5e5, #f5f5f5);
+  border: 1px solid rgb(255 255 255 / 0.3);
+  transition: background-color 3500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:root[data-theme="dark"] .glass {
+  background-color: rgb(0 0 0 / 0.2);
+  background-image: linear-gradient(
+    to top right,
+    rgb(0 0 0 / 0.3),
+    rgb(0 0 0 / 0.2)
+  );
+  border-color: rgb(82 82 82 / 0.3);
 }
 
 @media (min-width: 1024px) {
@@ -140,7 +222,374 @@ hr {
     backdrop-filter: blur(8.7px);
     -webkit-backdrop-filter: blur(8.7px);
   }
-  hr {
-    margin-right: 60px;
+}
+
+.morphism-outer {
+  box-shadow: 5px 8px 20px rgb(0 0 0 / 0.25),
+    -10px -10px 18px rgb(255 255 255 / 0.8);
+}
+
+:root[data-theme="dark"] .morphism-outer {
+  box-shadow: none;
+}
+
+.morphism-inner {
+  box-shadow: inset -31px -31px 23px rgb(255 255 255 / 0.64),
+    inset 26px 26px 28px rgb(13 39 80 / 0.16);
+}
+
+:root[data-theme="dark"] .morphism-inner {
+  box-shadow: inset 48px 36px 36px #090909, inset -16px -16px 32px #1b1b1b;
+}
+
+/* Decorative page background — replaces the WebGL light pillar. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      60% 45% at 50% 0%,
+      color-mix(in srgb, var(--color-accent) 26%, transparent),
+      transparent 70%
+    ),
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--color-accent) 8%, transparent),
+      transparent 55%
+    );
+}
+
+:root[data-theme="light"] body::before {
+  background:
+    radial-gradient(60% 45% at 50% 0%, rgb(219 215 209 / 0.9), transparent 70%),
+    linear-gradient(160deg, rgb(154 139 122 / 0.18), transparent 55%);
+}
+
+/* ---------------------------------------------------------------
+   Skills island
+   --------------------------------------------------------------- */
+.skills__grid {
+  display: grid;
+  gap: 1.25rem;
+  max-width: 64rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .skills__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
+
+@media (min-width: 1280px) {
+  .skills__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.skills__card {
+  position: relative;
+  overflow: hidden;
+  padding: 1.25rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  backdrop-filter: blur(2px);
+  transition: border-color 300ms ease;
+}
+
+.skills__card:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+}
+
+.skills__bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background: linear-gradient(
+    to bottom,
+    var(--color-accent),
+    color-mix(in srgb, var(--color-accent) 40%, transparent)
+  );
+}
+
+.skills__group {
+  padding-left: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.skills__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-left: 0.75rem;
+  list-style: none;
+  margin: 0;
+}
+
+.skills__chip {
+  display: inline-block;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.875rem;
+  line-height: normal;
+  color: var(--color-chip-text);
+  background: var(--color-chip-bg);
+  border: 1px solid var(--color-chip-border);
+  border-radius: 0.375rem;
+}
+
+.skills__chip--pill {
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  border-radius: 9999px;
+}
+
+.skills__languages {
+  max-width: 28rem;
+  margin-top: 2.5rem;
+}
+
+/* ---------------------------------------------------------------
+   Scroll-morph shape navigation
+   --------------------------------------------------------------- */
+.shape-anchor {
+  display: block;
+  position: relative;
+}
+
+/* Anchors reserve the large footprint; the mark itself is portalled in. */
+.shape-anchor--rect {
+  width: min(18rem, 55vw);
+  height: 8rem;
+  margin: 1rem 0 2rem;
+}
+
+.shape-anchor--trapezoid {
+  width: min(10rem, 32vw);
+  height: 9rem;
+  margin: 1rem 0 2rem auto;
+  margin-right: 12%;
+}
+
+.shape-anchor__mark {
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+
+.mark {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.mark--circle {
+  border-radius: 9999px;
+}
+
+.mark--rect {
+  rotate: -6deg;
+}
+
+.mark--trapezoid {
+  clip-path: polygon(0 100%, 22% 0, 100% 12%, 78% 100%);
+}
+
+.mark[data-docked] {
+  rotate: none;
+}
+
+.shape-nav {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.5rem;
+  z-index: 60;
+}
+
+.shape-nav__list {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.shape-nav__button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.25rem;
+  color: var(--color-heading);
+  text-decoration: none;
+  border-radius: 0.375rem;
+  line-height: 1.1;
+}
+
+.shape-nav__mark {
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.shape-nav__label {
+  font-size: 0.5rem;
+  letter-spacing: 0.02em;
+}
+
+.shape-nav__button:hover .shape-nav__mark,
+.shape-nav__button:focus-visible .shape-nav__mark {
+  scale: 1.12;
+}
+
+.shape-nav__mark {
+  transition: scale 150ms ease;
+}
+
+/* Filler geometry behind the hero portrait. */
+:root {
+  --color-slab: #d9d9d9;
+}
+
+:root[data-theme="dark"] {
+  --color-slab: rgb(115 115 115 / 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shape-nav__mark {
+    transition-duration: 1ms;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Side navigation island
+   --------------------------------------------------------------- */
+.sidenav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100svh;
+  pointer-events: none;
+}
+
+.sidenav__trigger {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  z-index: 40;
+  display: inline-flex;
+  padding: 0.25rem;
+  color: var(--color-heading);
+  background: none;
+  border: 0;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.sidenav__trigger:hover {
+  color: var(--color-accent);
+}
+
+.sidenav__panel {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 20;
+  width: 7rem;
+  height: 70svh;
+  padding: 10rem 1rem;
+  border-radius: 0.5rem;
+  background: linear-gradient(
+    to top,
+    rgb(212 212 212 / 0.5),
+    rgb(255 255 255 / 0.8)
+  );
+}
+
+:root[data-theme="dark"] .sidenav__panel {
+  background: linear-gradient(
+    to top,
+    rgb(115 115 115 / 0.2),
+    rgb(0 0 0 / 0.8)
+  );
+}
+
+.sidenav__list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-around;
+  gap: 2.5rem;
+  height: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidenav__link {
+  font-weight: 700;
+  color: inherit;
+  text-decoration: none;
+}
+
+.sidenav__link:hover {
+  color: var(--color-accent);
+}
+
+/* ---------------------------------------------------------------
+   Rendered markdown inside entry dialogs
+   --------------------------------------------------------------- */
+.prose h2 {
+  margin-block: 1.5rem 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-heading);
+}
+
+.prose h3 {
+  margin-block: 1.25rem 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-heading);
+}
+
+.prose p {
+  margin-block: 0.5rem;
+}
+
+.prose ul {
+  padding-left: 1.25rem;
+  margin-bottom: 2rem;
+  list-style: circle;
+}
+
+.prose li {
+  margin-block: 0.5rem;
+}
+
+.prose code {
+  padding: 0.1em 0.35em;
+  font-size: 0.9em;
+  background: var(--color-chip-bg);
+  border: 1px solid var(--color-chip-border);
+  border-radius: 0.25rem;
+}
+
+.prose img {
+  width: 100%;
+  height: auto;
 }

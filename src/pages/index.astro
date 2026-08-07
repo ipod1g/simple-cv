@@ -1,52 +1,212 @@
 ---
-import PortfolioApp from "@/components/PortfolioApp";
-import "@/styles/globals.css";
-import { getDatabase, parseDatabase } from "@/controllers/notionController";
-import { DATABASE_ID } from "@/config";
-import type { CustomNotionDatabaseItem, TNotionData } from "@/types";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/Hero.astro";
+import ProfilePanel from "@/components/ProfilePanel.astro";
+import ShapeNav from "@/components/react/ShapeNav";
+import SectionHeading from "@/components/SectionHeading.astro";
+import ExperienceCard from "@/components/ExperienceCard.astro";
+import EntryCard from "@/components/EntryCard.astro";
+import SkillsGrid from "@/components/react/SkillsGrid";
+import { getEntries } from "@/lib/entries";
+import { SITE } from "@/config/site";
 
-export const prerender = true;
-
-const raw = await getDatabase(DATABASE_ID);
-const notionDataArray = (parseDatabase(
-  (raw ?? []) as unknown as CustomNotionDatabaseItem[]
-) ?? []) as TNotionData[];
+const [experience, projects, extras] = await Promise.all([
+  getEntries("experience"),
+  getEntries("projects"),
+  getEntries("extras"),
+]);
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Bono's portfolio website" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="manifest" href="/manifest.json" />
-    <meta property="og:title" content="Bono" />
-    <meta property="og:type" content="portfolio" />
-    <meta property="og:url" content="https://cvbono.vercel.app" />
-    <title>Bono</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <script
-      is:inline
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-KXS0HTW0P4"></script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-KXS0HTW0P4", {
-        page_path: window.location.pathname,
-      });
-    </script>
-  </head>
-  <body>
-    <PortfolioApp client:load notionDataArray={notionDataArray} />
-  </body>
-</html>
+<BaseLayout>
+  <div class="shell">
+    <ProfilePanel />
+
+    <main id="main-content" class="shell__main">
+      <article class="shell__article">
+        <Hero />
+
+        <hr />
+
+        <section id="about-section" aria-labelledby="about-heading">
+          <SectionHeading id="about-heading" title="About" />
+          <div class="about">
+            {SITE.about.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
+        </section>
+
+        <hr />
+
+        <section id="work-section" aria-labelledby="work-heading">
+          <SectionHeading id="work-heading" title="Experiences" />
+          <span
+            class="shape-anchor shape-anchor--rect"
+            data-shape-anchor="experience"></span>
+          <ol class="grid-list">
+            {experience.map((entry) => <ExperienceCard entry={entry} />)}
+          </ol>
+        </section>
+
+        <hr />
+
+        <section id="project-section" aria-labelledby="project-heading">
+          <SectionHeading id="project-heading" title="Projects" />
+          <span
+            class="shape-anchor shape-anchor--trapezoid"
+            data-shape-anchor="projects"></span>
+          <ol class="stack-list">
+            {projects.map((entry) => <EntryCard entry={entry} />)}
+          </ol>
+        </section>
+
+        <hr />
+
+        <section id="extra-section" aria-labelledby="extra-heading">
+          <SectionHeading id="extra-heading" title="Extra-curricular" />
+          <ol class="stack-list">
+            {extras.map((entry) => <EntryCard entry={entry} variant="extra" />)}
+          </ol>
+        </section>
+
+        <hr />
+
+        <section id="skill-section" aria-labelledby="skill-heading">
+          <SectionHeading id="skill-heading" title="Skills" />
+          <div class="skills">
+            <SkillsGrid client:visible />
+          </div>
+          <hr />
+          <p class="credits">{SITE.credits}</p>
+        </section>
+      </article>
+
+    </main>
+  </div>
+
+  {/* Outside .shell: the flying mark must not be clipped by an overflow
+      ancestor, and the fixed header must not sit inside a transformed one. */}
+  <ShapeNav client:load />
+
+  <p class="back-to-top">
+    <a href="#main-content">Back to top</a>
+  </p>
+</BaseLayout>
+
+<style>
+  .shell {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-bottom: 2px solid var(--color-rule);
+    font-weight: 500;
+    letter-spacing: 2px;
+    line-height: 5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .shell {
+      flex-direction: row;
+    }
+  }
+
+  /* No overflow clipping here — the shape marks animate across this box
+     on their way to the header and must stay visible the whole flight. */
+  .shell__main {
+    position: relative;
+    width: 100%;
+  }
+
+  .shell__article {
+    width: 100%;
+    padding: 1.5rem 3rem;
+  }
+
+  @media (min-width: 1024px) {
+    .shell__article {
+      width: 75vw;
+    }
+  }
+
+  .about {
+    padding-left: 1rem;
+    margin-bottom: 2px;
+    line-height: 1.75rem;
+  }
+
+  @media (min-width: 768px) {
+    .about {
+      padding-left: 4rem;
+    }
+  }
+
+  .grid-list {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+  }
+
+  @media (min-width: 768px) {
+    .grid-list {
+      padding-left: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .grid-list {
+      margin-left: 1.5rem;
+    }
+  }
+
+  .stack-list {
+    position: relative;
+    max-width: 80rem;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+  }
+
+  @media (min-width: 768px) {
+    .stack-list {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  .skills {
+    padding: 1rem;
+    padding-bottom: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .skills {
+      margin-left: 3rem;
+    }
+  }
+
+  .credits {
+    padding: 1rem;
+    margin-bottom: 5rem;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  @media (min-width: 768px) {
+    .credits {
+      margin-left: 3rem;
+    }
+  }
+
+  .back-to-top {
+    display: flex;
+    justify-content: flex-end;
+    height: 0;
+    margin-bottom: 88vh;
+    padding: 1rem 2rem;
+  }
+
+  .back-to-top a {
+    color: var(--color-muted);
+  }
+</style>
