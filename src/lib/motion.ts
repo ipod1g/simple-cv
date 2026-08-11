@@ -1,6 +1,15 @@
 /**
- * Single shared feature bundle for every motion island. ShapeNav's layoutId
- * morph requires domMax (projection); loading domAnimation anywhere else
- * would ship a second, redundant feature set — always import from here.
+ * Single shared feature bundle for every motion island — importing a second
+ * feature set anywhere would ship a redundant copy alongside this one.
+ *
+ * Still domMax rather than domAnimation: the project card's artwork flies into
+ * the expanded panel via `layoutId`, and only domMax carries the projection
+ * feature that shared-layout animation needs.
  */
-export { LazyMotion, LayoutGroup, m, domMax } from "framer-motion";
+export {
+  AnimatePresence,
+  LayoutGroup,
+  LazyMotion,
+  m,
+  domMax,
+} from "framer-motion";

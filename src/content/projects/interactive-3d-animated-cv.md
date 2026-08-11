@@ -1,5 +1,6 @@
 ---
 title: Interactive 3D Animated CV
+accent: "#1f7a52"
 subtitle: Personal
 start: 2022-12-30
 end: 2023-04-22

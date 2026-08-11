@@ -1,5 +1,6 @@
 ---
 title: Battleship Online
+accent: "#14477d"
 subtitle: Personal
 start: 2022-11-11
 end: null

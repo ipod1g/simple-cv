@@ -1,5 +1,6 @@
 ---
 title: Riot Games Client Login Screen Clone
+accent: "#f43f3f"
 subtitle: Personal
 start: 2022-08-18
 end: 2022-09-02

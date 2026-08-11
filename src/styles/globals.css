@@ -1,85 +1,45 @@
+@import "modern-normalize";
 @import "tailwindcss";
 
-/* Dark/light: <html data-theme="dark"|"light"> — set before first paint. */
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
-
-@theme {
-  --color-greyish: #95a7c7;
-  --color-pale: rgb(209, 225, 238);
-  --color-blueish: rgb(209, 225, 238);
-}
-
 /* ---------------------------------------------------------------
-   Design tokens. Phase 2 (Figma) should only need to touch these.
+   Design tokens — light theme only.
    --------------------------------------------------------------- */
 :root {
-  --color-accent: #c9a96e;
-  --color-accent-strong: #b48d43;
+  --color-me: #f43f3f;
+  --color-accent: #4c82f7;
+  --color-accent-strong: #2f5fd0;
 
   --color-bg: #ffffff;
-  --color-text: #000000;
-  --color-heading: #000000;
+  --color-text: #111111;
+  --color-text-inverse: #ffffff;
+  --color-heading: #0a0a0a;
   --color-muted: rgb(82 82 82);
 
   --color-surface: #ffffff;
-  --color-surface-hover: color-mix(in srgb, var(--color-accent) 50%, #fff);
-  --color-border: rgb(212 212 212 / 0.6);
+  --color-surface-hover: #f5f5f5;
+  --color-border: rgb(0 0 0 / 0.12);
   --color-border-strong: rgb(0 0 0 / 0.5);
-  --color-rule: rgb(0 0 0 / 0.5);
+  --color-rule: rgb(0 0 0 / 0.15);
+  --color-dot: rgb(0 0 0 / 0.14);
 
-  --color-avatar-bg: #e5e5e5;
-  --color-cv-bg: transparent;
-  --color-toggle-bg: rgb(212 212 212);
-  --color-toggle-border: transparent;
-  --color-toggle-icon: rgb(234 179 8);
-  --color-toggle-icon-hover: rgb(251 146 60);
+  --color-bubble-bg: #e9eef8;
 
   --color-chip-bg: rgb(250 250 250 / 0.9);
-  --color-chip-border: rgb(229 229 229 / 0.8);
+  --color-chip-border: rgb(229 229 229);
   --color-chip-text: rgb(38 38 38);
 
-  font-size: 13px;
-}
+  /* Sharp start, long glide out — the easing every reveal on the site shares. */
+  --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
 
-:root[data-theme="dark"] {
-  --color-accent: #c9a96e;
-  --color-accent-strong: #f2d39e;
+  --font-mono:
+    ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Menlo, Consolas,
+    monospace;
 
-  --color-bg: #000000;
-  --color-text: color-mix(in srgb, var(--color-pale) 90%, transparent);
-  --color-heading: #ffffff;
-  --color-muted: rgb(163 163 163);
-
-  --color-surface: rgb(0 0 0 / 0.7);
-  --color-surface-hover: color-mix(in srgb, var(--color-accent) 30%, #000);
-  --color-border: rgb(115 115 115 / 0.25);
-  --color-border-strong: color-mix(in srgb, var(--color-pale) 50%, transparent);
-  --color-rule: rgb(209 213 219 / 0.3);
-
-  --color-avatar-bg: rgb(23 23 23);
-  --color-cv-bg: linear-gradient(
-    to top right,
-    rgb(64 64 64 / 0.5),
-    rgb(64 64 64 / 0.3)
-  );
-  --color-toggle-bg: #000000;
-  --color-toggle-border: rgb(82 82 82);
-  --color-toggle-icon: rgb(250 204 21);
-  --color-toggle-icon-hover: rgb(253 224 71);
-
-  --color-chip-bg: rgb(23 23 23 / 0.6);
-  --color-chip-border: rgb(64 64 64 / 0.8);
-  --color-chip-text: rgb(245 245 245);
-}
-
-@media (min-width: 1024px) {
-  :root {
-    font-size: 17px;
-  }
+  font-size: 16px;
 }
 
 html {
-  font-family: "Source Sans 3", "Source Sans Pro", system-ui, sans-serif;
+  font-family: "Satoshi", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color-scheme: light;
@@ -103,17 +63,26 @@ html.lenis body {
   overflow: hidden;
 }
 
-:root[data-theme="dark"] {
-  color-scheme: dark;
+/* Registered so the hero halo's conic angle interpolates — an unregistered
+   custom property snaps instead of animating. */
+@property --halo-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* 100vw full-bleed elements (hero halo) include the scrollbar width; clip
+   the sliver instead of growing a horizontal scrollbar. On html, not body —
+   the viewport scrolls via html, so clipping body alone still lets the page
+   pan sideways. */
+html,
+body {
+  overflow-x: clip;
 }
 
 body {
   background: var(--color-bg);
   color: var(--color-text);
-  /* Horizontal overflow guard lives here, not on inner wrappers — `clip`
-     (unlike `hidden`) does not create a scroll container, so the shape
-     marks' layout animations are not clipped mid-flight by ancestors. */
-  overflow-x: clip;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -135,7 +104,7 @@ body {
    Accessibility primitives
    --------------------------------------------------------------- */
 :where(a, button, [tabindex]):focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-me);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -174,8 +143,12 @@ body {
    --------------------------------------------------------------- */
 .reveal {
   opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 500ms ease-out, transform 500ms ease-out;
+  transform: translateY(2rem);
+  /* Opacity lands before the travel does, so the text is legible while it is
+     still settling rather than fading in at the end. */
+  transition:
+    opacity 600ms ease var(--reveal-delay, 0ms),
+    transform 800ms var(--ease-out-quart) var(--reveal-delay, 0ms);
 }
 
 .reveal.is-revealed {
@@ -183,182 +156,97 @@ body {
   transform: none;
 }
 
-/* ---------------------------------------------------------------
-   Surfaces carried over from the current design
-   --------------------------------------------------------------- */
-hr {
-  border: 0;
-  border-top: 1px solid var(--color-rule);
-  margin: 1.5rem 20% 1.5rem 60px;
-}
-
-@media (min-width: 1024px) {
-  hr {
-    margin-right: 60px;
-  }
-}
-
-.glass {
-  box-shadow: 0 14px 30px rgb(0 0 0 / 0.1);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  background-image: linear-gradient(to top right, #e5e5e5, #f5f5f5);
-  border: 1px solid rgb(255 255 255 / 0.3);
-  transition: background-color 3500ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-:root[data-theme="dark"] .glass {
-  background-color: rgb(0 0 0 / 0.2);
-  background-image: linear-gradient(
-    to top right,
-    rgb(0 0 0 / 0.3),
-    rgb(0 0 0 / 0.2)
-  );
-  border-color: rgb(82 82 82 / 0.3);
-}
-
-@media (min-width: 1024px) {
-  .glass {
-    backdrop-filter: blur(8.7px);
-    -webkit-backdrop-filter: blur(8.7px);
-  }
-}
-
-.morphism-outer {
-  box-shadow: 5px 8px 20px rgb(0 0 0 / 0.25),
-    -10px -10px 18px rgb(255 255 255 / 0.8);
-}
-
-:root[data-theme="dark"] .morphism-outer {
-  box-shadow: none;
-}
-
-.morphism-inner {
-  box-shadow: inset -31px -31px 23px rgb(255 255 255 / 0.64),
-    inset 26px 26px 28px rgb(13 39 80 / 0.16);
-}
-
-:root[data-theme="dark"] .morphism-inner {
-  box-shadow: inset 48px 36px 36px #090909, inset -16px -16px 32px #1b1b1b;
-}
-
-/* Decorative page background — replaces the WebGL light pillar. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -10;
-  pointer-events: none;
-  background:
-    radial-gradient(
-      60% 45% at 50% 0%,
-      color-mix(in srgb, var(--color-accent) 26%, transparent),
-      transparent 70%
-    ),
-    linear-gradient(
-      160deg,
-      color-mix(in srgb, var(--color-accent) 8%, transparent),
-      transparent 55%
-    );
-}
-
-:root[data-theme="light"] body::before {
-  background:
-    radial-gradient(60% 45% at 50% 0%, rgb(219 215 209 / 0.9), transparent 70%),
-    linear-gradient(160deg, rgb(154 139 122 / 0.18), transparent 55%);
+/* Applied for a frame when content is restored already-on-screen, so it lands
+   in its final state instead of replaying the entrance. */
+.is-instant,
+.is-instant .word {
+  transition: none !important;
 }
 
 /* ---------------------------------------------------------------
-   Skills island
+   Split-lines reveal — words rise from a hard cut edge.
+
+   Each measured line is its own clipping box; the words inside start fully
+   below it, so nothing fades — the text is simply not there yet, then it is.
    --------------------------------------------------------------- */
-.skills__grid {
-  display: grid;
-  gap: 1.25rem;
-  max-width: 64rem;
-  list-style: none;
-  padding: 0;
-  margin: 0;
+[data-split-lines] {
+  --stagger: 80ms;
+  --delay: 100ms;
 }
 
-@media (min-width: 640px) {
-  .skills__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+/* Hidden only until the splitter has run — and only when scripting is on, so
+   a JS-off visitor still reads every heading. */
+[data-js] [data-split-lines]:not(.is-split) {
+  visibility: hidden;
 }
 
-@media (min-width: 1280px) {
-  .skills__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-.skills__card {
-  position: relative;
+[data-split-lines] .line {
+  display: block;
   overflow: hidden;
-  padding: 1.25rem;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 0.5rem;
-  backdrop-filter: blur(2px);
-  transition: border-color 300ms ease;
 }
 
-.skills__card:hover {
-  border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
-}
-
-.skills__bar {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 4px;
-  background: linear-gradient(
-    to bottom,
-    var(--color-accent),
-    color-mix(in srgb, var(--color-accent) 40%, transparent)
-  );
-}
-
-.skills__group {
-  padding-left: 0.75rem;
-  margin-bottom: 1rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-}
-
-.skills__items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  padding-left: 0.75rem;
-  list-style: none;
-  margin: 0;
-}
-
-.skills__chip {
+[data-split-lines] .word {
   display: inline-block;
-  padding: 0.25rem 0.625rem;
-  font-size: 0.875rem;
-  line-height: normal;
-  color: var(--color-chip-text);
-  background: var(--color-chip-bg);
-  border: 1px solid var(--color-chip-border);
-  border-radius: 0.375rem;
+  /* 115%, not 100% — descenders sit below the baseline box and would
+     otherwise peek above the cut. */
+  transform: translateY(115%);
+  transition: transform 800ms var(--ease-out-quart);
+  transition-delay: calc(var(--index, 0) * var(--stagger) + var(--delay));
+  will-change: transform;
 }
 
-.skills__chip--pill {
-  padding: 0.5rem 1rem;
-  font-weight: 500;
-  border-radius: 9999px;
+[data-split-lines].is-inview .word {
+  transform: none;
 }
 
-.skills__languages {
-  max-width: 28rem;
-  margin-top: 2.5rem;
+/* Siblings cascade in rather than all arriving on the same frame. */
+.stack-list > .reveal:nth-child(2) {
+  --reveal-delay: 90ms;
+}
+
+.stack-list > .reveal:nth-child(3) {
+  --reveal-delay: 180ms;
+}
+
+.stack-list > .reveal:nth-child(n + 4) {
+  --reveal-delay: 270ms;
+}
+
+/* ---------------------------------------------------------------
+   Text-swap hover — the label rides up as its clone rides in.
+   --------------------------------------------------------------- */
+.swap {
+  display: inline-grid;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.swap__line {
+  grid-area: 1 / 1;
+  /* Wrapping would make the clone a different height, so the ride-in
+     distance (105% of its own box) would no longer line up. */
+  white-space: nowrap;
+  transition: transform 480ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.swap__line--clone {
+  transform: translateY(105%);
+}
+
+:where(a, button):hover .swap__line,
+:where(a, button):focus-visible .swap__line {
+  transform: translateY(-105%);
+}
+
+:where(a, button):hover .swap__line--clone,
+:where(a, button):focus-visible .swap__line--clone {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swap__line {
+    transition-duration: 1ms;
+  }
 }
 
 /* ---------------------------------------------------------------
@@ -366,72 +254,94 @@ body::before {
    --------------------------------------------------------------- */
 .shape-anchor {
   display: block;
-  position: relative;
+  position: absolute;
 }
 
 /* Anchors reserve the large footprint; the mark itself is portalled in. */
 .shape-anchor--rect {
-  width: min(18rem, 55vw);
-  height: 8rem;
-  margin: 1rem 0 2rem;
+  width: min(20rem, 62vw);
+  height: 11rem;
+  top: -3rem;
+  z-index: -1;
+  /* margin: 1.5rem 0 2.5rem -8%; */
+}
+
+@media (max-width: 36rem) {
+  .shape-anchor--rect {
+    top: 0.25rem;
+    width: 13rem;
+    opacity: 0.9;
+    transform: rotate(5deg);
+  }
 }
 
 .shape-anchor--trapezoid {
-  width: min(10rem, 32vw);
-  height: 9rem;
-  margin: 1rem 0 2rem auto;
-  margin-right: 12%;
+  width: min(11rem, 34vw);
+  height: 12rem;
+  top: -2.5rem;
+  left: 5.5rem;
+  z-index: -1;
 }
 
+/* Fills the anchor's width; height follows the shape's own ratio (inline
+   aspect-ratio), so the anchor box never distorts the silhouette. */
 .shape-anchor__mark {
   display: block;
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 
+/* Nothing morphs any more — the page marks and the header marks are separate
+   elements that only ever cross-fade, so no layer promotion is needed. */
+
+/* Geometry comes from the SVG path in shapes.ts — never mutate it in CSS. */
 .mark {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-.mark--circle {
-  border-radius: 9999px;
-}
-
-.mark--rect {
-  rotate: -6deg;
-}
-
-.mark--trapezoid {
-  clip-path: polygon(0 100%, 22% 0, 100% 12%, 78% 100%);
-}
-
-.mark[data-docked] {
-  rotate: none;
-}
-
 .shape-nav {
   position: fixed;
-  top: 1.25rem;
-  right: 1.5rem;
+  top: 1.1rem;
+  right: 1.25rem;
   z-index: 60;
 }
 
 .shape-nav__list {
   display: flex;
   align-items: flex-start;
-  gap: 0.85rem;
+  gap: 0.9rem;
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+/* Entries mount already-passed, so they fade up from nothing on arrival. */
+.shape-nav__item {
+  animation: nav-fade-in 420ms var(--ease-out-quart) both;
+}
+
+@keyframes nav-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shape-nav__item {
+    animation-duration: 1ms;
+  }
 }
 
 .shape-nav__button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.2rem;
+  gap: 0.25rem;
   padding: 0.25rem;
   color: var(--color-heading);
   text-decoration: none;
@@ -439,14 +349,18 @@ body::before {
   line-height: 1.1;
 }
 
+/* Height is fixed; width comes from each shape's inline aspect-ratio, so the
+   docked mark is the anchor shape at a smaller size — nothing else changes. */
 .shape-nav__mark {
   display: block;
-  width: 1.5rem;
   height: 1.5rem;
+  width: auto;
+  transition: scale 150ms ease;
 }
 
 .shape-nav__label {
-  font-size: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
   letter-spacing: 0.02em;
 }
 
@@ -455,99 +369,476 @@ body::before {
   scale: 1.12;
 }
 
-.shape-nav__mark {
+/* Docked hero portrait — mirrors the shape nav, but top left. Always in the
+   DOM so it only crosses opacity; mounting on scroll would decode the image
+   in the middle of the fade. */
+.portrait-dock {
+  position: fixed;
+  top: 0.9rem;
+  left: 1.25rem;
+  z-index: 60;
+  display: block;
+  padding: 0.15rem;
+  border-radius: 0.375rem;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 420ms var(--ease-out-quart),
+    visibility 0s linear 420ms;
+}
+
+.portrait-dock.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 420ms var(--ease-out-quart),
+    visibility 0s;
+}
+
+.portrait-dock__img {
+  display: block;
+  width: 3rem;
+  height: auto;
   transition: scale 150ms ease;
 }
 
-/* Filler geometry behind the hero portrait. */
-:root {
-  --color-slab: #d9d9d9;
-}
-
-:root[data-theme="dark"] {
-  --color-slab: rgb(115 115 115 / 0.35);
+.portrait-dock:hover .portrait-dock__img,
+.portrait-dock:focus-visible .portrait-dock__img {
+  scale: 1.08;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .shape-nav__mark {
+  .portrait-dock__img {
     transition-duration: 1ms;
   }
 }
 
 /* ---------------------------------------------------------------
-   Side navigation island
+   About chat bubble
    --------------------------------------------------------------- */
-.sidenav {
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 100svh;
-  pointer-events: none;
+.bubble {
+  position: relative;
+  max-width: 34rem;
+  margin-top: 4rem;
 }
 
-.sidenav__trigger {
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-  z-index: 40;
+@media (min-width: 768px) {
+  .bubble {
+    margin-top: -18rem;
+  }
+}
+
+.bubble__tail {
+  display: block;
+  width: 1.5rem;
+  height: 0.875rem;
+  margin-bottom: -0.05rem;
+  /* Offset is measured against the portrait by AboutBubble; 2rem is the
+     pre-hydration / no-JS fallback. */
+  margin-left: var(--tail-x, 2rem);
+  fill: var(--color-bubble-bg);
+}
+
+.bubble__surface {
+  position: relative;
+  padding: 1.5rem 1.5rem 1rem;
+  background: var(--color-bubble-bg);
+  border-radius: 1.5rem;
+}
+
+.bubble__content {
+  line-height: 1.7;
+}
+
+.bubble__content p + p {
+  margin-top: 0.75rem;
+}
+
+.bubble__meta {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.bubble__status {
   display: inline-flex;
-  padding: 0.25rem;
-  color: var(--color-heading);
-  background: none;
-  border: 0;
-  border-radius: 0.375rem;
-  cursor: pointer;
-  pointer-events: auto;
+  align-items: center;
+  gap: 0.25rem;
 }
 
-.sidenav__trigger:hover {
+.bubble__status--read {
   color: var(--color-accent);
 }
 
-.sidenav__panel {
+.bubble__ticks {
+  width: 1.1rem;
+  height: 0.7rem;
+}
+
+.bubble__reactions {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 20;
-  width: 7rem;
-  height: 70svh;
-  padding: 10rem 1rem;
-  border-radius: 0.5rem;
-  background: linear-gradient(
-    to top,
-    rgb(212 212 212 / 0.5),
-    rgb(255 255 255 / 0.8)
-  );
+  right: 0.9rem;
+  bottom: -0.9rem;
+  display: inline-flex;
+  padding: 0.2rem 0.45rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 9999px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.08);
 }
 
-:root[data-theme="dark"] .sidenav__panel {
-  background: linear-gradient(
-    to top,
-    rgb(115 115 115 / 0.2),
-    rgb(0 0 0 / 0.8)
-  );
+.bubble__reaction-chip {
+  position: relative;
+  display: inline-flex;
+  font-size: 0.95rem;
+  line-height: 1.3;
 }
 
-.sidenav__list {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: space-around;
-  gap: 2.5rem;
-  height: 100%;
+.bubble__reaction-chip + .bubble__reaction-chip {
+  margin-left: -0.2rem;
+}
+
+.bubble-burst {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.bubble-burst__dot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 9999px;
+  background: var(--color-me);
+}
+
+.bubble__picker {
+  display: inline-flex;
+  gap: 0.35rem;
+  margin-top: 1.4rem;
+  padding: 0.35rem 0.55rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 9999px;
+}
+
+.bubble__picker-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  font-size: 1.05rem;
+  background: none;
+  border: 0;
+  border-radius: 9999px;
+  cursor: pointer;
+}
+
+.bubble__picker-btn[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--color-accent) 14%, transparent);
+}
+
+/* ---------------------------------------------------------------
+   Skills island — playful scattered clusters with doodles
+   --------------------------------------------------------------- */
+.skills-scene {
+  position: relative;
+  max-width: 72rem;
+}
+
+.skills-scene__list {
+  position: relative;
+  z-index: 1;
+  columns: 2;
+  column-gap: clamp(0.75rem, 2vw, 1.25rem);
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.sidenav__link {
-  font-weight: 700;
-  color: inherit;
-  text-decoration: none;
+.skillc {
+  display: inline-block;
+  width: 100%;
+  min-width: 0;
+  margin: 0 0 clamp(0.75rem, 2vw, 1.25rem);
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  break-inside: avoid;
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--accent) 10%, var(--color-bg)),
+    color-mix(in srgb, var(--color-bg) 96%, transparent) 72%
+  );
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--color-rule));
+  border-radius: clamp(1.15rem, 2.5vw, 1.75rem);
+  box-shadow: 0 1rem 3rem rgb(25 35 55 / 0.045);
 }
 
-.sidenav__link:hover {
-  color: var(--color-accent);
+@media (min-width: 40rem) {
+  .skills-scene__list {
+    columns: 2;
+  }
+}
+
+@media (min-width: 64rem) {
+  .skills-scene__list {
+    columns: 3;
+  }
+}
+
+.skillc__head {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 1.1rem;
+}
+
+.skillc__icon {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+  border-radius: 1rem;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--color-bg));
+}
+
+.skillc__icon svg {
+  width: 1.4rem;
+  height: 1.4rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.skillc__title {
+  margin: 0;
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--accent);
+}
+
+.skillc__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.25rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.skillc__chip {
+  position: relative;
+  padding-left: 0.8rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--color-heading) 82%, var(--accent));
+}
+
+.skillc__chip::before {
+  content: "";
+  position: absolute;
+  top: 0.62em;
+  left: 0;
+  width: 0.3rem;
+  height: 0.3rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.skillc__more {
+  margin-top: 1.25rem;
+  padding: 0.35rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .skillc {
+    padding: 0.9rem;
+    border-radius: 1rem;
+  }
+
+  .skillc__head {
+    gap: 0.6rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .skillc__icon {
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 0.8rem;
+  }
+
+  .skillc__icon svg {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .skillc__title {
+    font-size: 0.98rem;
+    line-height: 1.15;
+  }
+
+  .skillc__chips {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .skillc__chip {
+    padding-left: 0.65rem;
+    font-size: 0.84rem;
+    line-height: 1.4;
+  }
+
+  .skillc__more {
+    margin-top: 0.9rem;
+    font-size: 0.68rem;
+  }
+}
+
+/* --- doodles ------------------------------------------------- */
+.skills-doodles {
+  position: absolute;
+  inset: -2rem -1rem;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.doodle {
+  position: absolute;
+}
+
+.doodle--blob {
+  border-radius: 42% 58% 63% 37% / 45% 40% 60% 55%;
+}
+
+.doodle--blob-a {
+  top: -1rem;
+  right: -2rem;
+  width: 11rem;
+  height: 12rem;
+  rotate: 18deg;
+  background: color-mix(in srgb, #3fbf4c 14%, transparent);
+}
+
+.doodle--blob-b {
+  top: 38%;
+  left: -3rem;
+  width: 9rem;
+  height: 6.5rem;
+  rotate: -12deg;
+  border-radius: 60% 40% 55% 45% / 55% 60% 40% 45%;
+  background: color-mix(in srgb, #f0921f 16%, transparent);
+}
+
+.doodle--blob-c {
+  bottom: 8%;
+  left: -2rem;
+  width: 12rem;
+  height: 9rem;
+  rotate: 24deg;
+  background: color-mix(in srgb, #7d4f9e 13%, transparent);
+}
+
+.doodle--blob-d {
+  bottom: 6%;
+  right: 2%;
+  width: 10rem;
+  height: 8rem;
+  rotate: -20deg;
+  border-radius: 55% 45% 38% 62% / 48% 62% 38% 52%;
+  background: color-mix(in srgb, #e8548f 13%, transparent);
+}
+
+.doodle--squiggle-a {
+  top: 22%;
+  left: 34%;
+  width: 5.5rem;
+  color: color-mix(in srgb, var(--color-accent) 55%, transparent);
+  rotate: -8deg;
+}
+
+.doodle--squiggle-b {
+  top: 62%;
+  left: 30%;
+  width: 5.5rem;
+  color: color-mix(in srgb, #7d4f9e 55%, transparent);
+  rotate: 6deg;
+}
+
+.doodle--sparkle-a {
+  top: 6%;
+  left: 58%;
+  width: 2.1rem;
+  color: #2f9e44;
+  rotate: 10deg;
+}
+
+.doodle--sparkle-b {
+  bottom: 4%;
+  left: 46%;
+  width: 2.1rem;
+  color: #14929e;
+  rotate: -140deg;
+}
+
+.doodle--dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  opacity: 0.75;
+}
+
+.doodle--dot-a {
+  top: 34%;
+  left: 46%;
+  background: #f4c430;
+}
+
+.doodle--dot-b {
+  top: 52%;
+  right: 22%;
+  background: #7d4f9e;
+}
+
+.doodle--dot-c {
+  top: 12%;
+  right: 26%;
+  width: 0.5rem;
+  height: 0.5rem;
+  background: #e8548f;
+}
+
+/* On small screens the clusters stack tightly — the scatter would sit on
+   top of the text, so only the corner blobs stay. */
+@media (max-width: 767px) {
+  .doodle--squiggle-a,
+  .doodle--squiggle-b,
+  .doodle--sparkle-a,
+  .doodle--sparkle-b,
+  .doodle--dot {
+    display: none;
+  }
 }
 
 /* ---------------------------------------------------------------
@@ -592,4 +883,613 @@ body::before {
 .prose img {
   width: 100%;
   height: auto;
+}
+
+/* ---------------------------------------------------------------
+   Project carousel — clipPath focus effect (after Skiper UI Skiper54)
+   --------------------------------------------------------------- */
+.pcar {
+  position: relative;
+  --pcar-basis: 72%;
+}
+
+@media (min-width: 640px) {
+  .pcar {
+    --pcar-basis: 46%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pcar {
+    --pcar-basis: 30%;
+  }
+}
+
+.pcar__viewport {
+  overflow: hidden;
+  transition: opacity 260ms var(--ease-out-quart);
+}
+
+/* Embla centres the active slide by translating the track, and can only do so
+   once it has measured — the static markup is flush left until then, so it
+   would visibly jump sideways on hydration. Hold it back for those few frames
+   instead. Offsetting the markup to match is not an option: any padding or
+   margin is part of what Embla measures, so it just moves the jump.
+   JS-gated, so the carousel stays visible when scripting is off. */
+[data-js] .pcar:not(.is-ready) .pcar__viewport {
+  opacity: 0;
+}
+
+.pcar__track {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  /* Embla translates this element; touch-action keeps vertical page scroll
+     working while horizontal drags go to the carousel. */
+  touch-action: pan-y pinch-zoom;
+}
+
+.pcar__slide {
+  flex: 0 0 var(--pcar-basis);
+  min-width: 0;
+}
+
+.pcar__card {
+  display: block;
+  width: 100%;
+  padding: 0;
+  color: inherit;
+  text-align: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.pcar__clip {
+  display: block;
+  height: clamp(20rem, 44vh, 27rem);
+  border-radius: 1.75rem;
+  overflow: hidden;
+  /* clipPath is animated by framer; declaring the resting value here keeps
+     the pre-hydration render identical to the hydrated one. */
+  clip-path: inset(14% 0 14% 0 round 1.75rem);
+}
+
+.pcar__card.is-focused .pcar__clip {
+  clip-path: inset(0 0 0 0 round 1.75rem);
+}
+
+.pcar__art {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  width: 100%;
+  /* Mixed against the page, not transparent: a translucent card would let
+     the section's decorative shapes read straight through the artwork. */
+  background: color-mix(in srgb, var(--accent) 12%, var(--color-bg));
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  border-radius: 1.75rem;
+  /* The media keeps its own aspect while the box morphs, so it is wider than
+     the box for part of the flight — clip rather than let it spill. */
+  overflow: hidden;
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  user-select: none;
+  transition: background-color 420ms ease;
+}
+
+/* Sized on the child so the flight scales the block, not the glyph. */
+.pcar__art-mono {
+  font-size: clamp(2.5rem, 7vw, 4rem);
+}
+
+.pcar__art-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.pcar__card:hover .pcar__art {
+  background: color-mix(in srgb, var(--accent) 20%, var(--color-bg));
+}
+
+.pcar__meta {
+  display: block;
+  padding: 1rem 0.25rem 0;
+  text-align: center;
+  opacity: 0.35;
+  transition: opacity 420ms ease;
+}
+
+.pcar__card.is-focused .pcar__meta {
+  opacity: 1;
+}
+
+.pcar__title {
+  display: block;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-heading);
+}
+
+.pcar__sub {
+  display: block;
+  margin-top: 0.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.pcar__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.pcar__arrow {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--color-heading);
+  background: none;
+  border: 1px solid var(--color-rule);
+  border-radius: 50%;
+  cursor: pointer;
+  transition:
+    border-color 320ms ease,
+    color 320ms ease;
+}
+
+.pcar__arrow:hover {
+  border-color: var(--color-border-strong);
+}
+
+.pcar__arrow svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pcar__dots {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pcar__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0;
+  background: var(--color-dot);
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  transition:
+    background-color 320ms ease,
+    scale 320ms ease;
+}
+
+.pcar__dot.is-active {
+  background: var(--color-heading);
+  scale: 1.25;
+}
+
+/* ---------------------------------------------------------------
+   Expanded project panel
+   --------------------------------------------------------------- */
+.pdialog {
+  width: min(100vw, 60rem);
+  max-width: none;
+  height: 100svh;
+  max-height: none;
+  /* The UA centres dialogs with `margin: auto`; setting an explicit size
+     without restating it leaves the panel pinned to the inset origin. */
+  margin: auto;
+  padding: 0;
+  color: var(--color-text);
+  /* No surface of its own. A solid panel would appear as a hard-edged sheet,
+     and fading it in would fade the flying artwork with it — the morph has to
+     arrive at full opacity or it reads as a flash rather than a flight. */
+  background: transparent;
+  border: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  /* Kept only so the backdrop can finish fading out before the dialog goes. */
+  transition:
+    display 420ms allow-discrete,
+    overlay 420ms allow-discrete;
+}
+
+/* The page frosts over instead: a light wash, so the panel's own copy stays
+   legible on top of it. This is the only thing that fades. */
+.pdialog::backdrop {
+  background: rgb(255 255 255 / 0.72);
+  backdrop-filter: blur(14px) saturate(1.1);
+  opacity: 0;
+  transition:
+    opacity 420ms var(--ease-out-quart),
+    display 420ms allow-discrete,
+    overlay 420ms allow-discrete;
+}
+
+.pdialog[open]::backdrop {
+  opacity: 1;
+}
+
+@starting-style {
+  .pdialog[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pdialog::backdrop {
+    transition-duration: 1ms;
+  }
+}
+
+/* Drag surface for swipe-to-dismiss. */
+.pdialog__sheet {
+  min-height: 100%;
+  /* Horizontal gestures still belong to the page; vertical ones to the drag. */
+  touch-action: pan-x;
+}
+
+/* Grab affordance, as on an iOS sheet. */
+.pdialog__grab {
+  width: 2.5rem;
+  height: 0.3rem;
+  margin: 0.6rem auto 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-heading) 22%, transparent);
+}
+
+.pdialog__dismiss {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+  margin: 0;
+}
+
+.pdialog__close {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--color-heading);
+  background: var(--color-bg);
+  border: 1px solid var(--color-rule);
+  border-radius: 50%;
+  cursor: pointer;
+  transition:
+    color 320ms ease,
+    border-color 320ms ease;
+}
+
+.pdialog__close:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.pdialog__close svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+.pdialog__inner {
+  padding: 0 clamp(1.25rem, 5vw, 3.5rem) 4rem;
+  margin-top: -3.5rem;
+}
+
+/* The panel's slot for the shared artwork — the block itself is .pcar__art. */
+.pdialog__inner > .pcar__art {
+  aspect-ratio: 16 / 10;
+  height: auto;
+  margin-bottom: 2.5rem;
+}
+
+.pdialog__eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.pdialog__title {
+  margin: 0.5rem 0 1rem;
+  font-size: clamp(2rem, 5.5vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--color-heading);
+}
+
+/* EntryLinks' own styles are Astro-scoped, so they never reach this
+   React-rendered markup — the panel carries its own. */
+.pdialog__links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.pdialog__link {
+  display: inline-flex;
+  color: var(--color-heading);
+  transition: color 320ms ease;
+}
+
+.pdialog__link:hover {
+  color: var(--accent);
+}
+
+.pdialog__points {
+  margin-top: 2.5rem;
+  padding-left: 1.1rem;
+  list-style: none;
+}
+
+.pdialog__points > li {
+  position: relative;
+  margin-bottom: 0.7rem;
+  line-height: 1.7;
+  color: var(--color-muted);
+}
+
+.pdialog__points > li::before {
+  content: "";
+  position: absolute;
+  left: -1.1rem;
+  top: 0.72em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.pdialog__body {
+  margin-top: 2.5rem;
+}
+
+/* ---------------------------------------------------------------
+   Experience accordion
+   --------------------------------------------------------------- */
+.xp-list {
+  position: relative;
+  border-top: 1px solid var(--color-rule);
+}
+
+.xp {
+  position: relative;
+  border-bottom: 1px solid var(--color-rule);
+}
+
+/* The accent washes in from the left edge on hover/open — colour arrives as
+   a gesture, not a state flip. */
+.xp::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.xp:hover::before,
+.xp.is-open::before {
+  transform: scaleY(1);
+  transform-origin: top;
+}
+
+.xp__heading {
+  margin: 0;
+  font: inherit;
+}
+
+.xp__toggle {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  width: 100%;
+  /* Left inset clears the accent bar so it never crowds the type. */
+  padding: clamp(1.25rem, 3vw, 2rem) 0 clamp(1.25rem, 3vw, 2rem)
+    clamp(1rem, 2.5vw, 2rem);
+  text-align: start;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.xp__eyebrow {
+  grid-column: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  transition: color 320ms ease;
+}
+
+.xp:hover .xp__eyebrow,
+.xp.is-open .xp__eyebrow {
+  color: var(--accent);
+}
+
+.xp__title {
+  grid-column: 1;
+  display: block;
+  /* Oversized display type is the reference's whole gesture. */
+  font-size: clamp(2.1rem, 6.5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--color-heading);
+  transition: color 320ms ease;
+}
+
+.xp:hover .xp__title,
+.xp.is-open .xp__title {
+  color: var(--accent);
+}
+
+.xp__icon {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--color-rule);
+  border-radius: 50%;
+  color: var(--color-heading);
+  transition:
+    transform 520ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 320ms ease,
+    color 320ms ease;
+}
+
+.xp__icon svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.xp:hover .xp__icon {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Plus becomes a cross — same path, 45°. */
+.xp.is-open .xp__icon {
+  transform: rotate(135deg);
+  color: var(--color-text-inverse);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.xp__panel {
+  overflow: hidden;
+}
+
+.xp__panel-inner {
+  max-width: 44rem;
+  padding-inline-start: clamp(1rem, 2.5vw, 2rem);
+  padding-bottom: clamp(1.5rem, 4vw, 2.75rem);
+}
+
+.xp__abstract {
+  font-size: clamp(1.1rem, 2.4vw, 1.45rem);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--color-heading);
+}
+
+.xp__points {
+  margin-top: 1.25rem;
+  padding-left: 1.1rem;
+  list-style: none;
+}
+
+.xp__points > li {
+  position: relative;
+  margin-bottom: 0.6rem;
+  line-height: 1.65;
+  color: var(--color-muted);
+}
+
+.xp__points > li::before {
+  content: "";
+  position: absolute;
+  left: -1.1rem;
+  top: 0.7em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.xp__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.15rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-heading);
+  text-decoration: none;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 999px;
+  transition:
+    color 320ms ease,
+    background-color 320ms ease,
+    border-color 320ms ease;
+}
+
+.xp__cta:hover,
+.xp__cta:focus-visible {
+  color: var(--color-text-inverse);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.xp__cta-arrow {
+  width: 0.85rem;
+  height: 0.85rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.xp__cta:hover .xp__cta-arrow,
+.xp__cta:focus-visible .xp__cta-arrow {
+  transform: translate(2px, -2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xp::before,
+  .xp__icon,
+  .xp__cta-arrow {
+    transition-duration: 1ms;
+  }
 }

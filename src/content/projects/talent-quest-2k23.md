@@ -1,5 +1,6 @@
 ---
 title: Talent Quest 2K23
+accent: "#e8548f"
 subtitle: Company
 start: 2023-01-09
 end: 2023-02-20

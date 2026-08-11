@@ -1,163 +1,236 @@
 ---
+import { getImage } from "astro:assets";
+import portrait from "@/assets/me_aero_angle.png";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Hero from "@/components/Hero.astro";
-import ProfilePanel from "@/components/ProfilePanel.astro";
+import ShapeMark from "@/components/ShapeMark.astro";
 import ShapeNav from "@/components/react/ShapeNav";
 import SectionHeading from "@/components/SectionHeading.astro";
-import ExperienceCard from "@/components/ExperienceCard.astro";
+import EditorialFlow from "@/components/EditorialFlow.astro";
 import EntryCard from "@/components/EntryCard.astro";
+import ExperienceAccordion from "@/components/react/ExperienceAccordion";
+import ProjectCarousel from "@/components/react/ProjectCarousel";
+import Footer from "@/components/Footer.astro";
 import SkillsGrid from "@/components/react/SkillsGrid";
-import { getEntries } from "@/lib/entries";
+import { getPortfolioEntries } from "@/lib/portfolioEntries";
 import { SITE } from "@/config/site";
 
-const [experience, projects, extras] = await Promise.all([
-  getEntries("experience"),
-  getEntries("projects"),
-  getEntries("extras"),
-]);
+const {
+  experience: experienceItems,
+  projects: projectItems,
+  extras,
+} = await getPortfolioEntries();
+
+// The header avatar is its own optimised asset rather than a copy of the hero
+// image, so the nav never depends on the hero's DOM.
+const dockPortrait = await getImage({
+  src: portrait,
+  width: 96,
+  format: "webp",
+});
 ---
 
 <BaseLayout>
-  <div class="shell">
-    <ProfilePanel />
-
-    <main id="main-content" class="shell__main">
-      <article class="shell__article">
+  <div class="page-sheet">
+    <main id="main-content" class="page">
+      <section
+        id="hero-section"
+        class="page-section"
+        aria-labelledby="hero-name"
+      >
         <Hero />
+      </section>
+      <section
+        id="work-section"
+        class="page-section"
+        aria-labelledby="work-heading"
+      >
+        <EditorialFlow index="01" outgoing="experience" align="right" />
+        <SectionHeading id="work-heading" title="Experiences" />
+        <span
+          class="shape-anchor shape-anchor--rect"
+          data-shape-anchor="experience"
+        >
+          <ShapeMark id="experience" class="shape-anchor__mark" />
+        </span>
+        <ExperienceAccordion client:visible items={experienceItems} />
+      </section>
 
-        <hr />
-
-        <section id="about-section" aria-labelledby="about-heading">
-          <SectionHeading id="about-heading" title="About" />
-          <div class="about">
-            {SITE.about.map((paragraph) => <p>{paragraph}</p>)}
-          </div>
-        </section>
-
-        <hr />
-
-        <section id="work-section" aria-labelledby="work-heading">
-          <SectionHeading id="work-heading" title="Experiences" />
-          <span
-            class="shape-anchor shape-anchor--rect"
-            data-shape-anchor="experience"></span>
-          <ol class="grid-list">
-            {experience.map((entry) => <ExperienceCard entry={entry} />)}
-          </ol>
-        </section>
-
-        <hr />
-
-        <section id="project-section" aria-labelledby="project-heading">
+      <div class="editorial-field">
+        <section
+          id="project-section"
+          class="page-section"
+          aria-labelledby="project-heading"
+        >
+          <EditorialFlow
+            index="02"
+            incoming="experience"
+            outgoing="projects"
+            align="left"
+          />
           <SectionHeading id="project-heading" title="Projects" />
           <span
             class="shape-anchor shape-anchor--trapezoid"
-            data-shape-anchor="projects"></span>
-          <ol class="stack-list">
-            {projects.map((entry) => <EntryCard entry={entry} />)}
-          </ol>
+            data-shape-anchor="projects"
+          >
+            <ShapeMark id="projects" class="shape-anchor__mark" />
+          </span>
+          <div class="project-overlap">
+            <ProjectCarousel client:visible items={projectItems} />
+          </div>
         </section>
 
-        <hr />
-
-        <section id="extra-section" aria-labelledby="extra-heading">
+        <section
+          id="extra-section"
+          class="page-section"
+          aria-labelledby="extra-heading"
+        >
+          <EditorialFlow
+            index="03"
+            incoming="projects"
+            outgoing="me"
+            align="right"
+          />
           <SectionHeading id="extra-heading" title="Extra-curricular" />
           <ol class="stack-list">
-            {extras.map((entry) => <EntryCard entry={entry} variant="extra" />)}
+            {
+              extras.map((entry, index) => (
+                <EntryCard entry={entry} index={index} />
+              ))
+            }
           </ol>
         </section>
 
-        <hr />
-
-        <section id="skill-section" aria-labelledby="skill-heading">
+        <section
+          id="skill-section"
+          class="page-section"
+          aria-labelledby="skill-heading"
+        >
+          <EditorialFlow index="04" incoming="me" align="left" />
           <SectionHeading id="skill-heading" title="Skills" />
           <div class="skills">
             <SkillsGrid client:visible />
           </div>
-          <hr />
-          <p class="credits">{SITE.credits}</p>
         </section>
-      </article>
-
+      </div>
     </main>
   </div>
 
-  {/* Outside .shell: the flying mark must not be clipped by an overflow
-      ancestor, and the fixed header must not sit inside a transformed one. */}
-  <ShapeNav client:load />
+  <Footer />
 
-  <p class="back-to-top">
-    <a href="#main-content">Back to top</a>
-  </p>
+  {
+    /* Outside main: the flying mark must not be clipped by an overflow
+      ancestor, and the fixed header must not sit inside a transformed one. */
+  }
+  <ShapeNav
+    client:load
+    portraitSrc={dockPortrait.src}
+    portraitAlt={`Back to top — ${SITE.fullName}`}
+  />
 </BaseLayout>
 
 <style>
-  .shell {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    border-bottom: 2px solid var(--color-rule);
-    font-weight: 500;
-    letter-spacing: 2px;
-    line-height: 5rem;
-  }
-
-  @media (min-width: 1024px) {
-    .shell {
-      flex-direction: row;
-    }
-  }
-
-  /* No overflow clipping here — the shape marks animate across this box
-     on their way to the header and must stay visible the whole flight. */
-  .shell__main {
+  .page-sheet {
     position: relative;
-    width: 100%;
+    z-index: 1;
+    /* border-radius: 0 0 clamp(1.75rem, 5vw, 5rem) clamp(1.75rem, 5vw, 5rem); */
+    background: var(--color-bg);
+    /* box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.14); */
   }
 
-  .shell__article {
-    width: 100%;
-    padding: 1.5rem 3rem;
+  .page {
+    max-width: 68rem;
+    margin-inline: auto;
   }
 
-  @media (min-width: 1024px) {
-    .shell__article {
-      width: 75vw;
-    }
+  .page-section {
+    position: relative;
+    isolation: isolate;
+    padding-inline: 1rem;
+  }
+
+  .page-section:not(#hero-section) {
+    padding-block: clamp(1.75rem, 3.5vw, 3rem);
+  }
+
+  #work-section {
+    margin-top: 4rem;
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-accent) 5%, transparent),
+      transparent clamp(7rem, 14vw, 10rem)
+    );
+  }
+
+  #work-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 1rem;
+    left: 1rem;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      color-mix(in srgb, var(--color-accent) 60%, transparent) 22%,
+      color-mix(in srgb, var(--color-accent) 60%, transparent) 78%,
+      transparent
+    );
+  }
+
+  /* One uninterrupted field: dots no longer restart at each section edge. */
+  .editorial-field {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .editorial-field::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: radial-gradient(
+      circle,
+      var(--color-dot) 1px,
+      transparent 1.5px
+    );
+    background-size: 18px 18px;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      rgb(0 0 0 / 0.35) 3rem,
+      #000 8rem
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      rgb(0 0 0 / 0.35) 3rem,
+      #000 8rem
+    );
+    pointer-events: none;
+  }
+
+  .project-overlap {
+    position: relative;
+    z-index: 2;
+    transform: translateY(clamp(1.5rem, 4vw, 3.5rem));
+  }
+
+  #project-section {
+    padding-bottom: 0;
+  }
+
+  #extra-section {
+    padding-top: clamp(5rem, 10vw, 8rem);
   }
 
   .about {
-    padding-left: 1rem;
-    margin-bottom: 2px;
-    line-height: 1.75rem;
+    max-width: 44rem;
+    line-height: 1.75;
   }
 
-  @media (min-width: 768px) {
-    .about {
-      padding-left: 4rem;
-    }
-  }
-
-  .grid-list {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    width: 100%;
-    list-style: none;
-    padding: 0;
-  }
-
-  @media (min-width: 768px) {
-    .grid-list {
-      padding-left: 2.5rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .grid-list {
-      margin-left: 1.5rem;
-    }
+  .about p + p {
+    margin-top: 0.75rem;
   }
 
   .stack-list {
@@ -166,47 +239,20 @@ const [experience, projects, extras] = await Promise.all([
     width: 100%;
     list-style: none;
     padding: 0;
-  }
-
-  @media (min-width: 768px) {
-    .stack-list {
-      padding-inline: 2.5rem;
-    }
+    margin: 0;
   }
 
   .skills {
-    padding: 1rem;
-    padding-bottom: 2.5rem;
+    padding-block: 0 1.5rem;
   }
 
-  @media (min-width: 768px) {
-    .skills {
-      margin-left: 3rem;
+  @media (max-width: 36rem) {
+    .project-overlap {
+      transform: translateY(1.25rem);
     }
-  }
 
-  .credits {
-    padding: 1rem;
-    margin-bottom: 5rem;
-    font-size: 0.875rem;
-    color: var(--color-muted);
-  }
-
-  @media (min-width: 768px) {
-    .credits {
-      margin-left: 3rem;
+    #extra-section {
+      padding-top: 4.5rem;
     }
-  }
-
-  .back-to-top {
-    display: flex;
-    justify-content: flex-end;
-    height: 0;
-    margin-bottom: 88vh;
-    padding: 1rem 2rem;
-  }
-
-  .back-to-top a {
-    color: var(--color-muted);
   }
 </style>

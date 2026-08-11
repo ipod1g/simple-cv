@@ -7,10 +7,12 @@ import Monogram from "@/components/Monogram.astro";
 interface Props {
   id: string;
   title: string;
+  monogram: string;
+  bodyHtml: string;
   image?: ImageMetadata | null;
 }
 
-const { id, title, image } = Astro.props;
+const { id, title, monogram, bodyHtml, image } = Astro.props;
 const labelId = `${id}-label`;
 ---
 
@@ -35,14 +37,16 @@ const labelId = `${id}-label`;
           class="dialog__image"
         />
       ) : (
-        <Monogram title={title} class="dialog__image" />
+        <Monogram
+          title={title}
+          text={monogram}
+          class="dialog__image"
+        />
       )
     }
   </div>
 
-  <div class="dialog__content prose">
-    <slot />
-  </div>
+  <div class="dialog__content prose" set:html={bodyHtml} />
 </dialog>
 
 <style>

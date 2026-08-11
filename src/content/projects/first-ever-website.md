@@ -1,5 +1,6 @@
 ---
 title: First Ever Website
+accent: "#3fbf4c"
 subtitle: Personal
 start: 2022-08-01
 end: 2022-08-11

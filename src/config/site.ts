@@ -22,7 +22,7 @@ export const SITE = {
     { emoji: "🎒", label: "MY" },
     { emoji: "🎓", label: "HK" },
   ],
-  credits: "Special thanks to YI Jisoo",
+  credits: "Special thanks to my wife Lisa",
 } as const;
 
 export const SOCIALS = [
@@ -41,32 +41,75 @@ export const SOCIALS = [
 ] as const;
 
 export const NAV = [
-  { label: "About", href: "#about-section" },
+  // About has no section of its own — it's the chat bubble inside the hero.
   { label: "Work", href: "#work-section" },
   { label: "Project", href: "#project-section" },
   { label: "Extra", href: "#extra-section" },
   { label: "Skill", href: "#skill-section" },
 ] as const;
 
+/** `icon` maps to the inline set in SkillsGrid; `color` tints the cluster. */
 export const SKILL_GROUPS = [
-  { title: "Languages", items: ["TypeScript", "JavaScript", "Python"] },
+  {
+    title: "Languages",
+    icon: "globe",
+    color: "#4c82f7",
+    items: ["TypeScript", "JavaScript", "Python"],
+  },
   {
     title: "Frontend",
-    items: ["React", "Next.js", "Tanstack Start", "Vue", "Astro"],
-  },
-  {
-    title: "Backend & infra",
+    icon: "code",
+    color: "#2f9e44",
     items: [
-      "Node.js",
-      "Cloudflare Workers",
-      "AWS",
-      "Google Cloud",
-      "GitHub Actions",
+      "React",
+      "Next.js",
+      "TanStack Start",
+      "TanStack Query",
+      "Zustand",
+      "Vue",
+      "Astro",
+      "Three.js",
     ],
   },
-  { title: "Databases", items: ["PostgreSQL", "MySQL", "MongoDB"] },
-  { title: "Design & tooling", items: ["Figma", "Storybook"] },
+  {
+    title: "Backend",
+    icon: "server",
+    color: "#f0921f",
+    items: ["Node.js", "Cloudflare Workers"],
+  },
+  {
+    title: "Infrastructure",
+    icon: "cloud",
+    color: "#2ba3d4",
+    items: ["AWS", "GCP", "GitHub Actions"],
+  },
+  {
+    title: "Architecture",
+    icon: "layers",
+    color: "#5560e8",
+    items: ["SSR", "Design Systems"],
+  },
+  {
+    title: "Databases",
+    icon: "database",
+    color: "#7d4f9e",
+    items: ["PostgreSQL", "MySQL", "MongoDB"],
+  },
+  {
+    title: "Payments",
+    icon: "card",
+    color: "#e8548f",
+    items: ["Stripe", "Adyen", "Square", "Checkout.com"],
+  },
+  {
+    title: "Design & Tooling",
+    icon: "pen",
+    color: "#14929e",
+    items: ["Figma", "Storybook", "Accessibility (WCAG)"],
+  },
 ] as const;
+
+export type SkillIcon = (typeof SKILL_GROUPS)[number]["icon"];
 
 export const SPOKEN_LANGUAGES = [
   "English — Native",

@@ -1,5 +1,6 @@
 ---
 title: NFC Business Card Website
+accent: "#f0921f"
 subtitle: Company
 start: 2023-03-14
 end: 2023-05-25

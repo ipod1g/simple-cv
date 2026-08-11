@@ -1,5 +1,6 @@
 ---
 title: Virtual Job Case Simulation
+accent: "#7d4f9e"
 subtitle: Project Lead Frontend Developer
 start: 2023-06-01
 end: 2024-01-09

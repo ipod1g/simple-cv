@@ -10,6 +10,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   site: "https://cvbono.vercel.app",
   output: "static",
+  // The toolbar's X-Ray app re-measures every hydrated island on each scroll
+  // frame, which makes local motion substantially rougher than production.
+  devToolbar: { enabled: false },
   integrations: [react(), sitemap()],
   image: {
     responsiveStyles: true,

@@ -1,5 +1,7 @@
 ---
 title: React Slides Editor
+accent: "#4c82f7"
+video: /assets/_vt-probe.mp4
 subtitle: Personal
 start: 2023-10-02
 end: 2023-10-28

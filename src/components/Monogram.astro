@@ -1,27 +1,25 @@
 ---
-import { monogram } from "@/lib/entries";
-
 interface Props {
   title: string;
-  /** `logo` keeps the square company-logo geometry; `wide` fills a 16/9 figure. */
-  variant?: "logo" | "wide";
+  text: string;
+  /** `logo` is circular, `wide` is a compact 16/9 figure, and `poster` is display artwork. */
+  variant?: "logo" | "wide" | "poster";
   class?: string;
 }
 
-const { title, variant = "wide", class: className = "" } = Astro.props;
-const initials = monogram(title);
+const { title, text, variant = "wide", class: className = "" } = Astro.props;
 ---
 
 <div
   class:list={[
     "monogram",
-    variant === "logo" ? "monogram--logo" : "monogram--wide",
+    `monogram--${variant}`,
     className,
   ]}
   role="img"
   aria-label={`${title} placeholder image`}
 >
-  <span aria-hidden="true">{initials}</span>
+  <span aria-hidden="true">{text}</span>
 </div>
 
 <style>
@@ -48,5 +46,12 @@ const initials = monogram(title);
     width: 100%;
     max-height: 16rem;
     font-size: 2.25rem;
+  }
+
+  .monogram--poster {
+    width: 100%;
+    min-height: clamp(18rem, 48vw, 32rem);
+    font-size: clamp(4.5rem, 13vw, 9rem);
+    line-height: 1;
   }
 </style>

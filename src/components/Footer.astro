@@ -5,83 +5,202 @@ import { SITE, SOCIALS } from "@/config/site";
 const year = new Date().getFullYear();
 ---
 
-<footer class="site-footer glass">
-  <ul class="site-footer__socials">
-    {
-      SOCIALS.map((social) => (
-        <li>
-          <a
-            class="site-footer__link"
-            href={social.href}
-            target={social.href.startsWith("mailto:") ? undefined : "_blank"}
-            rel="noreferrer"
-            aria-label={
-              social.icon === "envelope"
-                ? `Email ${SITE.name}`
-                : `${SITE.name} on ${social.name} (opens in a new tab)`
-            }
-          >
-            <Icon name={social.icon} size={20} />
-          </a>
-        </li>
-      ))
-    }
-  </ul>
-  <p class="site-footer__legal">© {year} {SITE.name} | All Rights Reserved.</p>
+<footer class="site-footer">
+  <p class="site-footer__backdrop" aria-hidden="true">
+    <span>B</span><span>O</span><span>N</span><span>O</span>
+  </p>
+
+  <div class="site-footer__inner">
+    <p class="site-footer__thanks">{SITE.credits}</p>
+
+    <div class="site-footer__closing">
+      <p class="site-footer__legal"><span>©</span> {year} {SITE.name}</p>
+
+      <ul class="site-footer__socials" aria-label="Social links">
+        {
+          SOCIALS.map((social) => (
+            <li>
+              <a
+                class="site-footer__link"
+                href={social.href}
+                target={
+                  social.href.startsWith("mailto:") ? undefined : "_blank"
+                }
+                rel="noreferrer"
+                aria-label={
+                  social.icon === "envelope"
+                    ? `Email ${SITE.name}`
+                    : `${SITE.name} on ${social.name} (opens in a new tab)`
+                }
+              >
+                <Icon name={social.icon} size={22} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
 </footer>
 
 <style>
   .site-footer {
-    position: fixed;
+    position: sticky;
     bottom: 0;
-    z-index: 50;
+    z-index: 0;
+    isolation: isolate;
+    display: grid;
+    min-height: clamp(25rem, 62svh, 42rem);
+    margin-top: calc(clamp(1.75rem, 5vw, 5rem) * -1);
+    overflow: clip;
+    color: var(--color-text);
+    background-color: #f3f6fb;
+    background-image:
+      linear-gradient(to right, rgb(76 130 247 / 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(76 130 247 / 0.06) 1px, transparent 1px);
+    background-size:
+      25% 100%,
+      100% 25%;
+  }
+
+  .site-footer__backdrop {
+    position: absolute;
+    z-index: -1;
+    inset: 50% auto auto 50%;
+    margin: 0;
+    display: flex;
+    color: var(--color-accent);
+    font-family: var(--font-display);
+    font-size: clamp(9rem, 32vw, 30rem);
+    font-weight: 800;
+    line-height: 0.7;
+    letter-spacing: -0.12em;
+    white-space: nowrap;
+    transform: translate(-51%, -54%);
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.11;
+    mix-blend-mode: multiply;
+  }
+
+  .site-footer__backdrop span:nth-child(1) {
+    color: #4285f4;
+  }
+
+  .site-footer__backdrop span:nth-child(2) {
+    color: #ea4335;
+  }
+
+  .site-footer__backdrop span:nth-child(3) {
+    color: #f9ab00;
+  }
+
+  .site-footer__backdrop span:nth-child(4) {
+    color: #34a853;
+  }
+
+  .site-footer__inner {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 100%;
-    padding: 0.75rem 0 0.5rem;
+    justify-content: space-between;
+    width: min(100%, 72rem);
+    min-height: inherit;
+    margin-inline: auto;
+    padding: clamp(4.75rem, 9vw, 8rem) clamp(1rem, 4vw, 3rem)
+      clamp(2rem, 5vw, 4.5rem);
+  }
+
+  .site-footer__thanks {
+    margin: 0;
+    font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    opacity: 0.8;
+  }
+
+  .site-footer__closing {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    padding-top: 6rem;
+  }
+
+  .site-footer__legal {
+    margin: 0;
+    font-size: clamp(1.5rem, 4vw, 3.5rem);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.045em;
+  }
+
+  .site-footer__legal span {
+    color: var(--color-accent-strong);
   }
 
   .site-footer__socials {
     display: flex;
-    gap: 1rem;
-    list-style: none;
-    padding: 0;
+    gap: clamp(0.35rem, 1vw, 0.75rem);
     margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
   .site-footer__link {
+    --link-color: var(--color-accent);
+
     display: inline-flex;
-    padding: 0.375rem;
-    border-radius: 0.375rem;
-    color: inherit;
-    transition: color 200ms ease;
+    padding: 0.625rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 999px;
+    color: var(--color-text);
+    background: rgb(255 255 255 / 0.72);
+    transition:
+      color 320ms ease,
+      background-color 320ms ease,
+      border-color 320ms ease,
+      transform 480ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .site-footer__socials li:nth-child(2) .site-footer__link {
+    --link-color: #ea4335;
+  }
+
+  .site-footer__socials li:nth-child(3) .site-footer__link {
+    --link-color: #34a853;
+  }
+
+  .site-footer__socials li:nth-child(4) .site-footer__link {
+    --link-color: #d98b00;
   }
 
   .site-footer__link:hover,
   .site-footer__link:focus-visible {
-    color: var(--color-accent);
+    color: white;
+    background: var(--link-color);
+    border-color: var(--link-color);
+    transform: translateY(-4px);
   }
 
-  .site-footer__legal {
-    margin-top: 0.25rem;
-    font-size: 0.75rem;
-    line-height: 1.4;
-  }
-
-  @media (min-width: 1024px) {
+  @media (max-width: 40rem) {
     .site-footer {
-      width: 325px;
-      padding-bottom: 1rem;
-      border-bottom-right-radius: 1rem;
+      min-height: 30rem;
     }
 
-    /* The profile panel already provides the glass surface on desktop. */
-    .site-footer.glass {
-      background: transparent;
-      border: none;
-      box-shadow: none;
-      backdrop-filter: none;
+    .site-footer__backdrop {
+      font-size: clamp(8rem, 43vw, 12rem);
+    }
+
+    .site-footer__closing {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding-top: 3rem;
+    }
+
+    .site-footer__legal {
+      font-size: clamp(2rem, 10vw, 3rem);
     }
   }
 </style>

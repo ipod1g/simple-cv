@@ -29,7 +29,7 @@ const personSchema = {
 ---
 
 <!doctype html>
-<html lang={SITE.locale} data-theme="dark">
+<html lang={SITE.locale}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -39,7 +39,7 @@ const personSchema = {
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#ffffff" />
 
     <meta property="og:type" content="profile" />
     <meta property="og:site_name" content={SITE.name} />
@@ -56,30 +56,24 @@ const personSchema = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    {/* Satoshi via Fontshare CDN. */}
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap"
+      href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap"
     />
-
-    {/* Applied before first paint so the stored theme never flashes. */}
-    <script is:inline>
-      (function () {
-        try {
-          var stored = localStorage.getItem("cv-theme");
-          if (stored === "light" || stored === "dark") {
-            document.documentElement.dataset.theme = stored;
-          }
-        } catch (e) {}
-      })();
-    </script>
 
     <script
       type="application/ld+json"
       is:inline
       set:html={JSON.stringify(personSchema)}
     />
+
+    {/* Runs before first paint, so split-lines targets are hidden from the
+        very first frame rather than flashing as plain text. Everything keyed
+        off this attribute degrades to visible when scripting is off. */}
+    <script is:inline>document.documentElement.dataset.js = "";</script>
   </head>
 
   <body>
@@ -87,65 +81,9 @@ const personSchema = {
     <slot />
 
     <script>
-      import { initSmoothScroll, scrollToTarget } from "@/lib/scroll";
+      import { mountPageInteractionRuntime } from "@/lib/pageInteractionRuntime";
 
-      initSmoothScroll();
-
-      // Route in-page anchors through Lenis so every jump shares one easing.
-      document.addEventListener("click", (event) => {
-        const link = (event.target as HTMLElement)?.closest?.(
-          'a[href^="#"]'
-        ) as HTMLAnchorElement | null;
-        if (!link || link.dataset.noSmooth != null) return;
-
-        const id = link.getAttribute("href")!.slice(1);
-        const target = id ? document.getElementById(id) : null;
-        if (!target) return;
-
-        event.preventDefault();
-        scrollToTarget(target);
-        // Keep the URL and focus behaviour of a real anchor jump.
-        history.replaceState(null, "", `#${id}`);
-        target.setAttribute("tabindex", "-1");
-        target.focus({ preventScroll: true });
-      });
-
-      // Dialogs: open on trigger, restore focus to the trigger on close.
-      for (const trigger of document.querySelectorAll<HTMLButtonElement>(
-        "[data-dialog-open]"
-      )) {
-        const dialog = document.getElementById(
-          trigger.dataset.dialogOpen!
-        ) as HTMLDialogElement | null;
-        if (!dialog) continue;
-
-        trigger.addEventListener("click", () => dialog.showModal());
-        dialog.addEventListener("close", () => trigger.focus());
-        // Click on the backdrop (the dialog element itself) dismisses.
-        dialog.addEventListener("click", (event) => {
-          if (event.target === dialog) dialog.close();
-        });
-      }
-
-      // Scroll reveal — CSS does the animating, this only flips a class.
-      const reveals = document.querySelectorAll(".reveal");
-      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-      if (reduced.matches || !("IntersectionObserver" in window)) {
-        reveals.forEach((el) => el.classList.add("is-revealed"));
-      } else {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            for (const entry of entries) {
-              if (!entry.isIntersecting) continue;
-              entry.target.classList.add("is-revealed");
-              observer.unobserve(entry.target);
-            }
-          },
-          { rootMargin: "0px 0px -40px 0px" }
-        );
-        reveals.forEach((el) => observer.observe(el));
-      }
+      mountPageInteractionRuntime();
     </script>
   </body>
 </html>
