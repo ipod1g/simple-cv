@@ -303,70 +303,241 @@ body {
   height: 100%;
 }
 
-.shape-nav {
+/* ---------------------------------------------------------------
+   Venn overlay menu
+
+   Layering, outermost in: a fixed hit-through shell, an opaque white plate
+   that fades the whole thing in, the circle field inside it (so `multiply`
+   has that white to blend against), then the panel of links above both.
+   --------------------------------------------------------------- */
+.venn-menu {
   position: fixed;
+  inset: 0;
+  z-index: 60;
+  /* The shell spans the viewport only so the panel can; the page below has to
+     stay clickable, so every interactive part opts back in explicitly. */
+  pointer-events: none;
+}
+
+.venn-menu__bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--color-bg);
+  opacity: 0;
+  /* Isolated so the circles multiply against this plate and not the page. */
+  isolation: isolate;
+  /* The circles are far larger than the viewport, and a blend group is
+     rasterised over the union of what it contains. `contain: paint` tells the
+     browser nothing inside can paint beyond this box, which bounds that buffer
+     to the screen instead of to three overlapping 124vmax squares. */
+  contain: paint;
+}
+
+.venn-menu.is-open .venn-menu__bg {
+  pointer-events: auto;
+}
+
+/* Flight geometry is written by VennMenu as plain transforms — on this element
+   the field's swing, on each dot its position along its spoke. It used to ride
+   on two custom properties, which is tidier to read but means every frame of
+   the flight invalidates style for the whole subtree; transforms don't. */
+.venn-menu__field {
+  position: absolute;
+  inset: 0;
+  transform: rotate(0deg);
+}
+
+/* Just the point the circles are arranged around — off-centre, so the settled
+   overlap never reads as a symmetrical logo. The slow turn this used to carry
+   as a CSS animation is now part of what `render` writes below. */
+.venn-menu__ring {
+  position: absolute;
+  top: 40%;
+  left: 60%;
+}
+
+/* The blended element, and the only one that moves.
+
+   Every part of the field — the flight, the ring's slow turn, each circle's
+   own drift — arrives here as one transform per circle, and deliberately so:
+   a CSS transform animation runs on the compositor, which gives whatever
+   carries it a layer of its own, sized to what that element paints. On the
+   124vmax circle that meant a 1047px-square buffer per circle on a 390x844
+   phone — three of them, ten viewports of blended pixels — and promotion also
+   lifted them out of the plate's `contain: paint`, so nothing clipped them
+   back down. Far too much to keep resident on a phone, which is why iOS kept
+   discarding them and every few opens paid to draw them again.
+
+   Written from script instead, nothing here is promoted, the blend rasterises
+   inside the plate's viewport-sized buffer, and the oversized layers are gone
+   entirely — measured three 1047x1047 layers before, none after. */
+.venn-menu__dot {
+  position: absolute;
+  /* Start where a closed menu leaves them; `render` takes over on mount. */
+  transform: translate3d(0, 0, 0);
+  mix-blend-mode: multiply;
+}
+
+/* Sized in vmax so one circle reaches across any viewport, and centred on the
+   dot's point rather than on itself. */
+.venn-menu__orbit {
+  position: absolute;
+  top: -62vmax;
+  left: -62vmax;
+  width: 124vmax;
+  height: 124vmax;
+}
+
+.venn-menu__circle {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.venn-menu__toggle {
+  position: absolute;
+  /* Above the panel, which covers the viewport once open and would otherwise
+     swallow every click aimed at Close. */
+  z-index: 2;
   top: 1.1rem;
   right: 1.25rem;
-  z-index: 60;
-}
-
-.shape-nav__list {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.9rem;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-/* Entries mount already-passed, so they fade up from nothing on arrival. */
-.shape-nav__item {
-  animation: nav-fade-in 420ms var(--ease-out-quart) both;
-}
-
-@keyframes nav-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .shape-nav__item {
-    animation-duration: 1ms;
-  }
-}
-
-.shape-nav__button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.25rem;
-  color: var(--color-heading);
-  text-decoration: none;
-  border-radius: 0.375rem;
-  line-height: 1.1;
-}
-
-/* Height is fixed; width comes from each shape's inline aspect-ratio, so the
-   docked mark is the anchor shape at a smaller size — nothing else changes. */
-.shape-nav__mark {
-  display: block;
-  height: 1.5rem;
-  width: auto;
-  transition: scale 150ms ease;
-}
-
-.shape-nav__label {
+  padding: 0.55rem 0.95rem;
   font-family: var(--font-mono);
   font-size: 0.7rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-bg);
+  background: var(--color-heading);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  pointer-events: auto;
+  transition:
+    background 300ms var(--ease-out-quart),
+    color 300ms var(--ease-out-quart);
 }
 
-.shape-nav__button:hover .shape-nav__mark,
-.shape-nav__button:focus-visible .shape-nav__mark {
-  scale: 1.12;
+/* Once the plate is up the pill would fight the colour field, so it drops to
+   bare white text — the same move the label makes from "Menu" to "Close". */
+.venn-menu.is-open .venn-menu__toggle {
+  color: #fff;
+  background: transparent;
+}
+
+.venn-menu__panel {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+  padding: 5rem clamp(1.25rem, 6vw, 5rem) 2.5rem;
+  color: #fff;
+}
+
+.venn-menu.is-open .venn-menu__panel {
+  pointer-events: auto;
+}
+
+.venn-menu__primary,
+.venn-menu__socials {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Each row clips its own link, so the link wipes up out of nothing rather
+   than sliding in from somewhere the eye can follow. */
+.venn-menu__primary > li {
+  overflow: hidden;
+}
+
+.venn-menu__primary a {
+  position: relative;
+  display: inline-block;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-decoration: none;
+  /* Pre-set to the hidden end of the wipe: the panel is inert until the flight
+     runs, and without this the links would flash in place on first paint. */
+  transform: translateY(100%);
+}
+
+.venn-menu__linkText {
+  display: inline-block;
+  transition: transform 300ms var(--ease-out-quart);
+}
+
+.venn-menu__dotIcon {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 0.42em;
+  height: 0.42em;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-0.2em, -50%);
+  transition:
+    opacity 250ms var(--ease-out-quart),
+    transform 250ms var(--ease-out-quart);
+}
+
+.venn-menu__primary a:hover .venn-menu__dotIcon,
+.venn-menu__primary a:focus-visible .venn-menu__dotIcon {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+.venn-menu__primary a:hover .venn-menu__linkText,
+.venn-menu__primary a:focus-visible .venn-menu__linkText {
+  transform: translateX(0.7em);
+}
+
+.venn-menu__tail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  opacity: 0;
+}
+
+.venn-menu__tail a {
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.venn-menu__tail a:hover,
+.venn-menu__tail a:focus-visible {
+  border-bottom-color: currentColor;
+}
+
+.venn-menu__socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+}
+
+/* Wide enough for the tail to read as one line: résumé left, socials right. */
+@media (min-width: 640px) {
+  .venn-menu__socials {
+    margin-left: auto;
+  }
+}
+
+/* Lenis is stopped alongside this; the class is the fallback for the
+   reduced-motion path, where there is no Lenis instance to stop. */
+html.is-scroll-locked,
+html.is-scroll-locked body {
+  overflow: hidden;
 }
 
 /* Docked hero portrait — mirrors the shape nav, but top left. Always in the
@@ -374,8 +545,8 @@ body {
    in the middle of the fade. */
 .portrait-dock {
   position: fixed;
-  top: 0.9rem;
-  left: 1.25rem;
+  top: 0.25rem;
+  left: 1rem;
   z-index: 60;
   display: block;
   padding: 0.15rem;
@@ -397,7 +568,7 @@ body {
 
 .portrait-dock__img {
   display: block;
-  width: 3rem;
+  width: 2rem;
   height: auto;
   transition: scale 150ms ease;
 }
@@ -422,11 +593,9 @@ body {
   margin-top: 4rem;
 }
 
-@media (min-width: 768px) {
-  .bubble {
-    margin-top: -18rem;
-  }
-}
+/* Desktop spacing is the hero's business — it owns the two-column layout the
+   bubble sits in. (This used to pull the bubble up 18rem, straight under the
+   portrait, which paints above it: the reply ended up behind the sender.) */
 
 .bubble__tail {
   display: block;
@@ -499,7 +668,7 @@ body {
 }
 
 .bubble__reaction-chip + .bubble__reaction-chip {
-  margin-left: -0.2rem;
+  margin-left: 0.2rem;
 }
 
 .bubble-burst {
@@ -553,42 +722,40 @@ body {
   max-width: 72rem;
 }
 
+/* A plain grid: equal columns, rows that line up. The masonry columns packed
+   tighter, but they also ordered the cards down each column instead of across,
+   and a card growing (the "+N more" toggle) reflowed the ones beneath it. */
 .skills-scene__list {
   position: relative;
   z-index: 1;
-  columns: 2;
-  column-gap: clamp(0.75rem, 2vw, 1.25rem);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.75rem, 2vw, 1.25rem);
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
 .skillc {
-  display: inline-block;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   min-width: 0;
-  margin: 0 0 clamp(0.75rem, 2vw, 1.25rem);
+  margin: 0;
   padding: clamp(1.25rem, 2.5vw, 2rem);
-  break-inside: avoid;
   background: linear-gradient(
     145deg,
     color-mix(in srgb, var(--accent) 10%, var(--color-bg)),
     color-mix(in srgb, var(--color-bg) 96%, transparent) 72%
   );
-  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--color-rule));
+  /* border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--color-rule)); */
   border-radius: clamp(1.15rem, 2.5vw, 1.75rem);
-  box-shadow: 0 1rem 3rem rgb(25 35 55 / 0.045);
-}
-
-@media (min-width: 40rem) {
-  .skills-scene__list {
-    columns: 2;
-  }
+  box-shadow: 0 1rem 3rem rgb(25 35 55 / 0.1);
 }
 
 @media (min-width: 64rem) {
   .skills-scene__list {
-    columns: 3;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -678,13 +845,13 @@ body {
   }
 
   .skillc__head {
-    gap: 0.6rem;
+    gap: 0.3rem;
     margin-bottom: 0.85rem;
   }
 
   .skillc__icon {
-    width: 2.4rem;
-    height: 2.4rem;
+    width: 2rem;
+    height: 2rem;
     border-radius: 0.8rem;
   }
 
@@ -890,24 +1057,38 @@ body {
    --------------------------------------------------------------- */
 .pcar {
   position: relative;
-  --pcar-basis: 72%;
+  --pcar-basis: 88%;
 }
 
+/* Landscape cards need more of the viewport each than the old portrait ones
+   did, or three 16/9 slides across leave every one of them letterboxed small. */
 @media (min-width: 640px) {
   .pcar {
-    --pcar-basis: 46%;
+    --pcar-basis: 62%;
   }
 }
 
 @media (min-width: 1024px) {
   .pcar {
-    --pcar-basis: 30%;
+    --pcar-basis: 48%;
   }
 }
 
 .pcar__viewport {
   overflow: hidden;
   transition: opacity 260ms var(--ease-out-quart);
+  /* Feathered edges, so slides dissolve at the sides instead of being cut off
+     by the overflow. The mask runs on the viewport rather than on an overlay
+     element, so it fades whatever passes under it — artwork and captions
+     alike — and needs no colour of its own to match the page background. */
+  --pcar-fade: clamp(1.25rem, 5vw, 4.5rem);
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 var(--pcar-fade),
+    #000 calc(100% - var(--pcar-fade)),
+    transparent
+  );
 }
 
 /* Embla centres the active slide by translating the track, and can only do so
@@ -923,7 +1104,11 @@ body {
 .pcar__track {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  /* No `gap`: in a looping carousel Embla teleports the slide that wraps
+     around by writing its own transform, and that transform is computed from
+     slide widths alone — a flex gap is invisible to it, so the wrapped slide
+     lands flush against its neighbour while every other pair keeps its gap.
+     The spacing lives inside each slide instead, where it travels with it. */
   list-style: none;
   margin: 0;
   padding: 0;
@@ -935,31 +1120,52 @@ body {
 .pcar__slide {
   flex: 0 0 var(--pcar-basis);
   min-width: 0;
+  /* Half the intended gap on each side, so neighbouring slides add up to one
+     full gap — and the wrapped slide carries its share with it. */
+  padding-inline: 0.5rem;
 }
 
 .pcar__card {
+  position: relative;
   display: block;
   width: 100%;
-  padding: 0;
   color: inherit;
-  text-align: inherit;
-  background: none;
-  border: 0;
-  cursor: pointer;
 }
 
+/* 16/9, so the frame matches the footage rather than cropping it to a portrait
+   window. The focus effect is a transition rather than a scripted animation:
+   clip-path is compositor-driven, so the slide costs nothing per frame and no
+   JS runs while it plays. */
 .pcar__clip {
   display: block;
-  height: clamp(20rem, 44vh, 27rem);
+  aspect-ratio: 16 / 9;
   border-radius: 1.75rem;
   overflow: hidden;
-  /* clipPath is animated by framer; declaring the resting value here keeps
-     the pre-hydration render identical to the hydrated one. */
-  clip-path: inset(14% 0 14% 0 round 1.75rem);
+  clip-path: inset(12% 0 12% 0 round 1.75rem);
+  transition: clip-path 600ms var(--ease-out-quart);
 }
 
 .pcar__card.is-focused .pcar__clip {
   clip-path: inset(0 0 0 0 round 1.75rem);
+}
+
+/* Covers the artwork of an off-centre card: clicking anywhere on it brings
+   that slide to the middle. */
+.pcar__pick {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 1.75rem;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pcar__clip {
+    clip-path: inset(0 0 0 0 round 1.75rem);
+    transition: none;
+  }
 }
 
 .pcar__art {
@@ -1004,6 +1210,32 @@ body {
   text-align: center;
   opacity: 0.35;
   transition: opacity 420ms ease;
+}
+
+/* Where the expanded panel's links used to live. The project itself is one
+   click from the carousel, so nothing has to open first. */
+.pcar__links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.6rem;
+  /* Unreachable until the card is centred — see the tabIndex in the island. */
+  pointer-events: none;
+}
+
+.pcar__card.is-focused .pcar__links {
+  pointer-events: auto;
+}
+
+.pcar__link {
+  display: inline-flex;
+  color: var(--color-heading);
+  transition: color 320ms ease;
+}
+
+.pcar__link:hover {
+  color: var(--accent);
 }
 
 .pcar__card.is-focused .pcar__meta {
@@ -1086,194 +1318,6 @@ body {
 .pcar__dot.is-active {
   background: var(--color-heading);
   scale: 1.25;
-}
-
-/* ---------------------------------------------------------------
-   Expanded project panel
-   --------------------------------------------------------------- */
-.pdialog {
-  width: min(100vw, 60rem);
-  max-width: none;
-  height: 100svh;
-  max-height: none;
-  /* The UA centres dialogs with `margin: auto`; setting an explicit size
-     without restating it leaves the panel pinned to the inset origin. */
-  margin: auto;
-  padding: 0;
-  color: var(--color-text);
-  /* No surface of its own. A solid panel would appear as a hard-edged sheet,
-     and fading it in would fade the flying artwork with it — the morph has to
-     arrive at full opacity or it reads as a flash rather than a flight. */
-  background: transparent;
-  border: 0;
-  overflow: auto;
-  overscroll-behavior: contain;
-  /* Kept only so the backdrop can finish fading out before the dialog goes. */
-  transition:
-    display 420ms allow-discrete,
-    overlay 420ms allow-discrete;
-}
-
-/* The page frosts over instead: a light wash, so the panel's own copy stays
-   legible on top of it. This is the only thing that fades. */
-.pdialog::backdrop {
-  background: rgb(255 255 255 / 0.72);
-  backdrop-filter: blur(14px) saturate(1.1);
-  opacity: 0;
-  transition:
-    opacity 420ms var(--ease-out-quart),
-    display 420ms allow-discrete,
-    overlay 420ms allow-discrete;
-}
-
-.pdialog[open]::backdrop {
-  opacity: 1;
-}
-
-@starting-style {
-  .pdialog[open]::backdrop {
-    opacity: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pdialog::backdrop {
-    transition-duration: 1ms;
-  }
-}
-
-/* Drag surface for swipe-to-dismiss. */
-.pdialog__sheet {
-  min-height: 100%;
-  /* Horizontal gestures still belong to the page; vertical ones to the drag. */
-  touch-action: pan-x;
-}
-
-/* Grab affordance, as on an iOS sheet. */
-.pdialog__grab {
-  width: 2.5rem;
-  height: 0.3rem;
-  margin: 0.6rem auto 0;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--color-heading) 22%, transparent);
-}
-
-.pdialog__dismiss {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  display: flex;
-  justify-content: flex-end;
-  padding: 1rem;
-  margin: 0;
-}
-
-.pdialog__close {
-  display: grid;
-  place-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  color: var(--color-heading);
-  background: var(--color-bg);
-  border: 1px solid var(--color-rule);
-  border-radius: 50%;
-  cursor: pointer;
-  transition:
-    color 320ms ease,
-    border-color 320ms ease;
-}
-
-.pdialog__close:hover {
-  color: var(--accent);
-  border-color: var(--accent);
-}
-
-.pdialog__close svg {
-  width: 1rem;
-  height: 1rem;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-}
-
-.pdialog__inner {
-  padding: 0 clamp(1.25rem, 5vw, 3.5rem) 4rem;
-  margin-top: -3.5rem;
-}
-
-/* The panel's slot for the shared artwork — the block itself is .pcar__art. */
-.pdialog__inner > .pcar__art {
-  aspect-ratio: 16 / 10;
-  height: auto;
-  margin-bottom: 2.5rem;
-}
-
-.pdialog__eyebrow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-.pdialog__title {
-  margin: 0.5rem 0 1rem;
-  font-size: clamp(2rem, 5.5vw, 3.25rem);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  color: var(--color-heading);
-}
-
-/* EntryLinks' own styles are Astro-scoped, so they never reach this
-   React-rendered markup — the panel carries its own. */
-.pdialog__links {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 0.75rem;
-}
-
-.pdialog__link {
-  display: inline-flex;
-  color: var(--color-heading);
-  transition: color 320ms ease;
-}
-
-.pdialog__link:hover {
-  color: var(--accent);
-}
-
-.pdialog__points {
-  margin-top: 2.5rem;
-  padding-left: 1.1rem;
-  list-style: none;
-}
-
-.pdialog__points > li {
-  position: relative;
-  margin-bottom: 0.7rem;
-  line-height: 1.7;
-  color: var(--color-muted);
-}
-
-.pdialog__points > li::before {
-  content: "";
-  position: absolute;
-  left: -1.1rem;
-  top: 0.72em;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--accent);
-}
-
-.pdialog__body {
-  margin-top: 2.5rem;
 }
 
 /* ---------------------------------------------------------------

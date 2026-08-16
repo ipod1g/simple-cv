@@ -4,7 +4,7 @@ import portrait from "@/assets/me_aero_angle.png";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Hero from "@/components/Hero.astro";
 import ShapeMark from "@/components/ShapeMark.astro";
-import ShapeNav from "@/components/react/ShapeNav";
+import VennMenu from "@/components/react/VennMenu";
 import SectionHeading from "@/components/SectionHeading.astro";
 import EditorialFlow from "@/components/EditorialFlow.astro";
 import EntryCard from "@/components/EntryCard.astro";
@@ -119,10 +119,10 @@ const dockPortrait = await getImage({
   <Footer />
 
   {
-    /* Outside main: the flying mark must not be clipped by an overflow
-      ancestor, and the fixed header must not sit inside a transformed one. */
+    /* Outside main: the overlay covers the viewport, so it must not sit inside
+      an overflow or transformed ancestor that would clip or re-root it. */
   }
-  <ShapeNav
+  <VennMenu
     client:load
     portraitSrc={dockPortrait.src}
     portraitAlt={`Back to top — ${SITE.fullName}`}
@@ -184,10 +184,19 @@ const dockPortrait = await getImage({
     isolation: isolate;
   }
 
+  /* Full-bleed: the dot field is a backdrop, not part of the column, so it
+     runs the width of the viewport instead of stopping at `.page`'s 68rem —
+     on a wide screen that edge read as the pattern being cut off. Centred on
+     the section's own midpoint, which is the viewport's, since .page is
+     centred; `left: 50%` + translate escapes the max-width without taking the
+     element out of flow. */
   .editorial-field::before {
     content: "";
     position: absolute;
-    inset: 0;
+    inset-block: 0;
+    left: 50%;
+    width: 100vw;
+    translate: -50% 0;
     z-index: -1;
     background-image: radial-gradient(
       circle,

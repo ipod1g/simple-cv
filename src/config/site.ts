@@ -4,14 +4,13 @@ export const SITE = {
   fullName: "Ku Bon Kwan",
   alias: "Bono",
   role: "Software Engineer",
-  title: "Bono — Software Engineer",
+  title: "Bono",
   description:
     "Ku Bon Kwan (Bono) — Physics graduate turned software engineer, building reliable, fast web systems in TypeScript, React and Next.js.",
   intro:
     "Prospective mentality, a self-motivator, and a creative and persevering deep problem solver",
   about: [
     "Hi, I'm a Physics graduate turned Software Engineer — I build reliable and scalable web systems with a focus on performance, and the kind of UI details most people don't notice until they're missing.",
-    "Check out my projects through the links!",
   ],
   cvUrl:
     "https://docs.google.com/document/d/1iOCAEYbtnJaxwnk-93Wl93FD0sGByxqgnPY7pwAdHWQ/",
@@ -27,11 +26,11 @@ export const SITE = {
 
 export const SOCIALS = [
   { name: "GitHub", icon: "github", href: "https://github.com/ipod1g" },
-  {
-    name: "Instagram",
-    icon: "instagram",
-    href: "https://www.instagram.com/bono420/",
-  },
+  // {
+  //   name: "Instagram",
+  //   icon: "instagram",
+  //   href: "https://www.instagram.com/bono420/",
+  // },
   {
     name: "LinkedIn",
     icon: "linkedin",

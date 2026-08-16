@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
-import { AnimatePresence, LazyMotion, domMax, m } from "@/lib/motion";
+import { AnimatePresence, LazyMotion, domAnimation, m } from "@/lib/motion";
 
 /**
  * iMessage-style bubble for the About section. Anatomy mirrors shadcn/ui's
@@ -144,7 +144,7 @@ export default function AboutBubble({ paragraphs }: { paragraphs: string[] }) {
   const active = REACTIONS.filter((emoji) => reactions[emoji]);
 
   return (
-    <LazyMotion features={domMax} strict>
+    <LazyMotion features={domAnimation} strict>
       <div ref={rootRef} className="bubble">
         {/* Tail — exact SVG path, pointing up at the portrait. */}
         <svg

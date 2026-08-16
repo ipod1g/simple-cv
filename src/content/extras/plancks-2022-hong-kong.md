@@ -7,4 +7,5 @@ url: https://www.dpg-physik.de/vereinigungen/fachuebergreifend/ak/akjdpg/events/
 points:
   - Solved 5/6 masters-level challenging physics questions in the Hong Kong preliminary rounds – in collaboration with 2 members from Hong Kong University of Science and Technology (HKUST)
   - Acquired critical thinking power beyond textbooks by enforcing research paper comprehension, and experienced professional discussions with academically excellent peers
+thumbnail: plancks-2022.jpg
 ---

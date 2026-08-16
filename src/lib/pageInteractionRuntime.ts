@@ -253,7 +253,10 @@ function mountGenericReveals(): () => void {
         observer.unobserve(entry.target);
       }
     },
-    { rootMargin: "0px 0px -40px 0px" }
+    // Shallow bottom inset: the hero deliberately leaves the next section's
+    // heading peeking under the fold, and at -40px that peek was never enough
+    // to trip the observer — the reader saw reserved space and no title.
+    { rootMargin: "0px 0px -16px 0px" }
   );
 
   const restored = isRestoredNavigation();
@@ -298,6 +301,20 @@ export function subscribePageScroll(callback: () => void): () => void {
     window.removeEventListener("scroll", callback);
     window.removeEventListener("resize", callback);
   };
+}
+
+/**
+ * Freeze page scrolling while a full-screen overlay is up. Lenis drives scroll
+ * with its own rAF loop, so `overflow: hidden` alone would not stop it — the
+ * body lock is only the no-Lenis (reduced-motion) fallback.
+ */
+export function setPageScrollLocked(locked: boolean): void {
+  const lenis = getLenis();
+  if (lenis) {
+    if (locked) lenis.stop();
+    else lenis.start();
+  }
+  document.documentElement.classList.toggle("is-scroll-locked", locked);
 }
 
 /** Scroll to a page target with the active runtime policy. */

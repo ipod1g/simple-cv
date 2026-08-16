@@ -34,9 +34,9 @@ export const SHAPES: ShapeDef[] = [
     target: "hero-section",
     label: "Me",
     color: "#f43f3f",
-    viewBox: "0 0 200 115",
-    d: "M100 0 A100 57.5 0 1 0 100 115 A100 57.5 0 1 0 100 0 Z",
-    ratio: 200 / 115,
+    viewBox: "4 -6 200 138",
+    d: "M80.3338 3.4702 A100 57.5 -20 1 0 119.6662 111.5298 A100 57.5 -20 1 0 80.3338 3.4702 Z",
+    ratio: 200 / 138,
     order: 0,
   },
   {

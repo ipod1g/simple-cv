@@ -43,15 +43,14 @@ import AboutBubble from "@/components/react/AboutBubble";
 
   <div class="hero__figure">
     <div class="hero__mark-wrapper">
-      <div class="hero__eyebrow">
-        <SectionHeading title="me" />
-      </div>
       <span class="hero__mark shape-anchor" data-shape-anchor="me">
         <ShapeMark id="me" class="shape-anchor__mark" />
       </span>
     </div>
 
-    {/* ShapeNav only measures this element's position; it never re-renders it. */}
+    {
+      /* VennMenu only measures this element's position; it never re-renders it. */
+    }
     <span class="hero__portrait" data-portrait-anchor>
       <Image
         src={portrait}
@@ -159,26 +158,75 @@ import AboutBubble from "@/components/react/AboutBubble";
     min-height: min(100svh, 52rem);
   }
 
+  /* Deliberately short of the viewport, so the top of "Experiences" shows
+     under the fold and the page reads as continuing rather than ending here.
+     The subtraction is that heading's own distance from the section top —
+     4rem section margin + 3rem section padding — plus the 2rem the heading
+     still sits below its resting place while unrevealed, plus the sliver that
+     is actually meant to show. Subtracting a fixed length keeps that sliver
+     the same at every viewport height, where a percentage would drift. Only
+     holds while the content stays inside the budget: hence the
+     height-bounded portrait below. */
   @media (min-width: 768px) {
     .hero {
-      grid-template-columns: 1fr auto;
-      gap: 2rem;
-      align-items: center;
+      min-height: min(calc(100svh - 10.5rem), 60rem);
+      align-content: center;
+      /* Clearance for the fixed Menu pill, which would otherwise sit on the
+         portrait's head whenever the content exactly fills the budget. */
+      padding-top: 2rem;
     }
   }
 
-  /* The bubble is a reply to the portrait, so it drops below both columns and
-     hugs the portrait's side — its tail then has something to point at.
-     (AboutBubble measures the real offset at runtime.) */
-  /* The island wrapper is the grid item, not .bubble. */
+  /* Name beside portrait on the top row, bubble on its own row underneath —
+     a reply arriving after the portrait, with the tail pointing back up at it.
+     It sits *below* rather than over: the portrait paints at z-index 2, so any
+     overlap puts the reply behind the sender. */
+  @media (min-width: 768px) {
+    .hero {
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-rows: auto auto;
+      gap: 0.75rem 2rem;
+      align-items: center;
+    }
+
+    .hero__figure {
+      grid-column: 2;
+      grid-row: 1;
+    }
+  }
+
+  /* The island wrapper is the grid item, not .bubble. Positioned so it paints
+     above the mark: the mark is absolutely positioned and would otherwise sit
+     over the bubble's tail, which is the one part that has to stay readable
+     for the reply to point at anything. */
   .hero > :global(astro-island) {
+    position: relative;
+    z-index: 3;
     display: block;
     grid-column: 1 / -1;
   }
 
   @media (min-width: 768px) {
+    .hero > :global(astro-island) {
+      grid-row: 2;
+      align-self: start;
+    }
+
+    /* Right-aligned so it lands under the portrait it is answering — that is
+       also what puts the tail within reach of the portrait's centre, which
+       AboutBubble measures and clamps to. */
     .hero > :global(astro-island) :global(.bubble) {
+      margin-top: 0;
       margin-inline-start: auto;
+      /* Wider than the mobile bubble: the same copy sets in fewer lines, and
+         those saved lines are what keep the hero inside its height budget. */
+      max-width: min(46rem, 100%);
+    }
+
+    /* Same reason — the reaction row's default breathing room is height the
+       hero cannot spare once the portrait and the bubble have had theirs. */
+    .hero > :global(astro-island) :global(.bubble__picker) {
+      margin-top: 0.75rem;
     }
   }
 
@@ -189,25 +237,31 @@ import AboutBubble from "@/components/react/AboutBubble";
     padding-top: 1rem;
   }
 
+  /* A zero-size anchor pinned to the figure's bottom edge — which is where the
+     toes are. The mark hangs off it, so it follows the portrait at any size
+     instead of being placed at a percentage down a box of its own. (The old
+     `top: 102%` measured against the figure's height, and silently resolved to
+     zero the moment that height stopped being a fixed ratio.) */
   .hero__mark-wrapper {
-    position: relative;
-    width: fit-content;
-    top: 100%;
-    inset-inline-start: 30%;
-  }
-
-  .hero__eyebrow {
-    position: relative;
-    color: var(--color-text-inverse) !important;
-    z-index: 1;
-    top: 2rem;
-    letter-spacing: 0.05em;
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 0;
   }
 
   .hero__role {
     margin-top: 5rem;
     font-size: 1.05rem;
     line-height: 1.3;
+  }
+
+  /* The desktop hero is vertically centred inside a fixed budget, so the top
+     inset that spaces the role line off a phone's status bar is just height
+     the portrait and the bubble have to give back. */
+  @media (min-width: 768px) {
+    .hero__role {
+      margin-top: 1rem;
+    }
   }
 
   .hero__name {
@@ -228,17 +282,33 @@ import AboutBubble from "@/components/react/AboutBubble";
     vertical-align: baseline;
   }
 
+  /* Height comes from the portrait itself, not a nominal 3/4 box: the mark is
+     anchored to this element's bottom edge, and only a figure that ends where
+     the image ends keeps that mark under the toes at every size. */
   .hero__figure {
     position: relative;
-    width: min(24rem, 78vw);
-    aspect-ratio: 3 / 4;
+    /* The last term is the height budget expressed as a width: portrait plus
+       the mark hanging below it come to about 1.8× this box's width, so
+       capping the width this way is what keeps the whole figure — toes and
+       footing included — on screen on a short phone rather than past the
+       fold. The subtraction is the name block stacked above it. */
+    width: min(24rem, 78vw, calc((100svh - 17rem) / 1.8));
     margin-left: auto;
-    margin-top: -10rem;
   }
 
+  /* Bounded by viewport *height* as well as width: the portrait, the name and
+     the bubble all have to fit inside the hero's height budget, or the section
+     below is pushed off screen entirely and the page loses its "there is more"
+     cue. */
   @media (min-width: 768px) {
     .hero__figure {
-      margin-top: 0;
+      /* Same height budget as the phone rule, with the desktop stack
+         subtracted instead: the hero's own top padding, the row gap, the
+         bubble beneath it, and the strip of the next section that has to stay
+         visible. Whatever height is left over, the portrait takes — so it runs
+         as large as the layout can actually afford at each viewport. */
+      width: clamp(9rem, min(26vw, calc((100svh - 30rem) / 1.66)), 20rem);
+      margin-block: auto;
     }
   }
 
@@ -258,21 +328,27 @@ import AboutBubble from "@/components/react/AboutBubble";
     pointer-events: none;
   }
 
-  /* Red ellipse under the feet — also the "Me" morph mark. */
+  /* Red ellipse under the feet — also the "Me" morph mark. Sized as a share of
+     the portrait rather than of the viewport, and centred on the feet (which
+     sit slightly right of centre, as the portrait itself is offset), so the
+     footing holds together as the portrait scales. The downward shift puts the
+     toes on the ellipse instead of above it. */
   .hero__mark {
     position: absolute;
-    top: 0;
-    inset-inline-start: -75%;
-    width: 50vw;
-    max-width: 20rem;
+    bottom: 0;
+    /* Not 50%: the subject stands left of the photograph's centre, so the
+       ellipse has to follow the shoes rather than the frame. */
+    left: 45%;
+    width: 57%;
     aspect-ratio: 2 / 1.15;
+    translate: -50% 24%;
   }
 
   .hero__portrait {
     position: relative;
     z-index: 2;
     display: block;
-    width: 100%;
+    width: 90%;
     margin-inline: auto;
     inset-inline-end: -5%;
   }
@@ -284,4 +360,10 @@ import AboutBubble from "@/components/react/AboutBubble";
     width: 100%;
     height: auto;
   }
+
+  /* Phones stack the hero, so the portrait is the one element that can run
+     past the fold and leave the figure cropped at the shins. Cap it by what
+     is actually left of the viewport — the name block above it, plus a little
+     air — and let the width follow, so it stands complete on any handset
+     rather than only on tall ones. */
 </style>

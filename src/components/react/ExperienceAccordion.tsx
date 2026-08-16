@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
-import { AnimatePresence, LazyMotion, domMax, m } from "@/lib/motion";
+import { AnimatePresence, LazyMotion, domAnimation, m } from "@/lib/motion";
 import { mountSplitLineReveals } from "@/lib/pageInteractionRuntime";
 import type { ExperiencePortfolioEntry } from "@/lib/portfolioEntries";
 
@@ -58,7 +58,7 @@ function Item({
           onClick={onToggle}
         >
           <span className="xp__eyebrow">
-            {item.subtitle && <span>{item.subtitle}</span>}
+            {item.subtitle && <span>{item.subtitle}</span>} ::
             <time dateTime={item.iso}>{item.duration}</time>
           </span>
 
@@ -154,7 +154,7 @@ export default function ExperienceAccordion({
   }, []);
 
   return (
-    <LazyMotion features={domMax} strict>
+    <LazyMotion features={domAnimation} strict>
       <div className="xp-list" ref={listRef}>
         {items.map((item, index) => (
           <Item

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useReducedMotion } from "framer-motion";
-import { LazyMotion, domMax, m } from "@/lib/motion";
+import { LazyMotion, domAnimation, m } from "@/lib/motion";
 import { SKILL_GROUPS, type SkillIcon } from "@/config/site";
 
 const PRIMARY_SKILL_COUNT = 5;
@@ -89,7 +89,7 @@ export default function SkillsGrid() {
   };
 
   return (
-    <LazyMotion features={domMax} strict>
+    <LazyMotion features={domAnimation} strict>
       <div className="skills-scene">
         {/* Decorative scatter — blobs, squiggles, sparkles, stray dots. */}
         <div className="skills-doodles" aria-hidden="true">
