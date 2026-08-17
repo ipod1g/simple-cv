@@ -2,38 +2,25 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
-import vercel from "@astrojs/vercel";
+import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
-import glsl from "vite-plugin-glsl";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   site: "https://cvbono.vercel.app",
-  output: "server",
-  adapter: vercel({
-    webAnalytics: {
-      enabled: false,
-    },
-    maxDuration: 8,
-    functionPerRoute: false,
-  }),
-  integrations: [react()],
+  output: "static",
+  // The toolbar's X-Ray app re-measures every hydrated island on each scroll
+  // frame, which makes local motion substantially rougher than production.
+  devToolbar: { enabled: false },
+  integrations: [react(), sitemap()],
+  image: {
+    responsiveStyles: true,
+  },
   vite: {
-    plugins: [tailwindcss(), glsl()],
+    plugins: [tailwindcss()],
     build: {
       minify: "esbuild",
-      rollupOptions: {
-        output: {
-          manualChunks(id) {
-            if (id.includes("node_modules")) {
-              if (id.includes("react") || id.includes("react-dom")) {
-                return "react-vendor";
-              }
-            }
-          },
-        },
-      },
     },
     resolve: {
       alias: {
