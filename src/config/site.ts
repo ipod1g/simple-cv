@@ -13,8 +13,8 @@ export const SITE = {
     "Hi, I'm a Physics graduate turned Software Engineer — I build reliable and scalable web systems with a focus on performance, and the kind of UI details most people don't notice until they're missing.",
   ],
   cvUrl:
-    "https://docs.google.com/document/d/1iOCAEYbtnJaxwnk-93Wl93FD0sGByxqgnPY7pwAdHWQ/",
-  ogImage: "/og.png",
+    "https://docs.google.com/document/d/1lqqn19fog2EV5ZV8f-e23WU06jwv_TIvvB_oaZucyyA",
+  ogImage: "/og.webp",
   locale: "en",
   origins: [
     { emoji: "👨‍👩‍👦‍👦", label: "KR" },

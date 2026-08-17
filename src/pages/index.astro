@@ -1,6 +1,6 @@
 ---
 import { getImage } from "astro:assets";
-import portrait from "@/assets/me_aero_angle.png";
+import portrait from "@/assets/me_aero_angle.webp";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Hero from "@/components/Hero.astro";
 import ShapeMark from "@/components/ShapeMark.astro";
@@ -13,6 +13,7 @@ import ProjectCarousel from "@/components/react/ProjectCarousel";
 import Footer from "@/components/Footer.astro";
 import SkillsGrid from "@/components/react/SkillsGrid";
 import { getPortfolioEntries } from "@/lib/portfolioEntries";
+import { resolveThumbnail } from "@/lib/images";
 import { SITE } from "@/config/site";
 
 const {
@@ -20,6 +21,18 @@ const {
   projects: projectItems,
   extras,
 } = await getPortfolioEntries();
+
+// The carousel is a React island, so it can only be handed a URL — the
+// `src/assets/` lookup and the optimised render both have to happen here.
+// Sized for the widest a card is ever drawn, and served as webp.
+const projectCards = await Promise.all(
+  projectItems.map(async (item) => {
+    const asset = resolveThumbnail(item.thumbnail);
+    if (!asset) return { ...item, thumbnail: null };
+    const image = await getImage({ src: asset, width: 960, format: "webp" });
+    return { ...item, thumbnail: image.src };
+  })
+);
 
 // The header avatar is its own optimised asset rather than a copy of the hero
 // image, so the nav never depends on the hero's DOM.
@@ -76,7 +89,7 @@ const dockPortrait = await getImage({
             <ShapeMark id="projects" class="shape-anchor__mark" />
           </span>
           <div class="project-overlap">
-            <ProjectCarousel client:visible items={projectItems} />
+            <ProjectCarousel client:visible items={projectCards} />
           </div>
         </section>
 

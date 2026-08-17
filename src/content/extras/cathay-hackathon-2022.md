@@ -8,5 +8,5 @@ url: https://hackathon.cathaypacific.com/index.html
 points:
   - Designed and developed an AI integrated inflight service solution app using Figma, Flutter and Firebase for prototype showcasing
   - Qualified for the final rounds as top 20 teams amongst 100+ participating teams with a pitching video of our solution
-thumbnail: cathay-hackathon-2022.jpg
+thumbnail: cathay-hackathon-2022.webp
 ---

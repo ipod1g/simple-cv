@@ -2,7 +2,7 @@ import type { ImageMetadata } from "astro";
 
 /**
  * Content `thumbnail` frontmatter is a path relative to `src/assets/`
- * (e.g. `logos/sandbox-vr.png`). Resolved here so the content files stay
+ * (e.g. `logos/sandbox-vr.webp`). Resolved here so the content files stay
  * free of import syntax and `astro:assets` can optimise the result.
  */
 const ASSETS = import.meta.glob<{ default: ImageMetadata }>(

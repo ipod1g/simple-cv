@@ -75,7 +75,7 @@ describe("Portfolio Entry interface", () => {
     );
     const extra = sourceEntry(
       "extra",
-      { title: "Physics Olympiad", thumbnail: "physics.png" },
+      { title: "Physics Olympiad", thumbnail: "physics.webp" },
       "## Result"
     );
 
@@ -99,7 +99,7 @@ describe("Portfolio Entry interface", () => {
     expect(portfolio.extras[0]).toMatchObject({
       kind: "extra",
       bodyHtml: "<h2>extra</h2>",
-      thumbnail: "physics.png",
+      thumbnail: "physics.webp",
       monogram: "PO",
     });
   });

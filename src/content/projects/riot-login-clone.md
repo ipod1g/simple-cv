@@ -4,8 +4,9 @@ accent: "#f43f3f"
 subtitle: Personal
 start: 2022-08-18
 end: 2022-09-02
-url: https://testers4bono.netlify.app
+# url: https://testers4bono.netlify.app
 github: https://github.com/ipod1g/riotlogin-clone-client
+thumbnail: riot-client-clone.webp
 points:
   - Developed a functional registration and login authorization system connected to RDBMS(MySQL) database using React and Node.js
   - Applied original responsive design and readily utilized React Hooks API

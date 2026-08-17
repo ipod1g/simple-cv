@@ -1176,7 +1176,7 @@ html.is-scroll-locked body {
   /* Mixed against the page, not transparent: a translucent card would let
      the section's decorative shapes read straight through the artwork. */
   background: color-mix(in srgb, var(--accent) 12%, var(--color-bg));
-  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  /* border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent); */
   border-radius: 1.75rem;
   /* The media keeps its own aspect while the box morphs, so it is wider than
      the box for part of the flight — clip rather than let it spill. */
@@ -1193,7 +1193,8 @@ html.is-scroll-locked body {
   font-size: clamp(2.5rem, 7vw, 4rem);
 }
 
-.pcar__art-video {
+.pcar__art-video,
+.pcar__art-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1220,6 +1221,10 @@ html.is-scroll-locked body {
   justify-content: center;
   gap: 1rem;
   margin-top: 0.6rem;
+  /* Held open whether or not this project has links, so every card in the
+     track is the same height — 20px is the icons' own size, so a row with
+     links and a row without occupy exactly the same band. */
+  min-height: 20px;
   /* Unreachable until the card is centred — see the tabIndex in the island. */
   pointer-events: none;
 }

@@ -52,6 +52,12 @@ export interface ProjectPortfolioEntry
   /** Rendered markdown authored in this repository, never user input. */
   bodyHtml: string | null;
   video: string | null;
+  /**
+   * Still artwork for a project with no clip. Resolved to an optimised `src`
+   * before it reaches the carousel, which is a React island and so can only
+   * be handed a URL, not an `ImageMetadata`.
+   */
+  thumbnail: string | null;
 }
 
 export interface ExtraPortfolioEntry extends PortfolioEntryBase<"extra"> {
@@ -142,6 +148,7 @@ function preparePortfolio(source: PortfolioEntrySourceSet): PortfolioEntries {
       ...prepareBase("project", entry),
       bodyHtml: entry.rendered?.html ?? null,
       video: entry.data.video,
+      thumbnail: entry.data.thumbnail,
     })),
     extras: publishedNewestFirst(source.extras).map((entry) => ({
       ...prepareBase("extra", entry),

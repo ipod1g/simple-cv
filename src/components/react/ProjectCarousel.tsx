@@ -146,6 +146,18 @@ export default function ProjectCarousel({
                           preload="none"
                           aria-hidden="true"
                         />
+                      ) : item.thumbnail ? (
+                        <img
+                          className="pcar__art-image"
+                          src={item.thumbnail}
+                          alt=""
+                          // The card's own title carries the name, so the
+                          // artwork is decoration; only the focused card is
+                          // near enough the fold to be worth fetching eagerly.
+                          loading="lazy"
+                          decoding="async"
+                          aria-hidden="true"
+                        />
                       ) : (
                         <span className="pcar__art-mono" aria-hidden="true">
                           {item.monogram}
@@ -175,37 +187,40 @@ export default function ProjectCarousel({
                       {item.duration}
                     </span>
 
-                    {(item.github || item.url) && (
-                      <span className="pcar__links">
-                        {item.github && (
-                          <a
-                            className="pcar__link"
-                            href={item.github}
-                            target="_blank"
-                            rel="noreferrer"
-                            // Off-centre cards are faded out; leaving their
-                            // links tabbable would send focus to a project
-                            // the reader cannot see.
-                            tabIndex={focused ? undefined : -1}
-                            aria-label={`${item.title} on GitHub (opens in a new tab)`}
-                          >
-                            <LinkIcon name="github" />
-                          </a>
-                        )}
-                        {item.url && (
-                          <a
-                            className="pcar__link"
-                            href={item.url}
-                            target="_blank"
-                            rel="noreferrer"
-                            tabIndex={focused ? undefined : -1}
-                            aria-label={`Visit ${item.title} (opens in a new tab)`}
-                          >
-                            <LinkIcon name="link" />
-                          </a>
-                        )}
-                      </span>
-                    )}
+                    {/* Always rendered, links or not. A card without either
+                        would otherwise stand shorter than its neighbours, and
+                        every slide in the track has to be the same height or
+                        the row jumps as it scrolls — the space is reserved in
+                        CSS instead. */}
+                    <span className="pcar__links">
+                      {item.github && (
+                        <a
+                          className="pcar__link"
+                          href={item.github}
+                          target="_blank"
+                          rel="noreferrer"
+                          // Off-centre cards are faded out; leaving their
+                          // links tabbable would send focus to a project
+                          // the reader cannot see.
+                          tabIndex={focused ? undefined : -1}
+                          aria-label={`${item.title} on GitHub (opens in a new tab)`}
+                        >
+                          <LinkIcon name="github" />
+                        </a>
+                      )}
+                      {item.url && (
+                        <a
+                          className="pcar__link"
+                          href={item.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          tabIndex={focused ? undefined : -1}
+                          aria-label={`Visit ${item.title} (opens in a new tab)`}
+                        >
+                          <LinkIcon name="link" />
+                        </a>
+                      )}
+                    </span>
                   </div>
                 </div>
               </li>
