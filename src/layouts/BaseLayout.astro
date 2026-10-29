@@ -1,0 +1,89 @@
+---
+import { SITE, SOCIALS } from "@/config/site";
+import "@/styles/globals.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = SITE.title, description = SITE.description } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url).href;
+const ogImage = new URL(SITE.ogImage, Astro.site ?? SITE.url).href;
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: SITE.fullName,
+  alternateName: SITE.alias,
+  jobTitle: SITE.role,
+  description: SITE.description,
+  url: SITE.url,
+  image: ogImage,
+  sameAs: SOCIALS.filter((s) => !s.href.startsWith("mailto:")).map(
+    (s) => s.href
+  ),
+  knowsLanguage: ["en", "ko"],
+};
+---
+
+<!doctype html>
+<html lang={SITE.locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="profile:first_name" content="Bon Kwan" />
+    <meta property="profile:last_name" content="Ku" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {/* Satoshi via Fontshare CDN. */}
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap"
+    />
+
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(personSchema)}
+    />
+
+    {/* Runs before first paint, so split-lines targets are hidden from the
+        very first frame rather than flashing as plain text. Everything keyed
+        off this attribute degrades to visible when scripting is off. */}
+    <script is:inline>document.documentElement.dataset.js = "";</script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <slot />
+
+    <script>
+      import { mountPageInteractionRuntime } from "@/lib/pageInteractionRuntime";
+
+      mountPageInteractionRuntime();
+    </script>
+  </body>
+</html>

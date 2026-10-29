@@ -1,0 +1,144 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import Icon from "@/components/Icon.astro";
+import Monogram from "@/components/Monogram.astro";
+
+interface Props {
+  id: string;
+  title: string;
+  monogram: string;
+  bodyHtml: string;
+  image?: ImageMetadata | null;
+}
+
+const { id, title, monogram, bodyHtml, image } = Astro.props;
+const labelId = `${id}-label`;
+---
+
+{/* Native <dialog> gives focus trapping, Esc-to-close and inert background for free. */}
+<dialog id={id} class="dialog" aria-labelledby={labelId} data-lenis-prevent>
+  <form method="dialog" class="dialog__dismiss">
+    <button type="submit" class="dialog__close" aria-label={`Close ${title}`}>
+      <Icon name="close" size={24} />
+    </button>
+  </form>
+
+  <div class="dialog__header">
+    <h2 id={labelId} class="dialog__title">{title}</h2>
+    {
+      image ? (
+        <Image
+          src={image}
+          alt=""
+          widths={[640, 960]}
+          sizes="(min-width: 768px) 45rem, 90vw"
+          loading="lazy"
+          class="dialog__image"
+        />
+      ) : (
+        <Monogram
+          title={title}
+          text={monogram}
+          class="dialog__image"
+        />
+      )
+    }
+  </div>
+
+  <div class="dialog__content prose" set:html={bodyHtml} />
+</dialog>
+
+<style>
+  .dialog {
+    width: min(92vw, 48rem);
+    max-width: none;
+    height: 85svh;
+    padding: 0;
+    color: var(--color-text);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border-strong);
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+
+  .dialog::backdrop {
+    background: rgb(0 0 0 / 0.5);
+    backdrop-filter: blur(4px);
+  }
+
+  /* Enter/exit transition — no JS, no animation library. */
+  .dialog,
+  .dialog::backdrop {
+    transition: opacity 200ms ease, display 200ms allow-discrete,
+      overlay 200ms allow-discrete;
+    opacity: 0;
+  }
+
+  .dialog[open],
+  .dialog[open]::backdrop {
+    opacity: 1;
+  }
+
+  @starting-style {
+    .dialog[open],
+    .dialog[open]::backdrop {
+      opacity: 0;
+    }
+  }
+
+  .dialog__dismiss {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.75rem;
+    margin: 0;
+  }
+
+  .dialog__close {
+    display: inline-flex;
+    padding: 0.5rem;
+    color: inherit;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0.375rem;
+    cursor: pointer;
+  }
+
+  .dialog__close:hover {
+    color: var(--color-accent);
+  }
+
+  .dialog__header {
+    padding-inline: 12%;
+  }
+
+  .dialog__title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-heading);
+  }
+
+  .dialog__image {
+    display: block;
+    width: 100%;
+    max-height: 16rem;
+    height: auto;
+    margin-block: 1.5rem;
+    object-fit: cover;
+    border-radius: 0.125rem;
+  }
+
+  .dialog__content {
+    padding: 0 12% 3rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dialog,
+    .dialog::backdrop {
+      transition-duration: 1ms;
+    }
+  }
+</style>

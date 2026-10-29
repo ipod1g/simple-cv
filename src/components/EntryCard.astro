@@ -1,0 +1,304 @@
+---
+import { Image } from "astro:assets";
+import EntryLinks from "@/components/EntryLinks.astro";
+import Monogram from "@/components/Monogram.astro";
+import EntryDialog from "@/components/EntryDialog.astro";
+import { resolveThumbnail } from "@/lib/images";
+import type { ExtraPortfolioEntry } from "@/lib/portfolioEntries";
+
+interface Props {
+  entry: ExtraPortfolioEntry;
+  index: number;
+}
+
+const { entry, index } = Astro.props;
+const {
+  title,
+  subtitle,
+  url,
+  github,
+  points,
+  thumbnail,
+  duration,
+  iso,
+  monogram,
+  bodyHtml,
+} = entry;
+
+const image = resolveThumbnail(thumbnail);
+const hasDetail = bodyHtml != null;
+const dialogId = `detail-${entry.id}`;
+const sequence = String(index + 1).padStart(3, "0");
+---
+
+<li class:list={["entry", "reveal", { "entry--reverse": index % 2 === 1 }]}>
+  <span class="entry__number" aria-hidden="true">{sequence}</span>
+
+  <div class="entry__content">
+    <div class="entry__head">
+      <p class="entry__eyebrow">
+        <span>{sequence}</span>
+        <time datetime={iso}>{duration}</time>
+      </p>
+      <EntryLinks title={title} url={url} github={github} />
+    </div>
+
+    <h3 class="entry__title">{title}</h3>
+    {subtitle && <p class="entry__subtitle">{subtitle}</p>}
+
+    <ul class="entry__points">
+      {points.map((point) => <li>{point}</li>)}
+    </ul>
+
+    {
+      hasDetail && (
+        <button
+          type="button"
+          class="entry__more"
+          data-dialog-open={dialogId}
+          aria-haspopup="dialog"
+        >
+          <span class="swap">
+            <span class="swap__line">Read more</span>
+            <span class="swap__line swap__line--clone" aria-hidden="true">
+              Read more
+            </span>
+          </span>
+          <span class="sr-only"> about {title}</span>
+        </button>
+      )
+    }
+  </div>
+
+  <figure class="entry__figure">
+    {
+      image ? (
+        <Image
+          src={image}
+          alt={`${title} artwork`}
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 64rem) 52vw, 100vw"
+          loading="lazy"
+          class="entry__img"
+        />
+      ) : (
+        <Monogram title={title} text={monogram} variant="poster" />
+      )
+    }
+  </figure>
+
+  {
+    hasDetail && (
+      <EntryDialog
+        id={dialogId}
+        title={title}
+        image={image}
+        monogram={monogram}
+        bodyHtml={bodyHtml}
+      />
+    )
+  }
+</li>
+
+<style>
+  .entry {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+    align-items: center;
+    gap: clamp(2rem, 6vw, 6rem);
+    overflow: clip;
+    padding: clamp(1.5rem, 4vw, 4rem);
+    margin: 0 0 clamp(2rem, 4vw, 3.5rem);
+    background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+    border-block: 1px solid var(--color-border);
+    transition: background-color 600ms ease;
+  }
+
+  .entry--reverse {
+    grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
+  }
+
+  .entry--reverse .entry__content {
+    grid-column: 2;
+  }
+
+  .entry--reverse .entry__figure {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .entry__number {
+    position: absolute;
+    top: -0.22em;
+    left: -0.04em;
+    z-index: 0;
+    font-family: var(--font-mono);
+    font-size: clamp(8rem, 21vw, 15rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.1em;
+    color: color-mix(in srgb, var(--color-heading) 6%, transparent);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .entry--reverse .entry__number {
+    right: 0.04em;
+    left: auto;
+  }
+
+  .entry__content,
+  .entry__figure {
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+  }
+
+  .entry__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .entry__eyebrow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.9rem;
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.45;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .entry__eyebrow span {
+    color: var(--color-accent-strong);
+  }
+
+  .entry__title {
+    max-width: 12ch;
+    margin: clamp(2.5rem, 5vw, 5rem) 0 0;
+    font-size: clamp(2.15rem, 4.8vw, 4rem);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+    color: var(--color-heading);
+  }
+
+  .entry__subtitle {
+    margin: 1rem 0 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-accent-strong);
+  }
+
+  .entry__points {
+    display: grid;
+    gap: 1rem;
+    margin: 2rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .entry__points > li {
+    position: relative;
+    padding-left: 1.75rem;
+    font-size: clamp(1rem, 1.4vw, 1.1rem);
+    line-height: 1.7;
+    color: var(--color-text);
+    overflow-wrap: break-word;
+  }
+
+  .entry__points > li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--color-accent-strong);
+  }
+
+  .entry__figure {
+    display: grid;
+    place-items: stretch;
+    margin: 0;
+    box-shadow: 0 1.5rem 4rem rgb(25 35 55 / 0.09);
+    transform: rotate(1.25deg);
+  }
+
+  .entry--reverse .entry__figure {
+    transform: rotate(-1.25deg);
+  }
+
+  .entry__img {
+    width: 100%;
+    min-height: clamp(18rem, 48vw, 32rem);
+    object-fit: cover;
+    border-radius: 0.25rem;
+  }
+
+  .entry__more {
+    margin-top: 2rem;
+    padding: 0.4rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--color-accent-strong);
+    background: none;
+    border: 0;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: opacity 200ms ease;
+  }
+
+  .entry__more:hover {
+    opacity: 0.72;
+  }
+
+  @media (max-width: 63.99rem) {
+    .entry,
+    .entry--reverse {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .entry .entry__content,
+    .entry--reverse .entry__content,
+    .entry .entry__figure,
+    .entry--reverse .entry__figure {
+      grid-column: 1;
+    }
+
+    .entry .entry__content,
+    .entry--reverse .entry__content {
+      grid-row: 2;
+    }
+
+    .entry .entry__figure,
+    .entry--reverse .entry__figure {
+      grid-row: 1;
+      transform: rotate(0);
+    }
+
+    .entry__title {
+      margin-top: 2rem;
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .entry {
+      margin-inline: -1rem;
+      padding: 1.25rem;
+    }
+
+    .entry__head {
+      align-items: center;
+    }
+
+    .entry__eyebrow {
+      font-size: 0.78rem;
+    }
+  }
+</style>

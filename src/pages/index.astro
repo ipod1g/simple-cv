@@ -1,52 +1,280 @@
 ---
-import PortfolioApp from "@/components/PortfolioApp";
-import "@/styles/globals.css";
-import { getDatabase, parseDatabase } from "@/controllers/notionController";
-import { DATABASE_ID } from "@/config";
-import type { CustomNotionDatabaseItem, TNotionData } from "@/types";
+import { getImage } from "astro:assets";
+import portrait from "@/assets/me_aero_angle.webp";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/Hero.astro";
+import ShapeMark from "@/components/ShapeMark.astro";
+import VennMenu from "@/components/react/VennMenu";
+import SectionHeading from "@/components/SectionHeading.astro";
+import EditorialFlow from "@/components/EditorialFlow.astro";
+import EntryCard from "@/components/EntryCard.astro";
+import ExperienceAccordion from "@/components/react/ExperienceAccordion";
+import ProjectCarousel from "@/components/react/ProjectCarousel";
+import Footer from "@/components/Footer.astro";
+import SkillsGrid from "@/components/react/SkillsGrid";
+import { getPortfolioEntries } from "@/lib/portfolioEntries";
+import { resolveThumbnail } from "@/lib/images";
+import { SITE } from "@/config/site";
 
-export const prerender = true;
+const {
+  experience: experienceItems,
+  projects: projectItems,
+  extras,
+} = await getPortfolioEntries();
 
-const raw = await getDatabase(DATABASE_ID);
-const notionDataArray = (parseDatabase(
-  (raw ?? []) as unknown as CustomNotionDatabaseItem[]
-) ?? []) as TNotionData[];
+// The carousel is a React island, so it can only be handed a URL — the
+// `src/assets/` lookup and the optimised render both have to happen here.
+// Sized for the widest a card is ever drawn, and served as webp.
+const projectCards = await Promise.all(
+  projectItems.map(async (item) => {
+    const asset = resolveThumbnail(item.thumbnail);
+    if (!asset) return { ...item, thumbnail: null };
+    const image = await getImage({ src: asset, width: 960, format: "webp" });
+    return { ...item, thumbnail: image.src };
+  })
+);
+
+// The header avatar is its own optimised asset rather than a copy of the hero
+// image, so the nav never depends on the hero's DOM.
+const dockPortrait = await getImage({
+  src: portrait,
+  width: 96,
+  format: "webp",
+});
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Bono's portfolio website" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="manifest" href="/manifest.json" />
-    <meta property="og:title" content="Bono" />
-    <meta property="og:type" content="portfolio" />
-    <meta property="og:url" content="https://cvbono.vercel.app" />
-    <title>Bono</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <script
-      is:inline
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-KXS0HTW0P4"></script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-KXS0HTW0P4", {
-        page_path: window.location.pathname,
-      });
-    </script>
-  </head>
-  <body>
-    <PortfolioApp client:load notionDataArray={notionDataArray} />
-  </body>
-</html>
+<BaseLayout>
+  <div class="page-sheet">
+    <main id="main-content" class="page">
+      <section
+        id="hero-section"
+        class="page-section"
+        aria-labelledby="hero-name"
+      >
+        <Hero />
+      </section>
+      <section
+        id="work-section"
+        class="page-section"
+        aria-labelledby="work-heading"
+      >
+        <EditorialFlow index="01" outgoing="experience" align="right" />
+        <SectionHeading id="work-heading" title="Experiences" />
+        <span
+          class="shape-anchor shape-anchor--rect"
+          data-shape-anchor="experience"
+        >
+          <ShapeMark id="experience" class="shape-anchor__mark" />
+        </span>
+        <ExperienceAccordion client:visible items={experienceItems} />
+      </section>
+
+      <div class="editorial-field">
+        <section
+          id="project-section"
+          class="page-section"
+          aria-labelledby="project-heading"
+        >
+          <EditorialFlow
+            index="02"
+            incoming="experience"
+            outgoing="projects"
+            align="left"
+          />
+          <SectionHeading id="project-heading" title="Projects" />
+          <span
+            class="shape-anchor shape-anchor--trapezoid"
+            data-shape-anchor="projects"
+          >
+            <ShapeMark id="projects" class="shape-anchor__mark" />
+          </span>
+          <div class="project-overlap">
+            <ProjectCarousel client:visible items={projectCards} />
+          </div>
+        </section>
+
+        <section
+          id="extra-section"
+          class="page-section"
+          aria-labelledby="extra-heading"
+        >
+          <EditorialFlow
+            index="03"
+            incoming="projects"
+            outgoing="me"
+            align="right"
+          />
+          <SectionHeading id="extra-heading" title="Extra-curricular" />
+          <ol class="stack-list">
+            {
+              extras.map((entry, index) => (
+                <EntryCard entry={entry} index={index} />
+              ))
+            }
+          </ol>
+        </section>
+
+        <section
+          id="skill-section"
+          class="page-section"
+          aria-labelledby="skill-heading"
+        >
+          <EditorialFlow index="04" incoming="me" align="left" />
+          <SectionHeading id="skill-heading" title="Skills" />
+          <div class="skills">
+            <SkillsGrid client:visible />
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <Footer />
+
+  {
+    /* Outside main: the overlay covers the viewport, so it must not sit inside
+      an overflow or transformed ancestor that would clip or re-root it. */
+  }
+  <VennMenu
+    client:load
+    portraitSrc={dockPortrait.src}
+    portraitAlt={`Back to top — ${SITE.fullName}`}
+  />
+</BaseLayout>
+
+<style>
+  .page-sheet {
+    position: relative;
+    z-index: 1;
+    /* border-radius: 0 0 clamp(1.75rem, 5vw, 5rem) clamp(1.75rem, 5vw, 5rem); */
+    background: var(--color-bg);
+    /* box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.14); */
+  }
+
+  .page {
+    max-width: 68rem;
+    margin-inline: auto;
+  }
+
+  .page-section {
+    position: relative;
+    isolation: isolate;
+    padding-inline: 1rem;
+  }
+
+  .page-section:not(#hero-section) {
+    padding-block: clamp(1.75rem, 3.5vw, 3rem);
+  }
+
+  #work-section {
+    margin-top: 4rem;
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-accent) 5%, transparent),
+      transparent clamp(7rem, 14vw, 10rem)
+    );
+  }
+
+  #work-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 1rem;
+    left: 1rem;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      color-mix(in srgb, var(--color-accent) 60%, transparent) 22%,
+      color-mix(in srgb, var(--color-accent) 60%, transparent) 78%,
+      transparent
+    );
+  }
+
+  /* One uninterrupted field: dots no longer restart at each section edge. */
+  .editorial-field {
+    position: relative;
+    isolation: isolate;
+  }
+
+  /* Full-bleed: the dot field is a backdrop, not part of the column, so it
+     runs the width of the viewport instead of stopping at `.page`'s 68rem —
+     on a wide screen that edge read as the pattern being cut off. Centred on
+     the section's own midpoint, which is the viewport's, since .page is
+     centred; `left: 50%` + translate escapes the max-width without taking the
+     element out of flow. */
+  .editorial-field::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    left: 50%;
+    width: 100vw;
+    translate: -50% 0;
+    z-index: -1;
+    background-image: radial-gradient(
+      circle,
+      var(--color-dot) 1px,
+      transparent 1.5px
+    );
+    background-size: 18px 18px;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      rgb(0 0 0 / 0.35) 3rem,
+      #000 8rem
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      rgb(0 0 0 / 0.35) 3rem,
+      #000 8rem
+    );
+    pointer-events: none;
+  }
+
+  .project-overlap {
+    position: relative;
+    z-index: 2;
+    transform: translateY(clamp(1.5rem, 4vw, 3.5rem));
+  }
+
+  #project-section {
+    padding-bottom: 0;
+  }
+
+  #extra-section {
+    padding-top: clamp(5rem, 10vw, 8rem);
+  }
+
+  .about {
+    max-width: 44rem;
+    line-height: 1.75;
+  }
+
+  .about p + p {
+    margin-top: 0.75rem;
+  }
+
+  .stack-list {
+    position: relative;
+    max-width: 80rem;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .skills {
+    padding-block: 0 1.5rem;
+  }
+
+  @media (max-width: 36rem) {
+    .project-overlap {
+      transform: translateY(1.25rem);
+    }
+
+    #extra-section {
+      padding-top: 4.5rem;
+    }
+  }
+</style>

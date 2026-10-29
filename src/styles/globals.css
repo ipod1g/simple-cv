@@ -1,146 +1,1544 @@
+@import "modern-normalize";
 @import "tailwindcss";
 
-/* Dark/light: <html data-theme="dark"|"light"> (see ThemeContext) — no .dark class */
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
-
-@theme {
-  --color-greyish: #95a7c7;
-  --color-pale: rgb(209, 225, 238);
-  --color-blueish: rgb(209, 225, 238);
-
-  --leading-20: 5rem;
-
-  --animate-fadeOut1: fadeOut1 1s ease-out;
-  --animate-fadeOut2: fadeOut2 1s ease-out;
-}
-
-@keyframes fadeOut1 {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes fadeOut2 {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
+/* ---------------------------------------------------------------
+   Design tokens — light theme only.
+   --------------------------------------------------------------- */
 :root {
-  font-size: 13px;
-}
+  --color-me: #f43f3f;
+  --color-accent: #4c82f7;
+  --color-accent-strong: #2f5fd0;
 
-@media (min-width: 1024px) {
-  :root {
-    font-size: 17px;
-  }
+  --color-bg: #ffffff;
+  --color-text: #111111;
+  --color-text-inverse: #ffffff;
+  --color-heading: #0a0a0a;
+  --color-muted: rgb(82 82 82);
+
+  --color-surface: #ffffff;
+  --color-surface-hover: #f5f5f5;
+  --color-border: rgb(0 0 0 / 0.12);
+  --color-border-strong: rgb(0 0 0 / 0.5);
+  --color-rule: rgb(0 0 0 / 0.15);
+  --color-dot: rgb(0 0 0 / 0.14);
+
+  --color-bubble-bg: #e9eef8;
+
+  --color-chip-bg: rgb(250 250 250 / 0.9);
+  --color-chip-border: rgb(229 229 229);
+  --color-chip-text: rgb(38 38 38);
+
+  /* Sharp start, long glide out — the easing every reveal on the site shares. */
+  --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+
+  --font-mono:
+    ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Menlo, Consolas,
+    monospace;
+
+  font-size: 16px;
 }
 
 html {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Satoshi", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: smooth;
+  color-scheme: light;
 }
 
-hr {
-  @apply border-0 border-t border-black/50 my-6 mr-[20%] ml-[60px] dark:border-gray-300/30;
+/* Lenis drives smooth scrolling; native smooth would fight it. */
+html.lenis,
+html.lenis body {
+  height: auto;
 }
 
-.glass {
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  transition-property: color, background-color, text-decoration-color, fill,
-    stroke;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 3500ms;
-  @apply bg-gradient-to-tr from-[#e5e5e5] to-neutral-100 dark:bg-black/20 dark:from-black/30 dark:to-black/20 border-[1px] dark:border-black/30;
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
 }
 
-.text-line-purple {
-  text-shadow: 1px 3px 3px #6f4d9bad;
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
 }
 
-.morphism-outer {
-  box-shadow: 5px 8px 20px rgba(0, 0, 0, 0.25),
-    -10px -10px 18px rgba(255, 255, 255, 0.8);
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
-[data-theme="dark"] .morphism-outer {
-  box-shadow: none;
+/* Registered so the hero halo's conic angle interpolates — an unregistered
+   custom property snaps instead of animating. */
+@property --halo-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
 }
 
-.morphism-inner {
-  box-shadow: inset -31px -31px 23px rgba(255, 255, 255, 0.64),
-    inset 26px 26px 28px rgba(13, 39, 80, 0.16);
+/* 100vw full-bleed elements (hero halo) include the scrollbar width; clip
+   the sliver instead of growing a horizontal scrollbar. On html, not body —
+   the viewport scrolls via html, so clipping body alone still lets the page
+   pan sideways. */
+html,
+body {
+  overflow-x: clip;
 }
 
-[data-theme="dark"] .morphism-inner {
-  box-shadow: inset 48px 36px 36px #090909, inset -16px -16px 32px #1b1b1b;
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
 }
 
-.content-box:hover .title-text {
-  text-shadow: 1px 3px 3px #6f4d9bad;
-  transform: scale(1.04);
-  -webkit-transition: all 0.2s linear;
-  -o-transition: all 0.2s linear;
-  transition: all 0.2s linear;
-  @apply text-purple-700 dark:text-purple-300;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
-.notion--table {
-  border: 1px solid currentColor;
-  border-collapse: collapse;
-}
-.notion--table th {
-  border: 1px solid currentColor;
-  background-color: rgb(242, 242, 242);
-  padding: 6px 12px;
-}
-.notion--table td {
-  border: 1px solid currentColor;
-  padding: 6px 12px;
+/* ---------------------------------------------------------------
+   Accessibility primitives
+   --------------------------------------------------------------- */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-me);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
-.notion--row {
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: -3rem;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 0.375rem;
+  transition: top 150ms ease;
+}
+
+.skip-link:focus {
+  top: 0.5rem;
+}
+
+/* ---------------------------------------------------------------
+   Scroll reveal — class flipped by an IntersectionObserver.
+   --------------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(2rem);
+  /* Opacity lands before the travel does, so the text is legible while it is
+     still settling rather than fading in at the end. */
+  transition:
+    opacity 600ms ease var(--reveal-delay, 0ms),
+    transform 800ms var(--ease-out-quart) var(--reveal-delay, 0ms);
+}
+
+.reveal.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* Applied for a frame when content is restored already-on-screen, so it lands
+   in its final state instead of replaying the entrance. */
+.is-instant,
+.is-instant .word {
+  transition: none !important;
+}
+
+/* ---------------------------------------------------------------
+   Split-lines reveal — words rise from a hard cut edge.
+
+   Each measured line is its own clipping box; the words inside start fully
+   below it, so nothing fades — the text is simply not there yet, then it is.
+   --------------------------------------------------------------- */
+[data-split-lines] {
+  --stagger: 80ms;
+  --delay: 100ms;
+}
+
+/* Hidden only until the splitter has run — and only when scripting is on, so
+   a JS-off visitor still reads every heading. */
+[data-js] [data-split-lines]:not(.is-split) {
+  visibility: hidden;
+}
+
+[data-split-lines] .line {
+  display: block;
+  overflow: hidden;
+}
+
+[data-split-lines] .word {
+  display: inline-block;
+  /* 115%, not 100% — descenders sit below the baseline box and would
+     otherwise peek above the cut. */
+  transform: translateY(115%);
+  transition: transform 800ms var(--ease-out-quart);
+  transition-delay: calc(var(--index, 0) * var(--stagger) + var(--delay));
+  will-change: transform;
+}
+
+[data-split-lines].is-inview .word {
+  transform: none;
+}
+
+/* Siblings cascade in rather than all arriving on the same frame. */
+.stack-list > .reveal:nth-child(2) {
+  --reveal-delay: 90ms;
+}
+
+.stack-list > .reveal:nth-child(3) {
+  --reveal-delay: 180ms;
+}
+
+.stack-list > .reveal:nth-child(n + 4) {
+  --reveal-delay: 270ms;
+}
+
+/* ---------------------------------------------------------------
+   Text-swap hover — the label rides up as its clone rides in.
+   --------------------------------------------------------------- */
+.swap {
+  display: inline-grid;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.swap__line {
+  grid-area: 1 / 1;
+  /* Wrapping would make the clone a different height, so the ride-in
+     distance (105% of its own box) would no longer line up. */
+  white-space: nowrap;
+  transition: transform 480ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.swap__line--clone {
+  transform: translateY(105%);
+}
+
+:where(a, button):hover .swap__line,
+:where(a, button):focus-visible .swap__line {
+  transform: translateY(-105%);
+}
+
+:where(a, button):hover .swap__line--clone,
+:where(a, button):focus-visible .swap__line--clone {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swap__line {
+    transition-duration: 1ms;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Scroll-morph shape navigation
+   --------------------------------------------------------------- */
+.shape-anchor {
+  display: block;
+  position: absolute;
+}
+
+/* Anchors reserve the large footprint; the mark itself is portalled in. */
+.shape-anchor--rect {
+  width: min(20rem, 62vw);
+  height: 11rem;
+  top: -3rem;
+  z-index: -1;
+  /* margin: 1.5rem 0 2.5rem -8%; */
+}
+
+@media (max-width: 36rem) {
+  .shape-anchor--rect {
+    top: 0.25rem;
+    width: 13rem;
+    opacity: 0.9;
+    transform: rotate(5deg);
+  }
+}
+
+.shape-anchor--trapezoid {
+  width: min(11rem, 34vw);
+  height: 12rem;
+  top: -2.5rem;
+  left: 5.5rem;
+  z-index: -1;
+}
+
+/* Fills the anchor's width; height follows the shape's own ratio (inline
+   aspect-ratio), so the anchor box never distorts the silhouette. */
+.shape-anchor__mark {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+/* Nothing morphs any more — the page marks and the header marks are separate
+   elements that only ever cross-fade, so no layer promotion is needed. */
+
+/* Geometry comes from the SVG path in shapes.ts — never mutate it in CSS. */
+.mark {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------
+   Venn overlay menu
+
+   Layering, outermost in: a fixed hit-through shell, an opaque white plate
+   that fades the whole thing in, the circle field inside it (so `multiply`
+   has that white to blend against), then the panel of links above both.
+   --------------------------------------------------------------- */
+.venn-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  /* The shell spans the viewport only so the panel can; the page below has to
+     stay clickable, so every interactive part opts back in explicitly. */
+  pointer-events: none;
+}
+
+.venn-menu__bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--color-bg);
+  opacity: 0;
+  /* Isolated so the circles multiply against this plate and not the page. */
+  isolation: isolate;
+  /* The circles are far larger than the viewport, and a blend group is
+     rasterised over the union of what it contains. `contain: paint` tells the
+     browser nothing inside can paint beyond this box, which bounds that buffer
+     to the screen instead of to three overlapping 124vmax squares. */
+  contain: paint;
+}
+
+.venn-menu.is-open .venn-menu__bg {
+  pointer-events: auto;
+}
+
+/* Flight geometry is written by VennMenu as plain transforms — on this element
+   the field's swing, on each dot its position along its spoke. It used to ride
+   on two custom properties, which is tidier to read but means every frame of
+   the flight invalidates style for the whole subtree; transforms don't. */
+.venn-menu__field {
+  position: absolute;
+  inset: 0;
+  transform: rotate(0deg);
+}
+
+/* Just the point the circles are arranged around — off-centre, so the settled
+   overlap never reads as a symmetrical logo. The slow turn this used to carry
+   as a CSS animation is now part of what `render` writes below. */
+.venn-menu__ring {
+  position: absolute;
+  top: 40%;
+  left: 60%;
+}
+
+/* The blended element, and the only one that moves.
+
+   Every part of the field — the flight, the ring's slow turn, each circle's
+   own drift — arrives here as one transform per circle, and deliberately so:
+   a CSS transform animation runs on the compositor, which gives whatever
+   carries it a layer of its own, sized to what that element paints. On the
+   124vmax circle that meant a 1047px-square buffer per circle on a 390x844
+   phone — three of them, ten viewports of blended pixels — and promotion also
+   lifted them out of the plate's `contain: paint`, so nothing clipped them
+   back down. Far too much to keep resident on a phone, which is why iOS kept
+   discarding them and every few opens paid to draw them again.
+
+   Written from script instead, nothing here is promoted, the blend rasterises
+   inside the plate's viewport-sized buffer, and the oversized layers are gone
+   entirely — measured three 1047x1047 layers before, none after. */
+.venn-menu__dot {
+  position: absolute;
+  /* Start where a closed menu leaves them; `render` takes over on mount. */
+  transform: translate3d(0, 0, 0);
+  mix-blend-mode: multiply;
+}
+
+/* Sized in vmax so one circle reaches across any viewport, and centred on the
+   dot's point rather than on itself. */
+.venn-menu__orbit {
+  position: absolute;
+  top: -62vmax;
+  left: -62vmax;
+  width: 124vmax;
+  height: 124vmax;
+}
+
+.venn-menu__circle {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.venn-menu__toggle {
+  position: absolute;
+  /* Above the panel, which covers the viewport once open and would otherwise
+     swallow every click aimed at Close. */
+  z-index: 2;
+  top: 1.1rem;
+  right: 1.25rem;
+  padding: 0.55rem 0.95rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-bg);
+  background: var(--color-heading);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  pointer-events: auto;
+  transition:
+    background 300ms var(--ease-out-quart),
+    color 300ms var(--ease-out-quart);
+}
+
+/* Once the plate is up the pill would fight the colour field, so it drops to
+   bare white text — the same move the label makes from "Menu" to "Close". */
+.venn-menu.is-open .venn-menu__toggle {
+  color: #fff;
+  background: transparent;
+}
+
+.venn-menu__panel {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+  padding: 5rem clamp(1.25rem, 6vw, 5rem) 2.5rem;
+  color: #fff;
 }
 
-.notion--row > div {
-  flex: 1;
+.venn-menu.is-open .venn-menu__panel {
+  pointer-events: auto;
 }
 
-.notion--container h1 {
-  font-size: 32px;
+.venn-menu__primary,
+.venn-menu__socials {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.notion--container img {
+/* Each row clips its own link, so the link wipes up out of nothing rather
+   than sliding in from somewhere the eye can follow. */
+.venn-menu__primary > li {
+  overflow: hidden;
+}
+
+.venn-menu__primary a {
+  position: relative;
+  display: inline-block;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-decoration: none;
+  /* Pre-set to the hidden end of the wipe: the panel is inert until the flight
+     runs, and without this the links would flash in place on first paint. */
+  transform: translateY(100%);
+}
+
+.venn-menu__linkText {
+  display: inline-block;
+  transition: transform 300ms var(--ease-out-quart);
+}
+
+.venn-menu__dotIcon {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 0.42em;
+  height: 0.42em;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-0.2em, -50%);
+  transition:
+    opacity 250ms var(--ease-out-quart),
+    transform 250ms var(--ease-out-quart);
+}
+
+.venn-menu__primary a:hover .venn-menu__dotIcon,
+.venn-menu__primary a:focus-visible .venn-menu__dotIcon {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+.venn-menu__primary a:hover .venn-menu__linkText,
+.venn-menu__primary a:focus-visible .venn-menu__linkText {
+  transform: translateX(0.7em);
+}
+
+.venn-menu__tail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  opacity: 0;
+}
+
+.venn-menu__tail a {
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.venn-menu__tail a:hover,
+.venn-menu__tail a:focus-visible {
+  border-bottom-color: currentColor;
+}
+
+.venn-menu__socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+}
+
+/* Wide enough for the tail to read as one line: résumé left, socials right. */
+@media (min-width: 640px) {
+  .venn-menu__socials {
+    margin-left: auto;
+  }
+}
+
+/* Lenis is stopped alongside this; the class is the fallback for the
+   reduced-motion path, where there is no Lenis instance to stop. */
+html.is-scroll-locked,
+html.is-scroll-locked body {
+  overflow: hidden;
+}
+
+/* Docked hero portrait — mirrors the shape nav, but top left. Always in the
+   DOM so it only crosses opacity; mounting on scroll would decode the image
+   in the middle of the fade. */
+.portrait-dock {
+  position: fixed;
+  top: 0.25rem;
+  left: 1rem;
+  z-index: 60;
+  display: block;
+  padding: 0.15rem;
+  border-radius: 0.375rem;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 420ms var(--ease-out-quart),
+    visibility 0s linear 420ms;
+}
+
+.portrait-dock.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 420ms var(--ease-out-quart),
+    visibility 0s;
+}
+
+.portrait-dock__img {
+  display: block;
+  width: 2rem;
+  height: auto;
+  transition: scale 150ms ease;
+}
+
+.portrait-dock:hover .portrait-dock__img,
+.portrait-dock:focus-visible .portrait-dock__img {
+  scale: 1.08;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portrait-dock__img {
+    transition-duration: 1ms;
+  }
+}
+
+/* ---------------------------------------------------------------
+   About chat bubble
+   --------------------------------------------------------------- */
+.bubble {
+  position: relative;
+  max-width: 34rem;
+  margin-top: 4rem;
+}
+
+/* Desktop spacing is the hero's business — it owns the two-column layout the
+   bubble sits in. (This used to pull the bubble up 18rem, straight under the
+   portrait, which paints above it: the reply ended up behind the sender.) */
+
+.bubble__tail {
+  display: block;
+  width: 1.5rem;
+  height: 0.875rem;
+  margin-bottom: -0.05rem;
+  /* Offset is measured against the portrait by AboutBubble; 2rem is the
+     pre-hydration / no-JS fallback. */
+  margin-left: var(--tail-x, 2rem);
+  fill: var(--color-bubble-bg);
+}
+
+.bubble__surface {
+  position: relative;
+  padding: 1.5rem 1.5rem 1rem;
+  background: var(--color-bubble-bg);
+  border-radius: 1.5rem;
+}
+
+.bubble__content {
+  line-height: 1.7;
+}
+
+.bubble__content p + p {
+  margin-top: 0.75rem;
+}
+
+.bubble__meta {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.bubble__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.bubble__status--read {
+  color: var(--color-accent);
+}
+
+.bubble__ticks {
+  width: 1.1rem;
+  height: 0.7rem;
+}
+
+.bubble__reactions {
+  position: absolute;
+  right: 0.9rem;
+  bottom: -0.9rem;
+  display: inline-flex;
+  padding: 0.2rem 0.45rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 9999px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.08);
+}
+
+.bubble__reaction-chip {
+  position: relative;
+  display: inline-flex;
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+
+.bubble__reaction-chip + .bubble__reaction-chip {
+  margin-left: 0.2rem;
+}
+
+.bubble-burst {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.bubble-burst__dot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 9999px;
+  background: var(--color-me);
+}
+
+.bubble__picker {
+  display: inline-flex;
+  gap: 0.35rem;
+  margin-top: 1.4rem;
+  padding: 0.35rem 0.55rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 9999px;
+}
+
+.bubble__picker-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  font-size: 1.05rem;
+  background: none;
+  border: 0;
+  border-radius: 9999px;
+  cursor: pointer;
+}
+
+.bubble__picker-btn[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--color-accent) 14%, transparent);
+}
+
+/* ---------------------------------------------------------------
+   Skills island — playful scattered clusters with doodles
+   --------------------------------------------------------------- */
+.skills-scene {
+  position: relative;
+  max-width: 72rem;
+}
+
+/* A plain grid: equal columns, rows that line up. The masonry columns packed
+   tighter, but they also ordered the cards down each column instead of across,
+   and a card growing (the "+N more" toggle) reflowed the ones beneath it. */
+.skills-scene__list {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.skillc {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  margin: 0;
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--accent) 10%, var(--color-bg)),
+    color-mix(in srgb, var(--color-bg) 96%, transparent) 72%
+  );
+  /* border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--color-rule)); */
+  border-radius: clamp(1.15rem, 2.5vw, 1.75rem);
+  box-shadow: 0 1rem 3rem rgb(25 35 55 / 0.1);
+}
+
+@media (min-width: 64rem) {
+  .skills-scene__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.skillc__head {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 1.1rem;
+}
+
+.skillc__icon {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+  border-radius: 1rem;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--color-bg));
+}
+
+.skillc__icon svg {
+  width: 1.4rem;
+  height: 1.4rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.skillc__title {
+  margin: 0;
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--accent);
+}
+
+.skillc__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.25rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.skillc__chip {
+  position: relative;
+  padding-left: 0.8rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--color-heading) 82%, var(--accent));
+}
+
+.skillc__chip::before {
+  content: "";
+  position: absolute;
+  top: 0.62em;
+  left: 0;
+  width: 0.3rem;
+  height: 0.3rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.skillc__more {
+  margin-top: 1.25rem;
+  padding: 0.35rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .skillc {
+    padding: 0.9rem;
+    border-radius: 1rem;
+  }
+
+  .skillc__head {
+    gap: 0.3rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .skillc__icon {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.8rem;
+  }
+
+  .skillc__icon svg {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .skillc__title {
+    font-size: 0.98rem;
+    line-height: 1.15;
+  }
+
+  .skillc__chips {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .skillc__chip {
+    padding-left: 0.65rem;
+    font-size: 0.84rem;
+    line-height: 1.4;
+  }
+
+  .skillc__more {
+    margin-top: 0.9rem;
+    font-size: 0.68rem;
+  }
+}
+
+/* --- doodles ------------------------------------------------- */
+.skills-doodles {
+  position: absolute;
+  inset: -2rem -1rem;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.doodle {
+  position: absolute;
+}
+
+.doodle--blob {
+  border-radius: 42% 58% 63% 37% / 45% 40% 60% 55%;
+}
+
+.doodle--blob-a {
+  top: -1rem;
+  right: -2rem;
+  width: 11rem;
+  height: 12rem;
+  rotate: 18deg;
+  background: color-mix(in srgb, #3fbf4c 14%, transparent);
+}
+
+.doodle--blob-b {
+  top: 38%;
+  left: -3rem;
+  width: 9rem;
+  height: 6.5rem;
+  rotate: -12deg;
+  border-radius: 60% 40% 55% 45% / 55% 60% 40% 45%;
+  background: color-mix(in srgb, #f0921f 16%, transparent);
+}
+
+.doodle--blob-c {
+  bottom: 8%;
+  left: -2rem;
+  width: 12rem;
+  height: 9rem;
+  rotate: 24deg;
+  background: color-mix(in srgb, #7d4f9e 13%, transparent);
+}
+
+.doodle--blob-d {
+  bottom: 6%;
+  right: 2%;
+  width: 10rem;
+  height: 8rem;
+  rotate: -20deg;
+  border-radius: 55% 45% 38% 62% / 48% 62% 38% 52%;
+  background: color-mix(in srgb, #e8548f 13%, transparent);
+}
+
+.doodle--squiggle-a {
+  top: 22%;
+  left: 34%;
+  width: 5.5rem;
+  color: color-mix(in srgb, var(--color-accent) 55%, transparent);
+  rotate: -8deg;
+}
+
+.doodle--squiggle-b {
+  top: 62%;
+  left: 30%;
+  width: 5.5rem;
+  color: color-mix(in srgb, #7d4f9e 55%, transparent);
+  rotate: 6deg;
+}
+
+.doodle--sparkle-a {
+  top: 6%;
+  left: 58%;
+  width: 2.1rem;
+  color: #2f9e44;
+  rotate: 10deg;
+}
+
+.doodle--sparkle-b {
+  bottom: 4%;
+  left: 46%;
+  width: 2.1rem;
+  color: #14929e;
+  rotate: -140deg;
+}
+
+.doodle--dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  opacity: 0.75;
+}
+
+.doodle--dot-a {
+  top: 34%;
+  left: 46%;
+  background: #f4c430;
+}
+
+.doodle--dot-b {
+  top: 52%;
+  right: 22%;
+  background: #7d4f9e;
+}
+
+.doodle--dot-c {
+  top: 12%;
+  right: 26%;
+  width: 0.5rem;
+  height: 0.5rem;
+  background: #e8548f;
+}
+
+/* On small screens the clusters stack tightly — the scatter would sit on
+   top of the text, so only the corner blobs stay. */
+@media (max-width: 767px) {
+  .doodle--squiggle-a,
+  .doodle--squiggle-b,
+  .doodle--sparkle-a,
+  .doodle--sparkle-b,
+  .doodle--dot {
+    display: none;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Rendered markdown inside entry dialogs
+   --------------------------------------------------------------- */
+.prose h2 {
+  margin-block: 1.5rem 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-heading);
+}
+
+.prose h3 {
+  margin-block: 1.25rem 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-heading);
+}
+
+.prose p {
+  margin-block: 0.5rem;
+}
+
+.prose ul {
+  padding-left: 1.25rem;
+  margin-bottom: 2rem;
+  list-style: circle;
+}
+
+.prose li {
+  margin-block: 0.5rem;
+}
+
+.prose code {
+  padding: 0.1em 0.35em;
+  font-size: 0.9em;
+  background: var(--color-chip-bg);
+  border: 1px solid var(--color-chip-border);
+  border-radius: 0.25rem;
+}
+
+.prose img {
   width: 100%;
   height: auto;
 }
 
-.notion--container figure {
-  margin-left: 0;
-  margin-right: 0;
+/* ---------------------------------------------------------------
+   Project carousel — clipPath focus effect (after Skiper UI Skiper54)
+   --------------------------------------------------------------- */
+.pcar {
+  position: relative;
+  --pcar-basis: 88%;
 }
 
-.notion--container figcaption {
-  opacity: 0.6;
+/* Landscape cards need more of the viewport each than the old portrait ones
+   did, or three 16/9 slides across leave every one of them letterboxed small. */
+@media (min-width: 640px) {
+  .pcar {
+    --pcar-basis: 62%;
+  }
 }
 
 @media (min-width: 1024px) {
-  .glass {
-    backdrop-filter: blur(8.7px);
-    -webkit-backdrop-filter: blur(8.7px);
+  .pcar {
+    --pcar-basis: 48%;
   }
-  hr {
-    margin-right: 60px;
+}
+
+.pcar__viewport {
+  overflow: hidden;
+  transition: opacity 260ms var(--ease-out-quart);
+  /* Feathered edges, so slides dissolve at the sides instead of being cut off
+     by the overflow. The mask runs on the viewport rather than on an overlay
+     element, so it fades whatever passes under it — artwork and captions
+     alike — and needs no colour of its own to match the page background. */
+  --pcar-fade: clamp(1.25rem, 5vw, 4.5rem);
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 var(--pcar-fade),
+    #000 calc(100% - var(--pcar-fade)),
+    transparent
+  );
+}
+
+/* Embla centres the active slide by translating the track, and can only do so
+   once it has measured — the static markup is flush left until then, so it
+   would visibly jump sideways on hydration. Hold it back for those few frames
+   instead. Offsetting the markup to match is not an option: any padding or
+   margin is part of what Embla measures, so it just moves the jump.
+   JS-gated, so the carousel stays visible when scripting is off. */
+[data-js] .pcar:not(.is-ready) .pcar__viewport {
+  opacity: 0;
+}
+
+.pcar__track {
+  display: flex;
+  align-items: center;
+  /* No `gap`: in a looping carousel Embla teleports the slide that wraps
+     around by writing its own transform, and that transform is computed from
+     slide widths alone — a flex gap is invisible to it, so the wrapped slide
+     lands flush against its neighbour while every other pair keeps its gap.
+     The spacing lives inside each slide instead, where it travels with it. */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  /* Embla translates this element; touch-action keeps vertical page scroll
+     working while horizontal drags go to the carousel. */
+  touch-action: pan-y pinch-zoom;
+}
+
+.pcar__slide {
+  flex: 0 0 var(--pcar-basis);
+  min-width: 0;
+  /* Half the intended gap on each side, so neighbouring slides add up to one
+     full gap — and the wrapped slide carries its share with it. */
+  padding-inline: 0.5rem;
+}
+
+.pcar__card {
+  position: relative;
+  display: block;
+  width: 100%;
+  color: inherit;
+}
+
+/* 16/9, so the frame matches the footage rather than cropping it to a portrait
+   window. The focus effect is a transition rather than a scripted animation:
+   clip-path is compositor-driven, so the slide costs nothing per frame and no
+   JS runs while it plays. */
+.pcar__clip {
+  display: block;
+  aspect-ratio: 16 / 9;
+  border-radius: 1.75rem;
+  overflow: hidden;
+  clip-path: inset(12% 0 12% 0 round 1.75rem);
+  transition: clip-path 600ms var(--ease-out-quart);
+}
+
+.pcar__card.is-focused .pcar__clip {
+  clip-path: inset(0 0 0 0 round 1.75rem);
+}
+
+/* Covers the artwork of an off-centre card: clicking anywhere on it brings
+   that slide to the middle. */
+.pcar__pick {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 1.75rem;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pcar__clip {
+    clip-path: inset(0 0 0 0 round 1.75rem);
+    transition: none;
+  }
+}
+
+.pcar__art {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  width: 100%;
+  /* Mixed against the page, not transparent: a translucent card would let
+     the section's decorative shapes read straight through the artwork. */
+  background: color-mix(in srgb, var(--accent) 12%, var(--color-bg));
+  /* border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent); */
+  border-radius: 1.75rem;
+  /* The media keeps its own aspect while the box morphs, so it is wider than
+     the box for part of the flight — clip rather than let it spill. */
+  overflow: hidden;
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  user-select: none;
+  transition: background-color 420ms ease;
+}
+
+/* Sized on the child so the flight scales the block, not the glyph. */
+.pcar__art-mono {
+  font-size: clamp(2.5rem, 7vw, 4rem);
+}
+
+.pcar__art-video,
+.pcar__art-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.pcar__card:hover .pcar__art {
+  background: color-mix(in srgb, var(--accent) 20%, var(--color-bg));
+}
+
+.pcar__meta {
+  display: block;
+  padding: 1rem 0.25rem 0;
+  text-align: center;
+  opacity: 0.35;
+  transition: opacity 420ms ease;
+}
+
+/* Where the expanded panel's links used to live. The project itself is one
+   click from the carousel, so nothing has to open first. */
+.pcar__links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.6rem;
+  /* Held open whether or not this project has links, so every card in the
+     track is the same height — 20px is the icons' own size, so a row with
+     links and a row without occupy exactly the same band. */
+  min-height: 20px;
+  /* Unreachable until the card is centred — see the tabIndex in the island. */
+  pointer-events: none;
+}
+
+.pcar__card.is-focused .pcar__links {
+  pointer-events: auto;
+}
+
+.pcar__link {
+  display: inline-flex;
+  color: var(--color-heading);
+  transition: color 320ms ease;
+}
+
+.pcar__link:hover {
+  color: var(--accent);
+}
+
+.pcar__card.is-focused .pcar__meta {
+  opacity: 1;
+}
+
+.pcar__title {
+  display: block;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-heading);
+}
+
+.pcar__sub {
+  display: block;
+  margin-top: 0.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.pcar__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.pcar__arrow {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--color-heading);
+  background: none;
+  border: 1px solid var(--color-rule);
+  border-radius: 50%;
+  cursor: pointer;
+  transition:
+    border-color 320ms ease,
+    color 320ms ease;
+}
+
+.pcar__arrow:hover {
+  border-color: var(--color-border-strong);
+}
+
+.pcar__arrow svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pcar__dots {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pcar__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0;
+  background: var(--color-dot);
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  transition:
+    background-color 320ms ease,
+    scale 320ms ease;
+}
+
+.pcar__dot.is-active {
+  background: var(--color-heading);
+  scale: 1.25;
+}
+
+/* ---------------------------------------------------------------
+   Experience accordion
+   --------------------------------------------------------------- */
+.xp-list {
+  position: relative;
+  border-top: 1px solid var(--color-rule);
+}
+
+.xp {
+  position: relative;
+  border-bottom: 1px solid var(--color-rule);
+}
+
+/* The accent washes in from the left edge on hover/open — colour arrives as
+   a gesture, not a state flip. */
+.xp::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.xp:hover::before,
+.xp.is-open::before {
+  transform: scaleY(1);
+  transform-origin: top;
+}
+
+.xp__heading {
+  margin: 0;
+  font: inherit;
+}
+
+.xp__toggle {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  width: 100%;
+  /* Left inset clears the accent bar so it never crowds the type. */
+  padding: clamp(1.25rem, 3vw, 2rem) 0 clamp(1.25rem, 3vw, 2rem)
+    clamp(1rem, 2.5vw, 2rem);
+  text-align: start;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.xp__eyebrow {
+  grid-column: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  transition: color 320ms ease;
+}
+
+.xp:hover .xp__eyebrow,
+.xp.is-open .xp__eyebrow {
+  color: var(--accent);
+}
+
+.xp__title {
+  grid-column: 1;
+  display: block;
+  /* Oversized display type is the reference's whole gesture. */
+  font-size: clamp(2.1rem, 6.5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--color-heading);
+  transition: color 320ms ease;
+}
+
+.xp:hover .xp__title,
+.xp.is-open .xp__title {
+  color: var(--accent);
+}
+
+.xp__icon {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--color-rule);
+  border-radius: 50%;
+  color: var(--color-heading);
+  transition:
+    transform 520ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 320ms ease,
+    color 320ms ease;
+}
+
+.xp__icon svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.xp:hover .xp__icon {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Plus becomes a cross — same path, 45°. */
+.xp.is-open .xp__icon {
+  transform: rotate(135deg);
+  color: var(--color-text-inverse);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.xp__panel {
+  overflow: hidden;
+}
+
+.xp__panel-inner {
+  max-width: 44rem;
+  padding-inline-start: clamp(1rem, 2.5vw, 2rem);
+  padding-bottom: clamp(1.5rem, 4vw, 2.75rem);
+}
+
+.xp__abstract {
+  font-size: clamp(1.1rem, 2.4vw, 1.45rem);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--color-heading);
+}
+
+.xp__points {
+  margin-top: 1.25rem;
+  padding-left: 1.1rem;
+  list-style: none;
+}
+
+.xp__points > li {
+  position: relative;
+  margin-bottom: 0.6rem;
+  line-height: 1.65;
+  color: var(--color-muted);
+}
+
+.xp__points > li::before {
+  content: "";
+  position: absolute;
+  left: -1.1rem;
+  top: 0.7em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.xp__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.15rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-heading);
+  text-decoration: none;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 999px;
+  transition:
+    color 320ms ease,
+    background-color 320ms ease,
+    border-color 320ms ease;
+}
+
+.xp__cta:hover,
+.xp__cta:focus-visible {
+  color: var(--color-text-inverse);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.xp__cta-arrow {
+  width: 0.85rem;
+  height: 0.85rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.xp__cta:hover .xp__cta-arrow,
+.xp__cta:focus-visible .xp__cta-arrow {
+  transform: translate(2px, -2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xp::before,
+  .xp__icon,
+  .xp__cta-arrow {
+    transition-duration: 1ms;
   }
 }

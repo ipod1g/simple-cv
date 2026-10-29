@@ -1,0 +1,62 @@
+---
+import Icon from "@/components/Icon.astro";
+
+interface Props {
+  title: string;
+  url?: string | null;
+  github?: string | null;
+}
+
+const { title, url, github } = Astro.props;
+---
+
+{
+  (url || github) && (
+    <div class="entry-links">
+      {github && (
+        <a
+          class="entry-links__link"
+          href={github}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`${title} on GitHub (opens in a new tab)`}
+        >
+          <Icon name="github" size={22} />
+        </a>
+      )}
+      {url && (
+        <a
+          class="entry-links__link"
+          href={url}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`Visit ${title} (opens in a new tab)`}
+        >
+          <Icon name="link" size={22} />
+        </a>
+      )}
+    </div>
+  )
+}
+
+<style>
+  .entry-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0;
+  }
+
+  .entry-links__link {
+    display: inline-flex;
+    padding: 0.25rem;
+    border-radius: 0.375rem;
+    color: inherit;
+    transition: color 200ms ease;
+  }
+
+  .entry-links__link:hover,
+  .entry-links__link:focus-visible {
+    color: var(--color-accent);
+  }
+</style>

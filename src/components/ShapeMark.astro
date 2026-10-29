@@ -1,0 +1,30 @@
+---
+import { SHAPES } from "@/config/shapes";
+
+interface Props {
+  id: string;
+  class?: string;
+}
+
+const { id, class: className = "" } = Astro.props;
+const shape = SHAPES.find((s) => s.id === id);
+
+if (!shape) {
+  throw new Error(
+    `ShapeMark: no shape with id "${id}" in shapes.ts (have: ${SHAPES.map((s) => s.id).join(", ")})`
+  );
+}
+---
+
+{/* Rendered server-side at full size. The header copy is a separate, smaller
+    SVG of the same path — nothing is re-parented or animated between them. */}
+<svg
+  class:list={["mark", className]}
+  viewBox={shape.viewBox}
+  preserveAspectRatio="xMidYMid meet"
+  style={`aspect-ratio: ${shape.ratio};`}
+  aria-hidden="true"
+  focusable="false"
+>
+  <path d={shape.d} fill={shape.color}></path>
+</svg>

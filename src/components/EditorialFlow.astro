@@ -1,0 +1,128 @@
+---
+import ShapeMark from "@/components/ShapeMark.astro";
+
+type ShapeId = "me" | "experience" | "projects";
+
+interface Props {
+  index: string;
+  incoming?: ShapeId;
+  outgoing?: ShapeId;
+  align?: "left" | "right";
+}
+
+const { index, incoming, outgoing, align = "right" } = Astro.props;
+---
+
+<div class:list={["editorial-flow", `editorial-flow--${align}`]} aria-hidden="true">
+  <span class="editorial-flow__index">{index}</span>
+  {
+    incoming && (
+      <span class="editorial-flow__shape editorial-flow__shape--incoming">
+        <ShapeMark id={incoming} class="editorial-flow__mark" />
+      </span>
+    )
+  }
+  {
+    outgoing && (
+      <span class="editorial-flow__shape editorial-flow__shape--outgoing">
+        <ShapeMark id={outgoing} class="editorial-flow__mark" />
+      </span>
+    )
+  }
+</div>
+
+<style>
+  .editorial-flow {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .editorial-flow__index {
+    position: absolute;
+    top: clamp(5rem, 13vw, 11rem);
+    font-family: var(--font-mono);
+    font-size: clamp(10rem, 28vw, 21rem);
+    font-weight: 700;
+    line-height: 0.72;
+    letter-spacing: -0.14em;
+    color: color-mix(in srgb, var(--color-heading) 4.5%, transparent);
+  }
+
+  .editorial-flow--left .editorial-flow__index {
+    left: -0.18em;
+  }
+
+  .editorial-flow--right .editorial-flow__index {
+    right: -0.04em;
+  }
+
+  .editorial-flow__shape {
+    position: absolute;
+    display: block;
+    width: clamp(11rem, 25vw, 19rem);
+    opacity: 0.1;
+  }
+
+  .editorial-flow__shape--incoming {
+    top: clamp(-8rem, -10vw, -4rem);
+  }
+
+  .editorial-flow__shape--outgoing {
+    bottom: clamp(-9rem, -11vw, -5rem);
+  }
+
+  .editorial-flow--left .editorial-flow__shape--incoming,
+  .editorial-flow--right .editorial-flow__shape--outgoing {
+    left: clamp(-8rem, -8vw, -3rem);
+  }
+
+  .editorial-flow--right .editorial-flow__shape--incoming,
+  .editorial-flow--left .editorial-flow__shape--outgoing {
+    right: clamp(-8rem, -8vw, -3rem);
+  }
+
+  :global(.editorial-flow__mark) {
+    display: block;
+    width: 100%;
+  }
+
+  @keyframes editorial-drift {
+    from {
+      transform: translateY(-1.5rem) rotate(-3deg);
+    }
+    to {
+      transform: translateY(1.5rem) rotate(3deg);
+    }
+  }
+
+  @supports (animation-timeline: view()) {
+    :global(.editorial-flow__mark) {
+      animation: editorial-drift linear both;
+      animation-timeline: view(block);
+      animation-range: entry 0% exit 100%;
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .editorial-flow__index {
+      top: 9rem;
+      font-size: clamp(9rem, 48vw, 12rem);
+    }
+
+    .editorial-flow__shape {
+      width: clamp(9rem, 42vw, 12rem);
+      opacity: 0.08;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.editorial-flow__mark) {
+      animation: none !important;
+      transform: none !important;
+    }
+  }
+</style>

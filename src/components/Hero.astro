@@ -1,0 +1,369 @@
+---
+import { Image } from "astro:assets";
+import portrait from "@/assets/me_aero_angle.webp";
+import nameStrip from "@/assets/bono_name_strip.svg";
+import { SITE } from "@/config/site";
+import SectionHeading from "@/components/SectionHeading.astro";
+import ShapeMark from "@/components/ShapeMark.astro";
+import AboutBubble from "@/components/react/AboutBubble";
+---
+
+<div class="hero">
+  <!-- <div class="halo"></div> -->
+  <div class="hero__text">
+    <p class="hero__role" data-split-lines>{SITE.role}</p>
+    <h1 id="hero-name" class="hero__name">
+      Bono<br /><svg
+        class="hero__dot"
+        viewBox="-2 -2 104 104"
+        aria-hidden="true"
+        focusable="false"
+      >
+        {
+          /* Taegeuk: two 50r halves split by an S of two 25r arcs, tilted
+            33.69° as on the Korean flag — red leading upper-left. */
+        }
+        <g transform="rotate(30 50 50)">
+          <path
+            d="M0 50 A50 50 0 0 1 100 50 A25 25 0 0 0 50 50 A25 25 0 0 1 0 50 Z"
+            fill="var(--color-me)"></path>
+          <path
+            d="M0 50 A50 50 0 0 0 100 50 A25 25 0 0 0 50 50 A25 25 0 0 1 0 50 Z"
+            fill="var(--color-accent)"></path>
+        </g>
+      </svg>Ku
+    </h1>
+  </div>
+  <div
+    class="hero__strip"
+    style={`background-image: url(${nameStrip.src});`}
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="hero__figure">
+    <div class="hero__mark-wrapper">
+      <span class="hero__mark shape-anchor" data-shape-anchor="me">
+        <ShapeMark id="me" class="shape-anchor__mark" />
+      </span>
+    </div>
+
+    {
+      /* VennMenu only measures this element's position; it never re-renders it. */
+    }
+    <span class="hero__portrait" data-portrait-anchor>
+      <Image
+        src={portrait}
+        alt={`Aerial portrait of ${SITE.fullName}`}
+        widths={[320, 640]}
+        sizes="(min-width: 768px) 24rem, 70vw"
+        loading="eager"
+        fetchpriority="high"
+        class="hero__portrait-img"
+      />
+    </span>
+  </div>
+  <AboutBubble client:visible paragraphs={[...SITE.about]} />
+</div>
+
+<style>
+  /* Full-bleed: a 100vw box centered on the section's midpoint — which is the
+   viewport midpoint, because .page is centered. Escapes .page's max-width
+   and padding without leaving the layout flow. */
+  .halo {
+    position: absolute;
+    inset-block: 0;
+    left: 50%;
+    width: 100vw;
+    translate: -50% 0;
+    border-radius: 0 0 36px 36px;
+    pointer-events: none;
+    overflow: clip;
+  }
+
+  /* Gemini/Apple-Intelligence-style edge glow: a rotating multi-hue conic
+     ring, blurred, masked so only a thin band inside the edges shows. */
+  .halo::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: conic-gradient(
+      from var(--halo-angle, 0deg),
+      #97eaff52,
+      /* #8b5bff, */ /* #ff5bbd, */ /* #ff9d5c, */ #45c4ff,
+      #4c82f7
+    );
+    filter: blur(64px) saturate(1);
+    opacity: 0.1;
+    /* Feathered edge mask: four gradients (union) fading inward, so the
+       glow dissolves into the page instead of stopping at a hard band. */
+    mask:
+      linear-gradient(to bottom, #000, transparent 32px),
+      linear-gradient(to top, #000, transparent 48px),
+      linear-gradient(to right, #000, transparent 12px),
+      linear-gradient(to left, #000, transparent 12px);
+    /* Breathe only by default: opacity-only animation stays on the
+       compositor, so the 64px blur is rendered once and cached. */
+    animation: halo-breathe 6s ease-in-out infinite alternate;
+  }
+
+  /* The hue spin animates the conic's angle, which re-rasters the
+     full-viewport gradient AND re-runs the blur every frame — fine on
+     desktop GPUs, but it starves the morph animation on mobile. Only
+     enable it where a fine pointer implies desktop-class hardware. */
+  @media (min-width: 1024px) and (pointer: fine) {
+    .halo::before {
+      animation:
+        halo-spin 8s linear infinite,
+        halo-breathe 6s ease-in-out infinite alternate;
+    }
+  }
+
+  /* Soft inward wash so the glow feels lit, not stickered. */
+  .halo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  @keyframes halo-spin {
+    to {
+      --halo-angle: 360deg;
+    }
+  }
+
+  @keyframes halo-breathe {
+    from {
+      opacity: 0.3;
+    }
+    to {
+      opacity: 0.55;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .halo::before {
+      animation: none;
+      opacity: 0.5;
+    }
+  }
+
+  .hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: start;
+    min-height: min(100svh, 52rem);
+  }
+
+  /* Deliberately short of the viewport, so the top of "Experiences" shows
+     under the fold and the page reads as continuing rather than ending here.
+     The subtraction is that heading's own distance from the section top —
+     4rem section margin + 3rem section padding — plus the 2rem the heading
+     still sits below its resting place while unrevealed, plus the sliver that
+     is actually meant to show. Subtracting a fixed length keeps that sliver
+     the same at every viewport height, where a percentage would drift. Only
+     holds while the content stays inside the budget: hence the
+     height-bounded portrait below. */
+  @media (min-width: 768px) {
+    .hero {
+      min-height: min(calc(100svh - 10.5rem), 60rem);
+      align-content: center;
+      /* Clearance for the fixed Menu pill, which would otherwise sit on the
+         portrait's head whenever the content exactly fills the budget. */
+      padding-top: 2rem;
+    }
+  }
+
+  /* Name beside portrait on the top row, bubble on its own row underneath —
+     a reply arriving after the portrait, with the tail pointing back up at it.
+     It sits *below* rather than over: the portrait paints at z-index 2, so any
+     overlap puts the reply behind the sender. */
+  @media (min-width: 768px) {
+    .hero {
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-rows: auto auto;
+      gap: 0.75rem 2rem;
+      align-items: center;
+    }
+
+    .hero__figure {
+      grid-column: 2;
+      grid-row: 1;
+    }
+  }
+
+  /* The island wrapper is the grid item, not .bubble. Positioned so it paints
+     above the mark: the mark is absolutely positioned and would otherwise sit
+     over the bubble's tail, which is the one part that has to stay readable
+     for the reply to point at anything. */
+  .hero > :global(astro-island) {
+    position: relative;
+    z-index: 3;
+    display: block;
+    grid-column: 1 / -1;
+  }
+
+  @media (min-width: 768px) {
+    .hero > :global(astro-island) {
+      grid-row: 2;
+      align-self: start;
+    }
+
+    /* Right-aligned so it lands under the portrait it is answering — that is
+       also what puts the tail within reach of the portrait's centre, which
+       AboutBubble measures and clamps to. */
+    .hero > :global(astro-island) :global(.bubble) {
+      margin-top: 0;
+      margin-inline-start: auto;
+      /* Wider than the mobile bubble: the same copy sets in fewer lines, and
+         those saved lines are what keep the hero inside its height budget. */
+      max-width: min(46rem, 100%);
+    }
+
+    /* Same reason — the reaction row's default breathing room is height the
+       hero cannot spare once the portrait and the bubble have had theirs. */
+    .hero > :global(astro-island) :global(.bubble__picker) {
+      margin-top: 0.75rem;
+    }
+  }
+
+  .hero__text {
+    inset-inline-start: 0.5rem;
+    position: relative;
+    z-index: 3;
+    padding-top: 1rem;
+  }
+
+  /* A zero-size anchor pinned to the figure's bottom edge — which is where the
+     toes are. The mark hangs off it, so it follows the portrait at any size
+     instead of being placed at a percentage down a box of its own. (The old
+     `top: 102%` measured against the figure's height, and silently resolved to
+     zero the moment that height stopped being a fixed ratio.) */
+  .hero__mark-wrapper {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 0;
+  }
+
+  .hero__role {
+    margin-top: 5rem;
+    font-size: 1.05rem;
+    line-height: 1.3;
+  }
+
+  /* The desktop hero is vertically centred inside a fixed budget, so the top
+     inset that spaces the role line off a phone's status bar is just height
+     the portrait and the bubble have to give back. */
+  @media (min-width: 768px) {
+    .hero__role {
+      margin-top: 1rem;
+    }
+  }
+
+  .hero__name {
+    font-size: clamp(4rem, 12vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--color-heading);
+    margin-top: 1rem;
+  }
+
+  /* Sized in em so it tracks the clamped name size at every breakpoint. */
+  .hero__dot {
+    display: inline-block;
+    width: 0.33em;
+    height: 0.33em;
+    margin: 0 0.125em 0 0.075em;
+    vertical-align: baseline;
+  }
+
+  /* Height comes from the portrait itself, not a nominal 3/4 box: the mark is
+     anchored to this element's bottom edge, and only a figure that ends where
+     the image ends keeps that mark under the toes at every size. */
+  .hero__figure {
+    position: relative;
+    /* The last term is the height budget expressed as a width: portrait plus
+       the mark hanging below it come to about 1.8× this box's width, so
+       capping the width this way is what keeps the whole figure — toes and
+       footing included — on screen on a short phone rather than past the
+       fold. The subtraction is the name block stacked above it. */
+    width: min(24rem, 78vw, calc((100svh - 17rem) / 1.8));
+    margin-left: auto;
+  }
+
+  /* Bounded by viewport *height* as well as width: the portrait, the name and
+     the bubble all have to fit inside the hero's height budget, or the section
+     below is pushed off screen entirely and the page loses its "there is more"
+     cue. */
+  @media (min-width: 768px) {
+    .hero__figure {
+      /* Same height budget as the phone rule, with the desktop stack
+         subtracted instead: the hero's own top padding, the row gap, the
+         bubble beneath it, and the strip of the next section that has to stay
+         visible. Whatever height is left over, the portrait takes — so it runs
+         as large as the layout can actually afford at each viewport. */
+      width: clamp(9rem, min(26vw, calc((100svh - 30rem) / 1.66)), 20rem);
+      margin-block: auto;
+    }
+  }
+
+  /* Vertical repeated-name artwork behind everything — tiles down the
+     full hero height. */
+  .hero__strip {
+    position: absolute;
+    inset-block: 2rem;
+    height: calc(100%-2rem);
+    right: 1rem;
+    width: clamp(5rem, 24vw, 12rem);
+    z-index: 0;
+    background-repeat: repeat-y;
+    background-position: top right;
+    background-size: 100% auto;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  /* Red ellipse under the feet — also the "Me" morph mark. Sized as a share of
+     the portrait rather than of the viewport, and centred on the feet (which
+     sit slightly right of centre, as the portrait itself is offset), so the
+     footing holds together as the portrait scales. The downward shift puts the
+     toes on the ellipse instead of above it. */
+  .hero__mark {
+    position: absolute;
+    bottom: 0;
+    /* Not 50%: the subject stands left of the photograph's centre, so the
+       ellipse has to follow the shoes rather than the frame. */
+    left: 45%;
+    width: 57%;
+    aspect-ratio: 2 / 1.15;
+    translate: -50% 24%;
+  }
+
+  .hero__portrait {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: 90%;
+    margin-inline: auto;
+    inset-inline-end: -5%;
+  }
+
+  /* The hero image is now purely static — the header avatar is its own
+     asset, so nothing swaps this element at hydration. */
+  .hero__portrait :global(.hero__portrait-img) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Phones stack the hero, so the portrait is the one element that can run
+     past the fold and leave the figure cropped at the shins. Cap it by what
+     is actually left of the viewport — the name block above it, plus a little
+     air — and let the width follow, so it stands complete on any handset
+     rather than only on tall ones. */
+</style>
