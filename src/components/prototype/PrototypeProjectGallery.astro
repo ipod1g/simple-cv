@@ -1,0 +1,53 @@
+---
+// THROWAWAY reference study: a browsable catalogue using real Portfolio Entries.
+import type { ProjectPortfolioEntry } from "@/lib/portfolioEntries";
+interface Props { items: ProjectPortfolioEntry[] }
+const { items } = Astro.props;
+---
+
+<div class="prototype-gallery">
+  <div class="prototype-gallery-toolbar">
+    <p class="prototype-micro">ALL PROJECTS / {String(items.length).padStart(2, "0")} ENTRIES</p>
+    <nav aria-label="Project display">
+      <button type="button" data-gallery-view="grid" aria-pressed="true" aria-controls="prototype-projects">Grid</button>
+      <button type="button" data-gallery-view="index" aria-pressed="false" aria-controls="prototype-projects">Index</button>
+    </nav>
+  </div>
+  <div class="prototype-projects" id="prototype-projects" data-view="grid">
+    {items.map((item, index) => <article class="prototype-project">
+      <div class="prototype-project__media">
+        <span class="prototype-project__tag">{item.video ? "IN MOTION" : "PROJECT"}</span>
+        {item.video ? <video controls preload="none" playsinline poster={item.thumbnail ?? undefined} aria-label={`${item.title} demo`}>
+          <source src={item.video} type="video/mp4" />
+        </video> : item.thumbnail ? <img src={item.thumbnail} alt={`${item.title} preview`} loading="lazy" width="600" height="450" /> : <span class="prototype-monogram" aria-hidden="true">{item.monogram}</span>}
+      </div>
+      <div class="prototype-project__copy">
+        <div class="prototype-project__topline"><span>/{String(index + 1).padStart(2, "0")}</span><time datetime={item.iso}>{item.duration}</time></div>
+        <h3>{item.title}</h3>
+        {item.subtitle && <p class="prototype-project__subtitle">{item.subtitle}</p>}
+        <div class="prototype-project__links">
+          {item.url && <a href={item.url} target="_blank" rel="noreferrer" aria-label={`Visit ${item.title}`}>Visit project ↗</a>}
+          {item.github && <a href={item.github} target="_blank" rel="noreferrer" aria-label={`${item.title} on GitHub`}>GitHub ↗</a>}
+        </div>
+        {(item.bodyHtml || item.points.length > 0) && <details>
+          <summary>Project notes<span class="sr-only"> for {item.title}</span></summary>
+          {item.bodyHtml ? <div set:html={item.bodyHtml} /> : <ul>{item.points.map(point => <li>{point}</li>)}</ul>}
+        </details>}
+      </div>
+    </article>)}
+  </div>
+</div>
+
+<script>
+  const gallery = document.querySelector(".prototype-gallery");
+  const projects = gallery?.querySelector<HTMLElement>(".prototype-projects");
+  gallery?.querySelectorAll<HTMLButtonElement>("[data-gallery-view]").forEach(button => {
+    button.addEventListener("click", () => {
+      if (!projects) return;
+      projects.dataset.view = button.dataset.galleryView;
+      gallery.querySelectorAll("[data-gallery-view]").forEach(control => {
+        control.setAttribute("aria-pressed", String(control === button));
+      });
+    });
+  });
+</script>

@@ -2,19 +2,18 @@
 import { getImage } from "astro:assets";
 import portrait from "@/assets/me_aero_angle.webp";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import Hero from "@/components/Hero.astro";
+import RayyanPrototype from "@/components/prototype/RayyanPrototype";
+import PrototypeProjectGallery from "@/components/prototype/PrototypeProjectGallery.astro";
+import "@/styles/rayyan-prototype.css";
 import ShapeMark from "@/components/ShapeMark.astro";
-import VennMenu from "@/components/react/VennMenu";
 import SectionHeading from "@/components/SectionHeading.astro";
 import EditorialFlow from "@/components/EditorialFlow.astro";
 import EntryCard from "@/components/EntryCard.astro";
 import ExperienceAccordion from "@/components/react/ExperienceAccordion";
-import ProjectCarousel from "@/components/react/ProjectCarousel";
 import Footer from "@/components/Footer.astro";
 import SkillsGrid from "@/components/react/SkillsGrid";
 import { getPortfolioEntries } from "@/lib/portfolioEntries";
 import { resolveThumbnail } from "@/lib/images";
-import { SITE } from "@/config/site";
 
 const {
   experience: experienceItems,
@@ -34,11 +33,10 @@ const projectCards = await Promise.all(
   })
 );
 
-// The header avatar is its own optimised asset rather than a copy of the hero
-// image, so the nav never depends on the hero's DOM.
-const dockPortrait = await getImage({
+// Prototype uses the existing portrait and keeps the original theme tokens.
+const prototypePortrait = await getImage({
   src: portrait,
-  width: 96,
+  width: 800,
   format: "webp",
 });
 ---
@@ -51,7 +49,7 @@ const dockPortrait = await getImage({
         class="page-section"
         aria-labelledby="hero-name"
       >
-        <Hero />
+        <RayyanPrototype client:load portraitSrc={prototypePortrait.src} projects={projectCards} />
       </section>
       <section
         id="work-section"
@@ -89,7 +87,7 @@ const dockPortrait = await getImage({
             <ShapeMark id="projects" class="shape-anchor__mark" />
           </span>
           <div class="project-overlap">
-            <ProjectCarousel client:visible items={projectCards} />
+            <PrototypeProjectGallery items={projectCards} />
           </div>
         </section>
 
@@ -131,15 +129,6 @@ const dockPortrait = await getImage({
 
   <Footer />
 
-  {
-    /* Outside main: the overlay covers the viewport, so it must not sit inside
-      an overflow or transformed ancestor that would clip or re-root it. */
-  }
-  <VennMenu
-    client:load
-    portraitSrc={dockPortrait.src}
-    portraitAlt={`Back to top — ${SITE.fullName}`}
-  />
 </BaseLayout>
 
 <style>
