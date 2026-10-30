@@ -13,69 +13,28 @@ points:
   - Optimized performance by using preloading methods and continuously refactored code for better efficiency
 ---
 
-## Summary
+A familiar login screen became my introduction to building with React—from the artwork and animations to the server behind the sign-in button.
 
-### Skills used
+> **A working login flow behind the replica.** Registration, password hashing, and JWT authorization connected to MySQL.
 
-- HTML
-- CSS
-- JavaScript
-- React
-- npm
-- Netlify (Frontend) & Heroku (Backend)
-- Node.js (express), axios, JWT
-- RDBMS (MySQL) + sequelize
-- Insomnia, LambdaTest (UI test framework)
+### Recreate the details
 
-### Notable functions
+I rebuilt the Riot client’s login interface, including interactive form states and responsive hero artwork. Preloading and Lighthouse checks helped me work on loading performance.
 
-- Replica of Riot Games Client
-- Registration on MySQL database
-- Server login authorization with hashing and JWT
-- Interactive and Responsive UI
-- Optimizations for loading time
+### The tricky part was state
 
-## Process
+Inputs, animations, and parent–child communication exposed gaps in my understanding of React’s lifecycle. Refactoring with Sim Ho and Steve over Live Share helped me work through them.
 
-### Initial
+A few details demanded extra attention:
 
-- Started with importing necessary assets and building the login form
-- Made various states to replicate the behavior of the interaction
-- Added personal touch on maintaining the aspect ratio of the hero art upon responsive rescaling
-- Refactor process with Sim Ho and Steve using Live-share for feedback
-- Selected MySQL as the choice of DBMS instead of MongoDB following these info from IBM
+- **Keyboard focus:** a border that seemed random turned out to be a focus outline.
+- **Modals:** React Portals let them render above the page while preserving React’s event handling.
+- **Deployment:** font loading, Netlify configuration, and an iOS input bug needed work beyond the local build.
 
-### Problems
+### Take it all the way through
 
-- Faced difficulties on constructing input handler + animation — tried to use components to simplify the code blocks but the life cycle was confusing
-- Using `onChange` the inputs are recognized 1 input later than wanted, hence brought `useEffect` to play
-- Overuse of `useState` and `useEffect` due to difficulties with child-parent communication
-- Had bug after pressing button and using keyboard input causing a random border appearing on it → `:focus-visible` had inherent outline
-- Faced troubles with deployment, but fixed with creating `netlify.toml` file locally
-- Issues with non secured http font link — solved by using import/link to `@font-face`
-- `setSelectionRange` was not working by function of `onClick` → `useEffect` resolved it without using it for cursor focus
-- Passing object props and recognizing change of state was an issue due to the way React reads it
-- React-select library — blur on selection
-- To improve performance, minify was considered but realized that JSX format doesn't auto minify on React unlike JS
-- Had this funny error with CSS on modal, turns out it was due to a misinputted `;` in between the classes that stopped it from reading the styles underneath
+The project connected a React frontend to a lightweight Express backend and MySQL database. It gave me practice with **components, authentication, and deployment** in the same build.
 
-### Lessons
+### Built with
 
-- Introduction to component based coding with React
-- Utilized React Hooks and knowledge of React components for more manageable code
-- Used React Portal for modal to maintain event delegation provided but render above all
-- react-transition-group animation library → had trouble using translate 50% centered for uprising animation
-- Utilize Lighthouse to check and optimize performance
-- Setting up a light-weight backend with Node.js + MySQL
-- On deployment, iOS device had input value not filling bug
-- Implement hashing and JWT authentication using bcrypt and jwt-token
-
-## Version check
-
-- v1.0.0
-- v1.1.0
-- v1.2.0
-- v2.1.0
-- v2.1.1
-- v2.2.0
-- v3.1.0
+React · JavaScript · Node.js · Express · MySQL · Sequelize · bcrypt · JWT

@@ -4,7 +4,7 @@ import { AnimatePresence, LazyMotion, domAnimation, m } from "@/lib/motion";
 import { mountSplitLineReveals } from "@/lib/pageInteractionRuntime";
 import type { ExperiencePortfolioEntry } from "@/lib/portfolioEntries";
 
-/** Numbered chapter panels. One role expands at a time. */
+/** Numbered chapter panels that expand independently. */
 
 /** Slow, long-tailed ease — the reference's reveals decelerate for a while. */
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -139,8 +139,10 @@ export default function ExperienceAccordion({
 }: {
   items: ExperiencePortfolioEntry[];
 }) {
-  // One open at a time, most recent role expanded on arrival.
-  const [openId, setOpenId] = useState<string | null>(items[0]?.id ?? null);
+  // Keep the most recent role expanded on arrival.
+  const [openIds, setOpenIds] = useState<Set<string>>(
+    () => new Set(items[0] ? [items[0].id] : [])
+  );
   const listRef = useRef<HTMLDivElement>(null);
 
   // Run after hydration, not from the layout script: React owns this subtree
@@ -158,8 +160,15 @@ export default function ExperienceAccordion({
             key={item.id}
             item={item}
             index={index}
-            isOpen={openId === item.id}
-            onToggle={() => setOpenId(openId === item.id ? null : item.id)}
+            isOpen={openIds.has(item.id)}
+            onToggle={() => {
+              setOpenIds(previous => {
+                const next = new Set(previous);
+                if (next.has(item.id)) next.delete(item.id);
+                else next.add(item.id);
+                return next;
+              });
+            }}
           />
         ))}
       </div>

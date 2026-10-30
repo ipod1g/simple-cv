@@ -28,17 +28,65 @@ const { items } = Astro.props;
           {item.url && <a href={item.url} target="_blank" rel="noreferrer" aria-label={`Visit ${item.title}`}>Visit project ↗</a>}
           {item.github && <a href={item.github} target="_blank" rel="noreferrer" aria-label={`${item.title} on GitHub`}>GitHub ↗</a>}
         </div>
-        {(item.bodyHtml || item.points.length > 0) && <details>
-          <summary>Project notes<span class="sr-only"> for {item.title}</span></summary>
-          {item.bodyHtml ? <div set:html={item.bodyHtml} /> : <ul>{item.points.map(point => <li>{point}</li>)}</ul>}
-        </details>}
+        {(item.bodyHtml || item.points.length > 0) && <>
+          <button type="button" class="project-card__notes" data-project-notes={`project-notes-${index}`} aria-haspopup="dialog" aria-controls={`project-notes-${index}`}>
+            Project notes<span class="sr-only"> for {item.title}</span><span aria-hidden="true">↗</span>
+          </button>
+          <dialog id={`project-notes-${index}`} class="project-notes" aria-labelledby={`project-notes-title-${index}`} data-lenis-prevent>
+            <header class="project-notes__toolbar">
+              <span class="character-micro">PROJECT NOTES / {String(index + 1).padStart(2, "0")}</span>
+              <form method="dialog"><button class="project-notes__close" aria-label={`Close notes for ${item.title}`}>Close <span aria-hidden="true">×</span></button></form>
+            </header>
+            <div class="project-notes__scroll" tabindex="0" role="region" aria-label="Project notes content">
+              <div class="project-notes__heading">
+                <p class="character-micro">{item.duration}</p>
+                <h2 id={`project-notes-title-${index}`}>{item.title}</h2>
+                {item.subtitle && <p class="project-notes__subtitle">{item.subtitle}</p>}
+              </div>
+              <div class="project-notes__body">
+                {item.bodyHtml ? <div set:html={item.bodyHtml} /> : <ul>{item.points.map(point => <li>{point}</li>)}</ul>}
+              </div>
+              <footer class="project-notes__footer">
+                <div class="project-notes__links">
+                  {item.url && <a href={item.url} target="_blank" rel="noreferrer">Visit project ↗</a>}
+                  {item.github && <a href={item.github} target="_blank" rel="noreferrer">View code ↗</a>}
+                </div>
+                <form method="dialog"><button type="submit">Back to projects <span aria-hidden="true">↩</span></button></form>
+              </footer>
+            </div>
+          </dialog>
+        </>}
       </div>
     </article>)}
   </div>
 </div>
 
 <script>
+  import { setPageScrollLocked } from "@/lib/pageInteractionRuntime";
+
   const gallery = document.querySelector(".project-gallery");
+  gallery?.querySelectorAll<HTMLButtonElement>("[data-project-notes]").forEach(button => {
+    const dialog = document.getElementById(button.dataset.projectNotes!) as HTMLDialogElement | null;
+    if (!dialog) return;
+    button.addEventListener("click", () => {
+      dialog.showModal();
+      const content = dialog.querySelector<HTMLElement>(".project-notes__scroll");
+      if (content) content.scrollTop = 0;
+      setPageScrollLocked(true);
+    });
+    dialog.addEventListener("close", () => {
+      // Keep the viewport width stable until the drawer has finished leaving.
+      // Restoring the page scrollbar earlier can rewrap the visible text.
+      Promise.allSettled(dialog.getAnimations().map(animation => animation.finished)).then(() => {
+        if (gallery.querySelector(".project-notes[open]")) return;
+        setPageScrollLocked(false);
+        button.focus({ preventScroll: true });
+      });
+    });
+    dialog.addEventListener("click", event => {
+      if (event.target === dialog) dialog.close();
+    });
+  });
   const projects = gallery?.querySelector<HTMLElement>(".project-gallery__entries");
   gallery?.querySelectorAll<HTMLButtonElement>("[data-gallery-view]").forEach(button => {
     button.addEventListener("click", () => {

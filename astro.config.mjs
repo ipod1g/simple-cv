@@ -18,7 +18,17 @@ export default defineConfig({
     responsiveStyles: true,
   },
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [
+      tailwindcss(),
+      {
+        name: "separate-vite-caches-by-mode",
+        // `astro check` syncs in production mode. Keep its optimized React
+        // runtime separate from the one used by a running dev server.
+        config: (_config, { mode }) => ({
+          cacheDir: path.resolve(__dirname, "node_modules/.vite", mode),
+        }),
+      },
+    ],
     build: {
       minify: "esbuild",
     },
