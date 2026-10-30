@@ -21,3 +21,12 @@ const email = SOCIALS.find(social => social.name === "Email")!;
     <div class="character-footer__bottom"><span>© {year} {SITE.name}</span><span>{SITE.credits}</span><span>PHYSICS MIND. ENGINEER BY CRAFT.</span></div>
   </div>
 </footer>
+
+<script>
+  const footer = document.querySelector<HTMLElement>(".character-footer");
+  if (footer) {
+    const measure = () => footer.style.setProperty("--footer-height", `${footer.offsetHeight}px`);
+    measure();
+    new ResizeObserver(measure).observe(footer);
+  }
+</script>
