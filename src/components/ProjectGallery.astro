@@ -1,31 +1,30 @@
 ---
-// THROWAWAY reference study: a browsable catalogue using real Portfolio Entries.
 import type { ProjectPortfolioEntry } from "@/lib/portfolioEntries";
 interface Props { items: ProjectPortfolioEntry[] }
 const { items } = Astro.props;
 ---
 
-<div class="prototype-gallery">
-  <div class="prototype-gallery-toolbar">
-    <p class="prototype-micro">ALL PROJECTS / {String(items.length).padStart(2, "0")} ENTRIES</p>
+<div class="project-gallery">
+  <div class="project-gallery__toolbar">
+    <p class="character-micro">ALL PROJECTS / {String(items.length).padStart(2, "0")} ENTRIES</p>
     <nav aria-label="Project display">
-      <button type="button" data-gallery-view="grid" aria-pressed="true" aria-controls="prototype-projects">Grid</button>
-      <button type="button" data-gallery-view="index" aria-pressed="false" aria-controls="prototype-projects">Index</button>
+      <button type="button" data-gallery-view="grid" aria-pressed="true" aria-controls="project-gallery-entries">Grid</button>
+      <button type="button" data-gallery-view="index" aria-pressed="false" aria-controls="project-gallery-entries">Index</button>
     </nav>
   </div>
-  <div class="prototype-projects" id="prototype-projects" data-view="grid">
-    {items.map((item, index) => <article class="prototype-project">
-      <div class="prototype-project__media">
-        <span class="prototype-project__tag">{item.video ? "IN MOTION" : "PROJECT"}</span>
+  <div class="project-gallery__entries" id="project-gallery-entries" data-view="grid">
+    {items.map((item, index) => <article class="project-card">
+      <div class="project-card__media">
+        <span class="project-card__tag">{item.video ? "IN MOTION" : "PROJECT"}</span>
         {item.video ? <video controls preload="none" playsinline poster={item.thumbnail ?? undefined} aria-label={`${item.title} demo`}>
           <source src={item.video} type="video/mp4" />
-        </video> : item.thumbnail ? <img src={item.thumbnail} alt={`${item.title} preview`} loading="lazy" width="600" height="450" /> : <span class="prototype-monogram" aria-hidden="true">{item.monogram}</span>}
+        </video> : item.thumbnail ? <img src={item.thumbnail} alt={`${item.title} preview`} loading="lazy" width="600" height="450" /> : <span class="project-card__monogram" aria-hidden="true">{item.monogram}</span>}
       </div>
-      <div class="prototype-project__copy">
-        <div class="prototype-project__topline"><span>/{String(index + 1).padStart(2, "0")}</span><time datetime={item.iso}>{item.duration}</time></div>
+      <div class="project-card__copy">
+        <div class="project-card__topline"><span>/{String(index + 1).padStart(2, "0")}</span><time datetime={item.iso}>{item.duration}</time></div>
         <h3>{item.title}</h3>
-        {item.subtitle && <p class="prototype-project__subtitle">{item.subtitle}</p>}
-        <div class="prototype-project__links">
+        {item.subtitle && <p class="project-card__subtitle">{item.subtitle}</p>}
+        <div class="project-card__links">
           {item.url && <a href={item.url} target="_blank" rel="noreferrer" aria-label={`Visit ${item.title}`}>Visit project ↗</a>}
           {item.github && <a href={item.github} target="_blank" rel="noreferrer" aria-label={`${item.title} on GitHub`}>GitHub ↗</a>}
         </div>
@@ -39,8 +38,8 @@ const { items } = Astro.props;
 </div>
 
 <script>
-  const gallery = document.querySelector(".prototype-gallery");
-  const projects = gallery?.querySelector<HTMLElement>(".prototype-projects");
+  const gallery = document.querySelector(".project-gallery");
+  const projects = gallery?.querySelector<HTMLElement>(".project-gallery__entries");
   gallery?.querySelectorAll<HTMLButtonElement>("[data-gallery-view]").forEach(button => {
     button.addEventListener("click", () => {
       if (!projects) return;

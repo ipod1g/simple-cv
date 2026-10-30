@@ -4,11 +4,7 @@ import { AnimatePresence, LazyMotion, domAnimation, m } from "@/lib/motion";
 import { mountSplitLineReveals } from "@/lib/pageInteractionRuntime";
 import type { ExperiencePortfolioEntry } from "@/lib/portfolioEntries";
 
-/**
- * Evozyne-style product list, repurposed for work history: a flat stack of
- * oversized titles that expand one at a time. Each entry carries its own hue,
- * which only surfaces on hover/expand so the page stays black-on-white at rest.
- */
+/** Numbered chapter panels. One role expands at a time. */
 
 /** Slow, long-tailed ease — the reference's reveals decelerate for a while. */
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -43,7 +39,7 @@ function Item({
   return (
     <m.article
       className={`xp ${isOpen ? "is-open" : ""}`}
-      style={{ ["--accent" as string]: item.accent }}
+      style={{ ["--accent" as string]: "var(--color-accent)" }}
       initial={reduced ? false : { opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "0px 0px -80px 0px" }}
@@ -58,6 +54,7 @@ function Item({
           onClick={onToggle}
         >
           <span className="xp__eyebrow">
+            <span className="xp__sequence">/{String(index + 1).padStart(2, "0")}</span>
             {item.subtitle && <span>{item.subtitle}</span>} ::
             <time dateTime={item.iso}>{item.duration}</time>
           </span>
